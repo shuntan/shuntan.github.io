@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[问道]]></title>
+    <url>%2F2019%2F04%2F11%2F%E9%97%AE%E9%81%93%2F</url>
+    <content type="text"><![CDATA[问道客户端百度云网盘1链接:https://pan.baidu.com/s/1rsdS6oiuAxoYr5wXeZr22A 密码:kq7m 更多资讯: Deployment]]></content>
+      <categories>
+        <category>Diary</category>
+      </categories>
+      <tags>
+        <tag>Games</tag>
+        <tag>PC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hello World]]></title>
     <url>%2F2018%2F10%2F24%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy 客户端链接:https://pan.baidu.com/s/1rsdS6oiuAxoYr5wXeZr22A 密码:kq7m 更多资讯: Deployment]]></content>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy 更多资讯: Deployment]]></content>
       <categories>
         <category>Diary</category>
       </categories>
