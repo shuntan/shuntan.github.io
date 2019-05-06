@@ -4,6 +4,9 @@
     <title><![CDATA[“给hexo博客next主题添加背景音乐”]]></title>
     <url>%2F2019%2F05%2F06%2F%E2%80%9C%E7%BB%99hexo%E5%8D%9A%E5%AE%A2next%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E8%83%8C%E6%99%AF%E9%9F%B3%E4%B9%90%E2%80%9D%2F</url>
     <content type="text"><![CDATA[请访问我的个人博客 sourcod 我的hexo博客使用的是next主题所有次教程在next主题上修改。 修改 themes/next/layout/_macro/sidebar.swig 文件添加音乐播放器内容 在 themes/next/_config.yml 配置文件中添加歌单地址配置background_music: //music.163.com/outchain/player?type=0&amp;amp;id=2120628564&amp;amp;auto=1&amp;amp;height=66 注册网易云音乐自己研究 创建歌单自己研究 给歌单添加自己喜欢的音乐看你自己了 分享歌单不会获取外链的请上度娘: 怎么把自己的歌单做成外链 获取外链播放器 把地址copy出来height=90改成 66 这样以后只需要修改网易云音乐的歌单，博客的背景音乐就会自动修改了。 如果出现音乐不自动播放，那是资源的问题，自己上网易云音乐生成外链的页面看看会不会自动播放。把坏资源删除就OK了。 修改完我的博客的效果]]></content>
+      <categories>
+        <category>Hexo教程</category>
+      </categories>
       <tags>
         <tag>hexo</tag>
       </tags>
