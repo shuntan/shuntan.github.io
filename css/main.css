@@ -2260,7 +2260,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #e8c833;
+  background: #be9ab6;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3691,4 +3691,10 @@ span#inline-purple {
 }
 .sidebar {
   background: rgba(255,255,255,0.7);
+}
+body {
+  background: url("https://source.unsplash.com/random/1600x900");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 50% 50%;
 }
