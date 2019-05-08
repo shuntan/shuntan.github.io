@@ -2260,7 +2260,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #124dff;
+  background: #e8c833;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3681,5 +3681,14 @@ span#inline-purple {
   background-color: #9954bb;
 }
 .header-inner {
+  background: rgba(255,255,255,0.7);
+}
+.content-wrap {
+  background: rgba(255,255,255,0.7);
+}
+.sidebar-inner {
+  background: rgba(255,255,255,0.7);
+}
+.sidebar {
   background: rgba(255,255,255,0.7);
 }
