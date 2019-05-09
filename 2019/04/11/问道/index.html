@@ -584,6 +584,19 @@
           
             
             
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/04/11/问道/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/11/问道/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -609,7 +622,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">517</span>
+                <span title="本文字数">603</span>
               
 
               
@@ -644,7 +657,7 @@
 
       
         <h2 id="问道客户端"><a href="#问道客户端" class="headerlink" title="问道客户端"></a>问道客户端</h2><h3 id="百度云网盘"><a href="#百度云网盘" class="headerlink" title="百度云网盘"></a>百度云网盘</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">链接:https://pan.baidu.com/s/1rsdS6oiuAxoYr5wXeZr22A  密码:kq7m</span><br></pre></td></tr></table></figure>
-<p>更多资讯: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p>更多资讯: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvZGVwbG95bWVudC5odG1s" title="https://hexo.io/docs/deployment.html">Deployment<i class="fa fa-external-link"></i></span></p>
 
       
     </div>
@@ -779,7 +792,6 @@
 
   
     <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC80MDUyMy8xNzA1MA=="></div>
     </div>
 
   
@@ -1204,22 +1216,36 @@
   
 
   
-
-
   
-    <script>
-  window.livereOptions = {
-    refer: '2019/04/11/问道/'
-  };
-  (function(d, s) {
-    var j, e = d.getElementsByTagName(s)[0];
-    if (typeof LivereTower === 'function') { return; }
-    j = d.createElement(s);
-    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-    j.async = true;
-    e.parentNode.insertBefore(j, e);
-  })(document, 'script');
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: true,
+    notify: true,
+    appId: 'RwokCKLImeTDIsSs57jLiJS8-gzGzoHsz',
+    appKey: 'Ygy6HQ7x6mDqPCqIKqHz1klz',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false
+  });
 </script>
+
+
+
 
   
 
