@@ -2269,7 +2269,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #8511ff;
+  background: #57b3ff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3559,7 +3559,7 @@ span.exturl {
   color: #f47466;
   content: "\f0c1";
   font: normal normal normal 14px/1 FontAwesome;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   transition: all 0.2s ease-out;
   padding-right: 0.3rem;
 }
@@ -3581,7 +3581,7 @@ span.exturl {
   color: #f44336;
   content: "\f08d";
   font: normal normal normal 14px/1 FontAwesome;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   transition: all 0.2s ease-out;
   padding-right: 0.3rem;
 }
@@ -3636,7 +3636,7 @@ a:hover {
 .post-body .exturl .fa {
   color: #3b9eff;
   font: normal normal normal 14px/1 FontAwesome;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   transition: all 0.2s ease-out;
   padding-right: 0.3rem;
 }
@@ -3669,7 +3669,7 @@ blockquote:before {
   content: "\f02b";
   color: #ffb200;
   font: normal normal normal 14px/1 FontAwesome;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   transition: all 0.2s ease-out;
   padding-right: 0.3rem;
 }
