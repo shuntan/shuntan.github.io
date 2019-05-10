@@ -146,9 +146,9 @@
       <category term="Diary" scheme="http://yoursite.com/categories/Diary/"/>
     
     
-      <category term="PS3" scheme="http://yoursite.com/tags/PS3/"/>
-    
       <category term="Games" scheme="http://yoursite.com/tags/Games/"/>
+    
+      <category term="PS3" scheme="http://yoursite.com/tags/PS3/"/>
     
   </entry>
   
