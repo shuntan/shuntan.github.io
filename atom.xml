@@ -97,9 +97,9 @@
       <category term="Diary" scheme="http://yoursite.com/categories/Diary/"/>
     
     
-      <category term="PC" scheme="http://yoursite.com/tags/PC/"/>
-    
       <category term="Games" scheme="http://yoursite.com/tags/Games/"/>
+    
+      <category term="PC" scheme="http://yoursite.com/tags/PC/"/>
     
   </entry>
   
@@ -124,9 +124,9 @@
       <category term="Diary" scheme="http://yoursite.com/categories/Diary/"/>
     
     
-      <category term="Games" scheme="http://yoursite.com/tags/Games/"/>
-    
       <category term="PS3" scheme="http://yoursite.com/tags/PS3/"/>
+    
+      <category term="Games" scheme="http://yoursite.com/tags/Games/"/>
     
   </entry>
   
