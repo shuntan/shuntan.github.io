@@ -2047,7 +2047,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #2eab87;
+  background: #3c0bff;
 }
 .feed-link,
 .chat {
@@ -3235,6 +3235,7 @@ span.exturl {
   color: #f47466;
   content: "\f0c1";
   font: normal normal normal 14px/1 FontAwesome;
+  font-size: 1.4rem;
   transition: all 0.2s ease-out;
   padding-right: 0.3rem;
 }
@@ -3256,6 +3257,7 @@ span.exturl {
   color: #f44336;
   content: "\f08d";
   font: normal normal normal 14px/1 FontAwesome;
+  font-size: 1.4rem;
   transition: all 0.2s ease-out;
   padding-right: 0.3rem;
 }
@@ -3267,6 +3269,7 @@ span.exturl {
   background: #fff;
   color: #49b1f5;
   text-decoration: none;
+  font-size: 12px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
