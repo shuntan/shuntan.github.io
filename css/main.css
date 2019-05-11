@@ -2047,7 +2047,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff6a36;
+  background: #b1ad09;
 }
 .feed-link,
 .chat {
@@ -2478,7 +2478,7 @@ ul.popular-posts .popular-posts-item .popular-posts-title {
   border: 1px solid #fff;
   border-radius: 50%;
 }
-.page-archive .fa-cloud-download {
+.page-archive .fa-external-link {
   font-size: 15px;
   margin-left: 5px;
 }
@@ -3118,9 +3118,8 @@ ul.breadcrumb li+li:last-child {
   margin: 0 auto;
 }
 .site-meta {
-  padding: 90px 0;
+  padding: 80px 0;
   color: #fff;
-  background: #49b1f5;
   background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557483862162&di=7510258a54958f771ec244625f5cec3b&imgtype=0&src=http%3A%2F%2Fi1.img.969g.com%2Fnews%2Fimgx2015%2F06%2F05%2F310_101412_fa8f6.jpg");
   opacity: 1;
   background-size: cover;
@@ -3324,13 +3323,6 @@ a:hover {
 }
 .posts-collapse .post-title a:hover {
   color: #49b1f5;
-}
-.post-body .exturl .fa {
-  color: #3b9eff;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: 1.4rem;
-  transition: all 0.2s ease-out;
-  padding-right: 0.3rem;
 }
 .fa-tag:before {
   content: "\f02b";
