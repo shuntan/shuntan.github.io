@@ -2047,7 +2047,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #302479;
+  background: #c6ffd5;
 }
 .feed-link,
 .chat {
@@ -3137,10 +3137,10 @@ ul.breadcrumb li+li:last-child {
 .posts-expand .post-title {
   font-size: 1.7em;
 }
-.posts-expand .post-body ul > li {
+.category-list > li {
   list-style: none;
 }
-.posts-expand .post-body ul li {
+.category-list-item {
   position: relative;
   margin: 0.5rem 0;
 }
@@ -3151,7 +3151,7 @@ a,
 span.exturl {
   border-bottom: none;
 }
-.posts-expand .post-body ul li:before {
+.category-list-item:before {
   top: 10px;
   margin-left: -1.45rem;
   width: 0.4rem;
@@ -3163,7 +3163,7 @@ span.exturl {
   line-height: 0.3rem;
   position: absolute;
 }
-.posts-expand .post-body ul li:hover:before {
+.category-list-item:hover:before {
   border-color: #ff7242;
 }
 .psts-expand .post-body ol li:before {
