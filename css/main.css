@@ -2047,7 +2047,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #c6ffd5;
+  background: #ffd0be;
 }
 .feed-link,
 .chat {
@@ -3137,21 +3137,26 @@ ul.breadcrumb li+li:last-child {
 .posts-expand .post-title {
   font-size: 1.7em;
 }
-.category-list > li {
+.category-list > li,
+.posts-expand .post-body ul {
   list-style: none;
 }
-.category-list-item {
+.category-list-item,
+.posts-expand .post-body ul > li {
   position: relative;
   margin: 0.5rem 0;
+}
+.nav-tabs > li:before {
+  content: none !important;
 }
 .category-all-page .category-list {
   padding-left: 40px;
 }
-a,
-span.exturl {
+a {
   border-bottom: none;
 }
-.category-list-item:before {
+.category-list-item:before,
+.posts-expand .post-body ul > li:before {
   top: 10px;
   margin-left: -1.45rem;
   width: 0.4rem;
@@ -3163,7 +3168,8 @@ span.exturl {
   line-height: 0.3rem;
   position: absolute;
 }
-.category-list-item:hover:before {
+.category-list-item:hover:before,
+.posts-expand .post-body ul > li:hover:before {
   border-color: #ff7242;
 }
 .psts-expand .post-body ol li:before {
