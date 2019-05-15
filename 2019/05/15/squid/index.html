@@ -151,20 +151,20 @@
 
 
 
-  <meta name="description" content="squid-cache 官网http://www.squid-cache.org squid介绍及其简单配置https://www.cnblogs.com/cherishry/p/5706736.html CentOS 7安装squid代理服务器https://blog.csdn.net/ithomer/article/details/78136993 squid的概念 squid是一种用来缓存I">
+  <meta name="description" content="squid-cache 官网http://www.squid-cache.org squid介绍及其简单配置https://www.cnblogs.com/cherishry/p/5706736.html CentOS 7安装squid代理服务器https://blog.csdn.net/ithomer/article/details/78136993 squid的概念squid是一种用来缓存In">
 <meta name="keywords" content="squid,proxy">
 <meta property="og:type" content="article">
 <meta property="og:title" content="squid介绍及其简单配置">
 <meta property="og:url" content="https://shuntan.github.io/2019/05/15/squid/index.html">
 <meta property="og:site_name" content="Shawntan&#39;s Blog">
-<meta property="og:description" content="squid-cache 官网http://www.squid-cache.org squid介绍及其简单配置https://www.cnblogs.com/cherishry/p/5706736.html CentOS 7安装squid代理服务器https://blog.csdn.net/ithomer/article/details/78136993 squid的概念 squid是一种用来缓存I">
+<meta property="og:description" content="squid-cache 官网http://www.squid-cache.org squid介绍及其简单配置https://www.cnblogs.com/cherishry/p/5706736.html CentOS 7安装squid代理服务器https://blog.csdn.net/ithomer/article/details/78136993 squid的概念squid是一种用来缓存In">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://images2015.cnblogs.com/blog/872781/201607/872781-20160726112850919-758636566.jpg">
 <meta property="og:image" content="https://images2015.cnblogs.com/blog/872781/201607/872781-20160726112935653-887103660.jpg">
-<meta property="og:updated_time" content="2019-05-15T07:29:58.720Z">
+<meta property="og:updated_time" content="2019-05-15T07:34:48.879Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="squid介绍及其简单配置">
-<meta name="twitter:description" content="squid-cache 官网http://www.squid-cache.org squid介绍及其简单配置https://www.cnblogs.com/cherishry/p/5706736.html CentOS 7安装squid代理服务器https://blog.csdn.net/ithomer/article/details/78136993 squid的概念 squid是一种用来缓存I">
+<meta name="twitter:description" content="squid-cache 官网http://www.squid-cache.org squid介绍及其简单配置https://www.cnblogs.com/cherishry/p/5706736.html CentOS 7安装squid代理服务器https://blog.csdn.net/ithomer/article/details/78136993 squid的概念squid是一种用来缓存In">
 <meta name="twitter:image" content="https://images2015.cnblogs.com/blog/872781/201607/872781-20160726112850919-758636566.jpg">
 
 
@@ -551,7 +551,7 @@
                 
               
 
-              <time title="创建时间：2019-05-15 15:15:30 / 修改时间：15:29:58" itemprop="dateCreated datePublished" datetime="2019-05-15T15:15:30+08:00">2019-05-15</time>
+              <time title="创建时间：2019-05-15 15:15:30 / 修改时间：15:34:48" itemprop="dateCreated datePublished" datetime="2019-05-15T15:15:30+08:00">2019-05-15</time>
             
 
             
@@ -659,32 +659,23 @@
         <p>squid-cache 官网<br><span class="exturl" data-url="aHR0cDovL3d3dy5zcXVpZC1jYWNoZS5vcmc=" title="http://www.squid-cache.org">http://www.squid-cache.org<i class="fa fa-external-link"></i></span></p>
 <p>squid介绍及其简单配置<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vY2hlcmlzaHJ5L3AvNTcwNjczNi5odG1s" title="https://www.cnblogs.com/cherishry/p/5706736.html">https://www.cnblogs.com/cherishry/p/5706736.html<i class="fa fa-external-link"></i></span></p>
 <p>CentOS 7安装squid代理服务器<br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2l0aG9tZXIvYXJ0aWNsZS9kZXRhaWxzLzc4MTM2OTkz" title="https://blog.csdn.net/ithomer/article/details/78136993">https://blog.csdn.net/ithomer/article/details/78136993<i class="fa fa-external-link"></i></span></p>
-<p><strong>squid的概念</strong></p>
-<p>squid是一种用来缓存Internet数据的软件。接受来自人们需要下载的目标（object）的请求并适当的处理这些请求。也就是说，如果一个人想下载一web界面，他请求squid为他取得这个页面。squid随之连接到远程服务器并向这个页面发出请求。然后，squid显式地聚集数据到客户端机器，而且同时复制一份。当下一次有人需要同一页面时， squid可以简单的从磁盘中读到它，那样数据会立即传输到客户机上。</p>
+<h1 id="squid的概念"><a href="#squid的概念" class="headerlink" title="squid的概念"></a>squid的概念</h1><p>squid是一种用来缓存Internet数据的软件。接受来自人们需要下载的目标（object）的请求并适当的处理这些请求。也就是说，如果一个人想下载一web界面，他请求squid为他取得这个页面。squid随之连接到远程服务器并向这个页面发出请求。然后，squid显式地聚集数据到客户端机器，而且同时复制一份。当下一次有人需要同一页面时， squid可以简单的从磁盘中读到它，那样数据会立即传输到客户机上。</p>
 <h2 id="squid代理的作用"><a href="#squid代理的作用" class="headerlink" title="squid代理的作用"></a>squid代理的作用</h2><ul>
 <li>通过缓存的方式为用户提供Web访问加速</li>
 <li>对用户的Web访问进行过滤控制</li>
 </ul>
 <h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><p>当代理服务器中有客户端需要的数据时：</p>
-<p>a. 客户端向代理服务器发送数据请求；</p>
-<p>b. 代理服务器检查自己的数据缓存；</p>
-<p>c. 代理服务器在缓存中找到了用户想要的数据，取出数据；</p>
-<p>d. 代理服务器将从缓存中取得的数据返回给客户端。</p>
-<p>当代理服务器中没有客户端需要的数据时：</p>
-<ol>
-<li><p>客户端向代理服务器发送数据请求；</p>
-</li>
-<li><p>代理服务器检查自己的数据缓存；</p>
-</li>
-<li><p>代理服务器在缓存中没有找到用户想要的数据；</p>
-</li>
-<li><p>代理服务器向Internet 上的远端服务器发送数据请求；</p>
-</li>
-<li><p>远端服务器响应，返回相应的数据；</p>
-</li>
-<li><p>代理服务器取得远端服务器的数据，返回给客户端，并保留一份到自己的数据缓存中。</p>
-</li>
-</ol>
+<p>a.客户端向代理服务器发送数据请求；</p>
+<p>b.代理服务器检查自己的数据缓存；</p>
+<p>c.代理服务器在缓存中找到了用户想要的数据，取出数据；</p>
+<p>d.代理服务器将从缓存中取得的数据返回给客户端。</p>
+<p>当代理服务器中没有客户端需要的数据时了：</p>
+<p>1.客户端向代理服务器发送数据请求；</p>
+<p>2.代理服务器检查自己的数据缓存；</p>
+<p>3.代理服务器在缓存中没有找到用户想要的数据；</p>
+<p>4.代理服务器向Internet 上的远端服务器发送数据请求；</p>
+<p>5.远端服务器响应，返回相应的数据；</p>
+<p>6.代理服务器取得远端服务器的数据，返回给客户端，并保留一份到自己的数据缓存中。</p>
 <p><img src="https://images2015.cnblogs.com/blog/872781/201607/872781-20160726112850919-758636566.jpg" alt=""></p>
 <p>Squid代理服务器工作在TCP/IP应用层</p>
 <p><img src="https://images2015.cnblogs.com/blog/872781/201607/872781-20160726112935653-887103660.jpg" alt=""></p>
@@ -697,8 +688,8 @@
 <h2 id="Squid主要组成部分"><a href="#Squid主要组成部分" class="headerlink" title="Squid主要组成部分"></a>Squid主要组成部分</h2><p>服务名：<code>squid</code><br>主程序：<code>/usr/sbin/squid</code><br>配置目录：<code>/etc/squid</code><br>主配置文件：<code>/etc/squid/squid.conf</code><br>监听tcp端口号：<code>3128</code><br>默认访问日志文件：<code>/var/log/squid/access.log</code></p>
 <h2 id="squid常用配置选项"><a href="#squid常用配置选项" class="headerlink" title="squid常用配置选项"></a>squid常用配置选项</h2><p><code>/etc/squid/squid.conf</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">http_port 3128  (还可以只监听一个IP http_port 192.168.0.1:3128)</span><br><span class="line">cache_mem 64MB  #缓存占内存大小</span><br><span class="line">maximum_object_size 4096KB  #最大缓存块</span><br><span class="line">reply_body_max_size  1024000 allow all      #限定下载文件大小</span><br><span class="line">access_log /var/log/squid/access.log    #访问日志存放的地方</span><br><span class="line">visible_hostname    proxy.test.xom  #可见的主机名</span><br><span class="line">cache_dir ufs /var/spool/squid  100 16 256 </span><br><span class="line">#ufs:缓存数据的存储格式</span><br><span class="line">#/var/spool/squid    缓存目录</span><br><span class="line">#100：缓存目录占磁盘空间大小（M）</span><br><span class="line">#16：缓存空间一级子目录个数</span><br><span class="line">#256：缓存空间二级子目录个数</span><br><span class="line">cache_mgr webmaster@test.com    #定义管理员邮箱</span><br><span class="line">http_access deny all    #访问控制</span><br></pre></td></tr></table></figure>
-<h2 id="squid中的访问控制"><a href="#squid中的访问控制" class="headerlink" title="squid中的访问控制"></a>squid中的访问控制</h2><pre><code>使用访问控制特性，可以控制在访问时根据特定的时间间隔进行缓存、访问特定站点或一组站点等等。squid访问控制有两个要素：ACL元素和访问列表。访问列表可以允许或拒绝某些用户对此服务的访问。
-</code></pre><h3 id="ACL元素类型"><a href="#ACL元素类型" class="headerlink" title="ACL元素类型"></a>ACL元素类型</h3><ul>
+<h2 id="squid中的访问控制"><a href="#squid中的访问控制" class="headerlink" title="squid中的访问控制"></a>squid中的访问控制</h2><p>  使用访问控制特性，可以控制在访问时根据特定的时间间隔进行缓存、访问特定站点或一组站点等等。squid访问控制有两个要素：ACL元素和访问列表。访问列表可以允许或拒绝某些用户对此服务的访问。</p>
+<h3 id="ACL元素类型"><a href="#ACL元素类型" class="headerlink" title="ACL元素类型"></a>ACL元素类型</h3><ul>
 <li>src：源地址（即客户机IP地址）</li>
 <li>dst：目标地址（即服务器IP地址）</li>
 <li>srcdomain：源名称（即客户机名称）</li>
@@ -1216,7 +1207,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#squid代理的作用"><span class="nav-number">1.</span> <span class="nav-text">squid代理的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作流程"><span class="nav-number">2.</span> <span class="nav-text">工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid各种代理的定义"><span class="nav-number">3.</span> <span class="nav-text">Squid各种代理的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正向代理"><span class="nav-number">3.1.</span> <span class="nav-text">正向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标准的代理缓冲服务器"><span class="nav-number">3.1.1.</span> <span class="nav-text">标准的代理缓冲服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#透明代理缓冲服务器"><span class="nav-number">3.1.2.</span> <span class="nav-text">透明代理缓冲服务器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向代理"><span class="nav-number">3.2.</span> <span class="nav-text">反向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#反向代理缓冲器"><span class="nav-number">3.2.1.</span> <span class="nav-text">反向代理缓冲器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正向代理与反向代理的区别"><span class="nav-number">3.3.</span> <span class="nav-text">正向代理与反向代理的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">3.4.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用途"><span class="nav-number">3.5.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全性"><span class="nav-number">3.6.</span> <span class="nav-text">安全性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid主要组成部分"><span class="nav-number">4.</span> <span class="nav-text">Squid主要组成部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#squid常用配置选项"><span class="nav-number">5.</span> <span class="nav-text">squid常用配置选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#squid中的访问控制"><span class="nav-number">6.</span> <span class="nav-text">squid中的访问控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ACL元素类型"><span class="nav-number">6.1.</span> <span class="nav-text">ACL元素类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ACL格式"><span class="nav-number">6.2.</span> <span class="nav-text">ACL格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问条目"><span class="nav-number">6.3.</span> <span class="nav-text">访问条目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid-conf配置文件详解"><span class="nav-number">7.</span> <span class="nav-text">Squid.conf配置文件详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid常用命令"><span class="nav-number">8.</span> <span class="nav-text">Squid常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid命中率分析"><span class="nav-number">9.</span> <span class="nav-text">Squid命中率分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定期清理swap-state内无效数据"><span class="nav-number">10.</span> <span class="nav-text">定期清理swap.state内无效数据</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#squid的概念"><span class="nav-number">1.</span> <span class="nav-text">squid的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#squid代理的作用"><span class="nav-number">1.1.</span> <span class="nav-text">squid代理的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作流程"><span class="nav-number">1.2.</span> <span class="nav-text">工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid各种代理的定义"><span class="nav-number">1.3.</span> <span class="nav-text">Squid各种代理的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正向代理"><span class="nav-number">1.3.1.</span> <span class="nav-text">正向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标准的代理缓冲服务器"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">标准的代理缓冲服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#透明代理缓冲服务器"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">透明代理缓冲服务器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向代理"><span class="nav-number">1.3.2.</span> <span class="nav-text">反向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#反向代理缓冲器"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">反向代理缓冲器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正向代理与反向代理的区别"><span class="nav-number">1.3.3.</span> <span class="nav-text">正向代理与反向代理的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">1.3.4.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用途"><span class="nav-number">1.3.5.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全性"><span class="nav-number">1.3.6.</span> <span class="nav-text">安全性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid主要组成部分"><span class="nav-number">1.4.</span> <span class="nav-text">Squid主要组成部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#squid常用配置选项"><span class="nav-number">1.5.</span> <span class="nav-text">squid常用配置选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#squid中的访问控制"><span class="nav-number">1.6.</span> <span class="nav-text">squid中的访问控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ACL元素类型"><span class="nav-number">1.6.1.</span> <span class="nav-text">ACL元素类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ACL格式"><span class="nav-number">1.6.2.</span> <span class="nav-text">ACL格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问条目"><span class="nav-number">1.6.3.</span> <span class="nav-text">访问条目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid-conf配置文件详解"><span class="nav-number">1.7.</span> <span class="nav-text">Squid.conf配置文件详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid常用命令"><span class="nav-number">1.8.</span> <span class="nav-text">Squid常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid命中率分析"><span class="nav-number">1.9.</span> <span class="nav-text">Squid命中率分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定期清理swap-state内无效数据"><span class="nav-number">1.10.</span> <span class="nav-text">定期清理swap.state内无效数据</span></a></li></ol></li></ol></div>
             
 
           </div>
