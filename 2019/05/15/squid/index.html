@@ -151,18 +151,21 @@
 
 
 
-  <meta name="description" content="目前 shadowsocks 服务已经受到了影响，不过部署在 25 端口目前还可用。 仍然可以通过 ubuntu 的 apt-get 获取到 shadowsocks 服务端，windows、Mac OS X、Android 客户端的 release 下载链接仍然保留。因此在写作本文时，shadowsocks 还是可以使用的。 shadowsocks 简介&amp;nbsp;&amp;nbsp;shadowsock">
-<meta name="keywords" content="VPS,shadowsocks">
+  <meta name="description" content="squid-cache 官网http://www.squid-cache.org squid介绍及其简单配置https://www.cnblogs.com/cherishry/p/5706736.html CentOS 7安装squid代理服务器https://blog.csdn.net/ithomer/article/details/78136993 squid的概念 squid是一种用来缓存I">
+<meta name="keywords" content="squid,proxy">
 <meta property="og:type" content="article">
-<meta property="og:title" content="科学上网：用 VPS 搭建 shadowsocks 服务器">
-<meta property="og:url" content="https://shuntan.github.io/2019/05/15/shadowsocks/index.html">
+<meta property="og:title" content="squid介绍及其简单配置">
+<meta property="og:url" content="https://shuntan.github.io/2019/05/15/squid/index.html">
 <meta property="og:site_name" content="Shawntan&#39;s Blog">
-<meta property="og:description" content="目前 shadowsocks 服务已经受到了影响，不过部署在 25 端口目前还可用。 仍然可以通过 ubuntu 的 apt-get 获取到 shadowsocks 服务端，windows、Mac OS X、Android 客户端的 release 下载链接仍然保留。因此在写作本文时，shadowsocks 还是可以使用的。 shadowsocks 简介&amp;nbsp;&amp;nbsp;shadowsock">
+<meta property="og:description" content="squid-cache 官网http://www.squid-cache.org squid介绍及其简单配置https://www.cnblogs.com/cherishry/p/5706736.html CentOS 7安装squid代理服务器https://blog.csdn.net/ithomer/article/details/78136993 squid的概念 squid是一种用来缓存I">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-15T07:12:16.189Z">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/872781/201607/872781-20160726112850919-758636566.jpg">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/872781/201607/872781-20160726112935653-887103660.jpg">
+<meta property="og:updated_time" content="2019-05-15T07:29:58.720Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="科学上网：用 VPS 搭建 shadowsocks 服务器">
-<meta name="twitter:description" content="目前 shadowsocks 服务已经受到了影响，不过部署在 25 端口目前还可用。 仍然可以通过 ubuntu 的 apt-get 获取到 shadowsocks 服务端，windows、Mac OS X、Android 客户端的 release 下载链接仍然保留。因此在写作本文时，shadowsocks 还是可以使用的。 shadowsocks 简介&amp;nbsp;&amp;nbsp;shadowsock">
+<meta name="twitter:title" content="squid介绍及其简单配置">
+<meta name="twitter:description" content="squid-cache 官网http://www.squid-cache.org squid介绍及其简单配置https://www.cnblogs.com/cherishry/p/5706736.html CentOS 7安装squid代理服务器https://blog.csdn.net/ithomer/article/details/78136993 squid的概念 squid是一种用来缓存I">
+<meta name="twitter:image" content="https://images2015.cnblogs.com/blog/872781/201607/872781-20160726112850919-758636566.jpg">
 
 
 
@@ -172,7 +175,7 @@
 
   
   
-  <link rel="canonical" href="https://shuntan.github.io/2019/05/15/shadowsocks/">
+  <link rel="canonical" href="https://shuntan.github.io/2019/05/15/squid/">
 
 
 
@@ -182,7 +185,7 @@
   };
 </script>
 
-  <title>科学上网：用 VPS 搭建 shadowsocks 服务器 | Shawntan's Blog</title>
+  <title>squid介绍及其简单配置 | Shawntan's Blog</title>
   
 
 
@@ -505,7 +508,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://shuntan.github.io/2019/05/15/shadowsocks/">
+    <link itemprop="mainEntityOfPage" href="https://shuntan.github.io/2019/05/15/squid/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Shawntan">
@@ -522,7 +525,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">科学上网：用 VPS 搭建 shadowsocks 服务器
+          <h2 class="post-title" itemprop="name headline">squid介绍及其简单配置
 
               
             
@@ -548,7 +551,7 @@
                 
               
 
-              <time title="创建时间：2019-05-15 14:38:46 / 修改时间：15:12:16" itemprop="dateCreated datePublished" datetime="2019-05-15T14:38:46+08:00">2019-05-15</time>
+              <time title="创建时间：2019-05-15 15:15:30 / 修改时间：15:29:58" itemprop="dateCreated datePublished" datetime="2019-05-15T15:15:30+08:00">2019-05-15</time>
             
 
             
@@ -589,8 +592,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/05/15/shadowsocks/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/15/shadowsocks/" itemprop="commentCount"></span>
+                <a href="/2019/05/15/squid/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/15/squid/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -619,7 +622,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">3.6k</span>
+                <span title="本文字数">4.4k</span>
               
 
               
@@ -633,7 +636,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">3 分钟</span>
+                <span title="阅读时长">4 分钟</span>
               
             </div>
           
@@ -653,96 +656,108 @@
       
 
       
-        <p>目前 shadowsocks 服务已经受到了影响，不过部署在 25 端口目前还可用。</p>
-<p>仍然可以通过 ubuntu 的 apt-get 获取到 shadowsocks 服务端，windows、Mac OS X、Android 客户端的 release 下载链接仍然保留。因此在写作本文时，shadowsocks 还是可以使用的。</p>
-<h2 id="shadowsocks-简介"><a href="#shadowsocks-简介" class="headerlink" title="shadowsocks 简介"></a>shadowsocks 简介</h2><p>&nbsp;&nbsp;shadowsocks 是一款自定义协议的代理软件，由于其流量特征不明显，（直到不久前）一直可以稳定提供上网代理。</p>
-<p>&nbsp;&nbsp;shadowsocks 客户端会在本地开启一个 socks5 代理，通过此代理的网络访问请求由客户端发送至服务端，服务端发出请求，收到响应数据后再发回客户端。</p>
-<p>&nbsp;&nbsp;因此使用 shadowsocks 需要一台墙外的服务器来部署 shadowsocks 服务端。</p>
-<h2 id="购买-VPS-服务器"><a href="#购买-VPS-服务器" class="headerlink" title="购买 VPS 服务器"></a>购买 VPS 服务器</h2><p>  主流的 VPS（虚拟主机）服务器提供商有三家：</p>
-<ul>
-<li>linode</li>
-<li>digital ocean</li>
-<li>bandwagon</li>
+        <p>squid-cache 官网<br><span class="exturl" data-url="aHR0cDovL3d3dy5zcXVpZC1jYWNoZS5vcmc=" title="http://www.squid-cache.org">http://www.squid-cache.org<i class="fa fa-external-link"></i></span></p>
+<p>squid介绍及其简单配置<br><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vY2hlcmlzaHJ5L3AvNTcwNjczNi5odG1s" title="https://www.cnblogs.com/cherishry/p/5706736.html">https://www.cnblogs.com/cherishry/p/5706736.html<i class="fa fa-external-link"></i></span></p>
+<p>CentOS 7安装squid代理服务器<br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2l0aG9tZXIvYXJ0aWNsZS9kZXRhaWxzLzc4MTM2OTkz" title="https://blog.csdn.net/ithomer/article/details/78136993">https://blog.csdn.net/ithomer/article/details/78136993<i class="fa fa-external-link"></i></span></p>
+<p><strong>squid的概念</strong></p>
+<p>squid是一种用来缓存Internet数据的软件。接受来自人们需要下载的目标（object）的请求并适当的处理这些请求。也就是说，如果一个人想下载一web界面，他请求squid为他取得这个页面。squid随之连接到远程服务器并向这个页面发出请求。然后，squid显式地聚集数据到客户端机器，而且同时复制一份。当下一次有人需要同一页面时， squid可以简单的从磁盘中读到它，那样数据会立即传输到客户机上。</p>
+<h2 id="squid代理的作用"><a href="#squid代理的作用" class="headerlink" title="squid代理的作用"></a>squid代理的作用</h2><ul>
+<li>通过缓存的方式为用户提供Web访问加速</li>
+<li>对用户的Web访问进行过滤控制</li>
 </ul>
-<p>下面的比上面的便宜。如果只是自用，bandwagon 足够。</p>
-<p>一般使用 paypal 绑定一个 visa 或 mastercard 信用卡来付款。注意要用国际 paypal 帐号，国内的是不能用外币付款的。</p>
-<p>在 bandwagon 购买 VPS 以后会获得一个主机地址和用于 ssh 登录的 root 密码。</p>
-<h2 id="远程登陆-VPS"><a href="#远程登陆-VPS" class="headerlink" title="远程登陆 VPS"></a>远程登陆 VPS</h2><p>  Mac或 Linux 下直接在终端中ssh root@your_vps_ip your_ssh_port即可。<br>在 windows 系统下需要专门的客户端来 SSH 登录 VPS。在&nbsp;<span class="exturl" data-url="aHR0cDovL3d3dy5uZXRzYXJhbmcuY29tL2Rvd25sb2FkL2Rvd25fZm9ybS5odG1sP2NvZGU9NTIyJmFtcDt1dG1fc291cmNlPXRleHRhcmVhLmNvbSZhbXA7dXRtX21lZGl1bT10ZXh0YXJlYS5jb20mYW1wO3V0bV9jYW1wYWlnbj1hcnRpY2xl" title="http://www.netsarang.com/download/down_form.html?code=522&amp;utm_source=textarea.com&amp;utm_medium=textarea.com&amp;utm_campaign=article">xShell 官网<i class="fa fa-external-link"></i></span>&nbsp;&nbsp;下载 xShell。</p>
-<p>  家庭和学校用户可以免费试用，下载时选择 home&nbsp;and&nbsp;school&nbsp;use 即可。需要用邮箱注册一下，下载链接会发送到邮箱中。</p>
-<p>  xShell 中新建一个连接，会要求输入目标 IP 地址和端口，以及 root 密码，按提示操作即可。</p>
-<h2 id="安装-shadowsocks"><a href="#安装-shadowsocks" class="headerlink" title="安装 shadowsocks"></a>安装 shadowsocks</h2><p>  最好是centos7</p>
-<p>1.安装pip</p>
-<p>由于安装的是python 版本的 shadowsocks，所以首先安装pip</p>
-<pre><code>$ curl &quot;https://bootstrap.pypa.io/get-pip.py&quot; -o &quot;get-pip.py&quot;
-
-$ python get-pip.py
-</code></pre><p>2.安装shadowsocks    </p>
-<pre><code>$ pip install --upgrade pip
-
-$ pip install shadowsocks
-</code></pre><p>3.创建配置文件</p>
-<pre><code>创建文件所在目录:/etc
-</code></pre><h1 id="创建文件命令"><a href="#创建文件命令" class="headerlink" title="创建文件命令,"></a>创建文件命令,</h1><pre><code>$ vi /etc/shadowsocks.json
-</code></pre><h1 id="若进入了etc目录"><a href="#若进入了etc目录" class="headerlink" title="若进入了etc目录"></a>若进入了etc目录</h1><pre><code>$ vi shadowsocks.json
-</code></pre><p>配置文件内容：</p>
-<p>单端口：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"> &quot;server&quot;:&quot;0.0.0.0&quot;, --服务器IP，直接用0.0.0.0也可</span><br><span class="line"></span><br><span class="line"> &quot;server_port&quot;:8888, --端口端口</span><br><span class="line"></span><br><span class="line"> &quot;local_address&quot;: &quot;127.0.0.1&quot;, --本地地址，可省略</span><br><span class="line"></span><br><span class="line"> &quot;local_port&quot;:1080,--本地端口，可省略</span><br><span class="line"></span><br><span class="line"> &quot;password&quot;:&quot;password&quot;,--密码</span><br><span class="line"></span><br><span class="line"> &quot;timeout&quot;:300, --超时时间，可省略</span><br><span class="line"></span><br><span class="line"> &quot;method&quot;:&quot;aes-256-cfb&quot;, --加密策略，有多重策略，具体自查</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>多端口：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"> &quot;server&quot;:&quot;0.0.0.0&quot;,</span><br><span class="line"></span><br><span class="line"> &quot;local_address&quot;:&quot;127.0.0.1&quot;,</span><br><span class="line"></span><br><span class="line"> &quot;local_port&quot;:1080,</span><br><span class="line"></span><br><span class="line"> &quot;port_password&quot;:&#123;--每个端口对应一个密码</span><br><span class="line"></span><br><span class="line"> &quot;1111&quot;:&quot;password1&quot;,</span><br><span class="line"></span><br><span class="line"> &quot;1112&quot;:&quot;password2&quot;,</span><br><span class="line"></span><br><span class="line"> &quot;1113&quot;:&quot;password3&quot;</span><br><span class="line"></span><br><span class="line"> &#125;,</span><br><span class="line"></span><br><span class="line"> &quot;timeout&quot;:300,</span><br><span class="line"></span><br><span class="line"> &quot;method&quot;:&quot;aes-256-cfb&quot;,</span><br><span class="line"></span><br><span class="line"> &quot;fast_open&quot;:false</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>4.启动shadowsocks</p>
-<h1 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h1><pre><code>ssserver -c /etc/shadowsocks.json -d start
-</code></pre><h1 id="停止"><a href="#停止" class="headerlink" title="停止"></a>停止</h1><pre><code>ssserver -c /etc/shadowsocks.json -d stop
-</code></pre><h1 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h1><pre><code>ssserver -c /etc/shadowsocks.json -d restart
-</code></pre><p>启动成功即可通过ss客户端使用。</p>
-<p>在window端可以在控制台通过以下命令查看端口是否打开</p>
-<pre><code>telnet {ip} {port}
-</code></pre><p>5.配置自启动</p>
-<pre><code>新建启动脚本文件/etc/systemd/system/shadowsocks.service，内容如下：
-</code></pre><p>[Unit]</p>
-<pre><code>Description=Shadowsocks
-</code></pre><p>[Service]</p>
-<pre><code>TimeoutStartSec=0
-
-ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json
-</code></pre><p>[Install]</p>
-<pre><code>WantedBy=multi-user.target
-</code></pre><p>通过以下命令注册，启动服务</p>
-<pre><code>$ systemctl enable shadowsocks
-
-$ systemctl start shadowsocks
-</code></pre><p>启动后可以查看服务状态</p>
-<pre><code>$ systemctl status shadowsocks -l
-</code></pre><p>若启动成功：</p>
-<p>● shadowsocks.service - Shadowsocks</p>
-<p>Loaded: loaded (/etc/systemd/system/shadowsocks.service; enabled; vendor preset: disabled)</p>
-<p>Active: active (running) since Sun 2017-08-13 18:03:41 CST; 1h 29min ago</p>
-<p>Main PID: 9567 (ssserver)</p>
-<p>CGroup: /system.slice/shadowsocks.service</p>
-<p>└─9567 /usr/bin/python2 /usr/bin/ssserver -c /etc/shadowsocks.json<br>如果，服务失败，重启服务器试一下</p>
-<h2 id="安装并启动-shadowsocks-客户端"><a href="#安装并启动-shadowsocks-客户端" class="headerlink" title="安装并启动 shadowsocks 客户端"></a>安装并启动 shadowsocks 客户端</h2><p>  shadowsocks 支持 windows、Mac&nbsp;OS&nbsp;X、Linux、Android、iOS 等多个平台。不过 iOS 由于系统对应用后台运行的限制，推荐使用客户端内嵌的浏览器科学上网，给其他应用代理时需要每过几分钟重新启动一下 app。</p>
-<p>  shadowsocks 项目 Github 主页在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NoYWRvd3NvY2tzL3NoYWRvd3NvY2tzP3V0bV9zb3VyY2U9dGV4dGFyZWEuY29tJmFtcDt1dG1fbWVkaXVtPXRleHRhcmVhLmNvbSZhbXA7dXRtX2NhbXBhaWduPWFydGljbGU=" title="https://github.com/shadowsocks/shadowsocks?utm_source=textarea.com&amp;utm_medium=textarea.com&amp;utm_campaign=article">这里<i class="fa fa-external-link"></i></span>。</p>
-<p>  里面可以找到客户端下载地址。</p>
-<p>  下载安装客户端以后，只需按服务器的配置填写 IP 地址、服务器端口、本地端口（如果没有本地端口选项，就是默认的 1080）、密码、加密方式等参数，启动就可以了。</p>
-<p>  客户端支持全局代理和 PAC 代理两种方式，后者会使用一个脚本来自动检查一个网站是否在需要代理的网站列表中，自动选择直接连接或代理连接。</p>
-<p>  PAC 列表可以在线更新，但是难免有收录不全的情况。这时可以选择关闭 shadowsocks 代理（实际上是取消对系统代理的配置，shadowsocks 客户端仍然保持工作），然后使用支持自定义规则的代理管理插件来实现自动切换代理，比如 switchyOmega。</p>
-<h2 id="使用-switchyOmega-实现自动切换代理"><a href="#使用-switchyOmega-实现自动切换代理" class="headerlink" title="使用 switchyOmega 实现自动切换代理"></a>使用 switchyOmega 实现自动切换代理</h2><pre><code>switchyOmega 是 chrome 浏览器上一个很好用的代理管理插件。它的前身 switchySharp 更有名。
-
-chrome 应用商店本身需要翻墙才能访问，因此需要先在 shadowsocks 启动代理模式下下载安装，再关闭 shadowsocks 代理。
-
-安装完毕后，右击 switchyOmega 图标，选择选项，进入 switchOmega 配置界面。
-</code></pre><h3 id="创建-shadowsocks-情景模式"><a href="#创建-shadowsocks-情景模式" class="headerlink" title="创建 shadowsocks 情景模式"></a>创建 shadowsocks 情景模式</h3><pre><code>新建一个情景模式，比如叫 SS，代理协议选择 socks5，代理地址为 127.0.0.1，端口 1080。
-
-现在切换到 SS 情景模式就可以通过 shadowsocks 科学上网了。后面获取自动切换规则列表
-</code></pre><h3 id="设置自动切换模式"><a href="#设置自动切换模式" class="headerlink" title="设置自动切换模式"></a>设置自动切换模式</h3><p>  在设置界面选择自动切换模式，在 “切换规则” 中勾选“规则列表规则”，对应的情景模式选择刚刚新建的 SS。</p>
-<p>  然后在下面的规则列表地址中填写</p>
-<p>  <span class="exturl" data-url="aHR0cHM6Ly9hdXRvcHJveHktZ2Z3bGlzdC5nb29nbGVjb2RlLmNvbS9zdm4vdHJ1bmsvZ2Z3bGlzdC50eHQ=" title="https://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt">https://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt<i class="fa fa-external-link"></i></span></p>
-<p>  规则列表格式选择 AutoProxy。</p>
-<p>  然后点击立即更新情景模式， 更新完成后会有提示。</p>
-<p>  点击左侧的 “应用选项”。然后单击 switchyOmega 图标，选择自动切换，就可以在访问“不存在的网站” 时自动切换到 shadowsocks 代理了。</p>
-<h3 id="添加自定义规则"><a href="#添加自定义规则" class="headerlink" title="添加自定义规则"></a>添加自定义规则</h3><p>  如果遇到某个国外网站无法直接连接或速度太慢时，可以单击 switchyOmega 图标，选择 “添加条件”，情景模式选择 SS，就可以了。</p>
-<p>  这时打开 switchyOmega 选项，在自动切换模式的切换规则中就可以看到刚刚添加的规则。可以在这里管理自定义的规则。</p>
-<h3 id="导入和导出-switchyOmega-设置"><a href="#导入和导出-switchyOmega-设置" class="headerlink" title="导入和导出 switchyOmega 设置"></a>导入和导出 switchyOmega 设置</h3><p>  如果换了一台电脑，重新设置一遍 switchyOmega 就太麻烦了。可以在设置好的 switchyOmega 中导出设置文件，在另一个 chrome 浏览器中导入，就可以直接复制原来的设置了。</p>
-<p>  在 switchyOmega 选项的左侧点击 “导入 / 导出”，点击“生成备份文件” 即可生成 switchyOmega 设置备份。点击 “从备份文件恢复” 可以导入备份文件。</p>
+<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><p>当代理服务器中有客户端需要的数据时：</p>
+<p>a. 客户端向代理服务器发送数据请求；</p>
+<p>b. 代理服务器检查自己的数据缓存；</p>
+<p>c. 代理服务器在缓存中找到了用户想要的数据，取出数据；</p>
+<p>d. 代理服务器将从缓存中取得的数据返回给客户端。</p>
+<p>当代理服务器中没有客户端需要的数据时：</p>
+<ol>
+<li><p>客户端向代理服务器发送数据请求；</p>
+</li>
+<li><p>代理服务器检查自己的数据缓存；</p>
+</li>
+<li><p>代理服务器在缓存中没有找到用户想要的数据；</p>
+</li>
+<li><p>代理服务器向Internet 上的远端服务器发送数据请求；</p>
+</li>
+<li><p>远端服务器响应，返回相应的数据；</p>
+</li>
+<li><p>代理服务器取得远端服务器的数据，返回给客户端，并保留一份到自己的数据缓存中。</p>
+</li>
+</ol>
+<p><img src="https://images2015.cnblogs.com/blog/872781/201607/872781-20160726112850919-758636566.jpg" alt=""></p>
+<p>Squid代理服务器工作在TCP/IP应用层</p>
+<p><img src="https://images2015.cnblogs.com/blog/872781/201607/872781-20160726112935653-887103660.jpg" alt=""></p>
+<h2 id="Squid各种代理的定义"><a href="#Squid各种代理的定义" class="headerlink" title="Squid各种代理的定义"></a>Squid各种代理的定义</h2><h3 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h3><h4 id="标准的代理缓冲服务器"><a href="#标准的代理缓冲服务器" class="headerlink" title="标准的代理缓冲服务器"></a>标准的代理缓冲服务器</h4><p>一个标准的代理缓冲服务被用于缓存静态的网页到本地网络上的一台主机上（即代理服务器）。当被缓存的页面被第二次访问的时候，浏览器将直接从本地代理服务器那里获取请求数据而不再向原web站点请求数据。这样就节省了宝贵的网络带宽，而且提高了访问速度。但是，要想实现这种方式，必须在每一个内部主机的浏览器上明确指名代理服务器的IP地址和端口号。客户端上网时，每次都把请求发送给代理服务器处理,代理服务器根据请求确定是否连接到远程web服务器获取数据。如果在本地缓冲区有目标文件，则直接将文件传给用户即可。如果没有的话则先取回文件，先在本地保存一份缓冲，然后将文件发送给客户端浏览器。</p>
+<h4 id="透明代理缓冲服务器"><a href="#透明代理缓冲服务器" class="headerlink" title="透明代理缓冲服务器"></a>透明代理缓冲服务器</h4><p>透明代理缓冲服务器和标准代理服务器的功能完全相同。但是，代理操作对客户端的浏览器是透明的（即不需指明代理服务器的IP和端口）。透明代理服务器阻断网络通信，并且过滤出访问外部的HTTP（80端口）流量。如果客户端的请求在本地有缓冲则将缓冲的数据直接发给用户，如果在本地没有缓冲则向远程web服务器发出请求，其余操作和标准的代理服务器完全相同。对于linux操作系统来说，透明代理使用Iptables或者Ipchains实现。因此不需要对浏览器作任何设置，所以，透明代理对于ISP（Internet服务器提供商）特别有用。</p>
+<h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><h4 id="反向代理缓冲器"><a href="#反向代理缓冲器" class="headerlink" title="反向代理缓冲器"></a>反向代理缓冲器</h4><p>反向代理是和前两种代理完全不同的一种代理服务。使用它可以降低原始WEB服务器的负载。反向代理服务器承担了对原始WEB服务器的静态页面的请求，防止原始服务器过载。它位于WEB服务器和Internet之间，处理所有对WEB服务器的请求，组织了WEB服务器和Internet的直接通信。如果互联网用户请求的页面在代理服务器上有缓冲的话，代理服务器直接将缓冲内容发送给用户。如果没有缓冲则先向WEB服务器发出请求，取回数据，本地缓存后再发给用户。这种方式通过降低了WEB服务器的请求数从而降低了WEB服务器的负载。</p>
+<h3 id="正向代理与反向代理的区别"><a href="#正向代理与反向代理的区别" class="headerlink" title="正向代理与反向代理的区别"></a>正向代理与反向代理的区别</h3><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>正向代理：对于原始服务器而言，就是客户端的代言人<br>反向代理：对于客户端而言，就像是原始服务器</p>
+<h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><p>正向代理的典型用途是为在防火墙内的局域网客户端提供访问Internet的途径。正向代理还可以使用缓冲特性减少网络使用率。<br>反向代理还可以为后端的多台服务器提供负载平衡，或为后端较慢的服务器提供缓冲服务。另外，反向代理还可以启用高级URL策略和管理技术，从而使处于不同web服务器系统的web页面同时存在于同一个URL空间下。</p>
+<h3 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h3><p>正向代理允许客户端通过它访问任意网站并且隐藏客户端自身，因此你必须采取安全措施以确保仅为经过授权的客户端提供服务。<br>反向代理对外都是透明的，访问者并不知道自己访问的是一个代理。</p>
+<h2 id="Squid主要组成部分"><a href="#Squid主要组成部分" class="headerlink" title="Squid主要组成部分"></a>Squid主要组成部分</h2><p>服务名：<code>squid</code><br>主程序：<code>/usr/sbin/squid</code><br>配置目录：<code>/etc/squid</code><br>主配置文件：<code>/etc/squid/squid.conf</code><br>监听tcp端口号：<code>3128</code><br>默认访问日志文件：<code>/var/log/squid/access.log</code></p>
+<h2 id="squid常用配置选项"><a href="#squid常用配置选项" class="headerlink" title="squid常用配置选项"></a>squid常用配置选项</h2><p><code>/etc/squid/squid.conf</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">http_port 3128  (还可以只监听一个IP http_port 192.168.0.1:3128)</span><br><span class="line">cache_mem 64MB  #缓存占内存大小</span><br><span class="line">maximum_object_size 4096KB  #最大缓存块</span><br><span class="line">reply_body_max_size  1024000 allow all      #限定下载文件大小</span><br><span class="line">access_log /var/log/squid/access.log    #访问日志存放的地方</span><br><span class="line">visible_hostname    proxy.test.xom  #可见的主机名</span><br><span class="line">cache_dir ufs /var/spool/squid  100 16 256 </span><br><span class="line">#ufs:缓存数据的存储格式</span><br><span class="line">#/var/spool/squid    缓存目录</span><br><span class="line">#100：缓存目录占磁盘空间大小（M）</span><br><span class="line">#16：缓存空间一级子目录个数</span><br><span class="line">#256：缓存空间二级子目录个数</span><br><span class="line">cache_mgr webmaster@test.com    #定义管理员邮箱</span><br><span class="line">http_access deny all    #访问控制</span><br></pre></td></tr></table></figure>
+<h2 id="squid中的访问控制"><a href="#squid中的访问控制" class="headerlink" title="squid中的访问控制"></a>squid中的访问控制</h2><pre><code>使用访问控制特性，可以控制在访问时根据特定的时间间隔进行缓存、访问特定站点或一组站点等等。squid访问控制有两个要素：ACL元素和访问列表。访问列表可以允许或拒绝某些用户对此服务的访问。
+</code></pre><h3 id="ACL元素类型"><a href="#ACL元素类型" class="headerlink" title="ACL元素类型"></a>ACL元素类型</h3><ul>
+<li>src：源地址（即客户机IP地址）</li>
+<li>dst：目标地址（即服务器IP地址）</li>
+<li>srcdomain：源名称（即客户机名称）</li>
+<li>dstdomain：目标名称（即服务器名称）</li>
+<li>time：一天中的时刻和一周内的一天</li>
+<li>url_regex：URL规则表达式匹配</li>
+<li>urlpath_regex：URL-path规则表达式匹配，略去协议和主机名</li>
+<li>proxy_auth：通过外部程序进行用户验证</li>
+<li>maxconn：单一IP的最大连接数</li>
+</ul>
+<h3 id="ACL格式"><a href="#ACL格式" class="headerlink" title="ACL格式"></a>ACL格式</h3><pre><code>为了使用控制功能，必须先设置ACL规则并应用。ACL声明的格式如下：
+</code></pre><p>注：</p>
+<ul>
+<li>acl_element_name 可以是任一个在ACL中定义的名称</li>
+<li>任何两个ACL元素不能用相同的名字</li>
+<li>每个ACL由列表值组成。当进行匹配检测的时候，多个值由逻辑或运算连接；换言之，即任一ACL元素的值被匹配，则这个ACL元素即被匹配。</li>
+<li>并不是所有ACL元素都能使用访问列表中的全部类型</li>
+<li>不同的ACL元素写在不同行中，squid将把他们组合在一个列表中</li>
+</ul>
+<h3 id="访问条目"><a href="#访问条目" class="headerlink" title="访问条目"></a>访问条目</h3><p>我们可以使用许多不同的访问条目。下面是我们常用的几个：</p>
+<ul>
+<li>http_access:允许HTTP访问</li>
+<li>no_cache:定义对缓存请求的响应。<br>访问列表的规则由一些类似’allow’或‘deny’的关键字构成，用以允许或拒绝向特定或一组ACL元素提供服务。</li>
+</ul>
+<ol>
+<li>一个访问列表可以由多条规则组成</li>
+<li>如果没有任何规则与访问请求匹配，默认动作将与列表中最后一条规则对应。</li>
+<li>一个访问条目中所有元素将用逻辑与运算连接<br>http_access Action 声明1 AND 声明2 AND 声明 OR.<br>http_access Action 声明3<br>多个http_accesss声明间用或运算连接，但每个访问条目的元素间用与运算连接。</li>
+<li>列表中的规则总是遵循由上而下的顺序</li>
+<li>这些规则按照他们的排列顺序进行匹配检测，一旦检测到匹配的规则，匹配就立即结束。</li>
+</ol>
+<h2 id="Squid-conf配置文件详解"><a href="#Squid-conf配置文件详解" class="headerlink" title="Squid.conf配置文件详解"></a>Squid.conf配置文件详解</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br></pre></td><td class="code"><pre><span class="line">#acl all src 0.0.0.0/0.0.0.0 and http_access allow all选项定义了一个访问控制列表。详细情况参见和Squid软件</span><br><span class="line">#携带的文档。这里的访问控制列表允许所有对代理服务的访问，因为这里该代理是加速web服务器。</span><br><span class="line">acl all src 0.0.0.0/0.0.0.0                 #允许所有IP访问</span><br><span class="line">acl manager proto http                 #manager url协议为http</span><br><span class="line">acl localhost src 127.0.0.1/255.255.255.255  #允午本机IP</span><br><span class="line">acl to_localhost dst 127.0.0.1                 #允午目的地址为本机IP</span><br><span class="line">acl Safe_ports port 80                # 允许安全更新的端口为80</span><br><span class="line">acl CONNECT method CONNECT        #请求方法以CONNECT</span><br><span class="line">http_access allow all                #允许所有人使用该代理.因为这里是代理加速web服务器</span><br><span class="line">http_reply_access allow all                #允许所有客户端使用该代理</span><br><span class="line"></span><br><span class="line">acl OverConnLimit maxconn 16        #限制每个IP最大允许16个连接，防止攻击</span><br><span class="line">http_access deny OverConnLimit</span><br><span class="line"></span><br><span class="line">icp_access deny all                        #禁止从邻居服务器缓冲内发送和接收ICP请求.</span><br><span class="line">miss_access allow all                #允许直接更新请求</span><br><span class="line">ident_lookup_access deny all                                #禁止lookup检查DNS</span><br><span class="line">http_port 8080 transparent                                #指定Squid监听浏览器客户请求的端口号。</span><br><span class="line"></span><br><span class="line">hierarchy_stoplist cgi-bin ?                #用来强制某些特定的对象不被缓存，主要是处于安全的目的。</span><br><span class="line">acl QUERY urlpath_regex cgi-bin \?</span><br><span class="line">cache deny QUERY</span><br><span class="line"></span><br><span class="line">cache_mem 1 GB        #这是一个优化选项，增加该内存值有利于缓存。应该注意的是：</span><br><span class="line">                     #一般来说如果系统有内存，设置该值为(n/)3M。现在是3G 所以这里1G</span><br><span class="line">fqdncache_size 1024        #FQDN 高速缓存大小</span><br><span class="line">maximum_object_size_in_memory 2 MB        #允许最大的文件载入内存</span><br><span class="line"></span><br><span class="line">memory_replacement_policy heap LFUDA  #动态使用最小的，移出内存cache</span><br><span class="line">cache_replacement_policy heap LFUDA         #动态使用最小的，移出硬盘cache</span><br><span class="line"></span><br><span class="line">cache_dir ufs /home/cache 5000 32 512  #高速缓存目录 ufs 类型 使用的缓冲值最大允午1000MB空间，</span><br><span class="line">#32个一级目录，512个二级目录</span><br><span class="line"></span><br><span class="line">max_open_disk_fds 0                                 #允许最大打开文件数量,0 无限制</span><br><span class="line">minimum_object_size 1 KB                         #允午最小文件请求体大小</span><br><span class="line">maximum_object_size 20 MB                 #允午最大文件请求体大小</span><br><span class="line"></span><br><span class="line">cache_swap_low 90                            #最小允许使用swap 90%</span><br><span class="line">cache_swap_high 95                            #最多允许使用swap 95%</span><br><span class="line"></span><br><span class="line">ipcache_size 2048                                # IP 地址高速缓存大小 2M</span><br><span class="line">ipcache_low 90                                #最小允许ipcache使用swap 90%</span><br><span class="line">ipcache_high 95                                  #最大允许ipcache使用swap 90%</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">access_log /var/log/squid/access.log squid        #定义日志存放记录</span><br><span class="line">cache_log /var/log/squid/cache.log squid</span><br><span class="line">cache_store_log none                        #禁止store日志</span><br><span class="line"></span><br><span class="line">emulate_httpd_log on        #将使Squid仿照Web服务器的格式创建访问记录。如果希望使用</span><br><span class="line">                                #Web访问记录分析程序，就需要设置这个参数。</span><br><span class="line"></span><br><span class="line">refresh_pattern . 0 20% 4320 override-expire override-lastmod reload-into-ims ignore-reload   #更新cache规则</span><br><span class="line"></span><br><span class="line">acl buggy_server url_regex ^http://.... http://          #只允许http的请求</span><br><span class="line">broken_posts allow buggy_server</span><br><span class="line"></span><br><span class="line">acl apache rep_header Server ^Apache                 #允许apache的编码</span><br><span class="line">broken_vary_encoding allow apache</span><br><span class="line"></span><br><span class="line">request_entities off                                        #禁止非http的标分准请求，防止攻击</span><br><span class="line">header_access header allow all                        #允许所有的http报头</span><br><span class="line">relaxed_header_parser on                                #不严格分析http报头.</span><br><span class="line">client_lifetime 120 minute                                #最大客户连接时间 120分钟</span><br><span class="line"></span><br><span class="line">cache_mgr sky@test.com                        #指定当缓冲出现问题时向缓冲管理者发送告警信息的地址信息。</span><br><span class="line"></span><br><span class="line">cache_effective_user squid                        #这里以用户squid的身份Squid服务器</span><br><span class="line">cache_effective_group squid</span><br><span class="line"></span><br><span class="line">icp_port 0                       #指定Squid从邻居服务器缓冲内发送和接收ICP请求的端口号。</span><br><span class="line">                     #这里设置为0是因为这里配置Squid为内部Web服务器的加速器，</span><br><span class="line">                     #所以不需要使用邻居服务器的缓冲。0是禁用</span><br><span class="line"></span><br><span class="line"># cache_peer 设置允许更新缓存的主机，因是本机所以127.0.0.1</span><br><span class="line">cache_peer 127.0.0.1 parent 80 0 no-query default multicast-responder no-netdb-exchange</span><br><span class="line">cache_peer_domain 127.0.0.1                                 </span><br><span class="line">hostname_aliases 127.0.0.1</span><br><span class="line"></span><br><span class="line">error_directory /usr/share/squid/errors/Simplify_Chinese        #定义错误路径</span><br><span class="line"></span><br><span class="line">always_direct allow all                # cache丢失或不存在是允许所有请求直接转发到原始服务器</span><br><span class="line">ignore_unknown_nameservers on        #开反DNS查询，当域名地址不相同时候，禁止访问</span><br><span class="line">coredump_dir  /var/log/squid                 #定义dump的目录</span><br><span class="line"></span><br><span class="line">max_filedesc 2048                #最大打开的文件描述</span><br><span class="line"></span><br><span class="line">half_closed_clients off        #使Squid在当read不再返回数据时立即关闭客户端的连接。</span><br><span class="line">                                #有时read不再返回数据是由于某些客户关闭TCP的发送数据</span><br><span class="line">                                #而仍然保持接收数据。而Squid分辨不出TCP半关闭和完全关闭。</span><br><span class="line"></span><br><span class="line">buffered_logs on #若打开选项“buffered_logs”可以稍稍提高加速某些对日志文件的写入，该选项主要是实现优化特性。</span><br><span class="line"></span><br><span class="line">#防止天涯盗链，转嫁给百度</span><br><span class="line">acl tianya referer_regex -i tianya</span><br><span class="line">http_access deny tianya</span><br><span class="line">deny_info  tianya</span><br><span class="line">#阻止baidu蜘蛛</span><br><span class="line">acl baidu req_header User-Agent Baiduspider</span><br><span class="line">http_access deny baidu</span><br><span class="line">#限制同一IP客户端的最大连接数</span><br><span class="line">acl OverConnLimit maxconn 128</span><br><span class="line">http_access deny OverConnLimit</span><br><span class="line"></span><br><span class="line">#防止被人利用为HTTP代理，设置允许访问的IP地址</span><br><span class="line">acl myip dst 222.18.63.37</span><br><span class="line">http_access deny !myip</span><br><span class="line"></span><br><span class="line">#允许本地管理</span><br><span class="line">acl Manager proto cache_object</span><br><span class="line">acl Localhost src 127.0.0.1 222.18.63.37</span><br><span class="line">http_access allow Manager Localhost</span><br><span class="line">cachemgr_passwd 53034338 all</span><br><span class="line">http_access deny Manager</span><br><span class="line"></span><br><span class="line">#仅仅允许80端口的代理</span><br><span class="line">acl all src 0.0.0.0/0.0.0.0</span><br><span class="line">acl Safe_ports port 80 # http</span><br><span class="line">http_access deny !Safe_ports</span><br><span class="line">http_access allow all</span><br><span class="line"></span><br><span class="line">#Squid信息设置</span><br><span class="line">visible_hostname happy.swjtu.edu.cn</span><br><span class="line">cache_mgr  ooopic2008@qq.com</span><br><span class="line"></span><br><span class="line">#基本设置</span><br><span class="line">cache_effective_user squid</span><br><span class="line">cache_effective_group squid</span><br><span class="line">tcp_recv_bufsize 65535 bytes</span><br><span class="line"></span><br><span class="line">#2.6的反向代理加速配置</span><br><span class="line">cache_peer 127.0.0.1 parent 80 0 no-query originserver</span><br><span class="line"></span><br><span class="line">#错误文档</span><br><span class="line">error_directory /usr/local/squid/share/errors/Simplify_Chinese</span><br><span class="line"></span><br><span class="line">#单台使用，不使用该功能</span><br><span class="line">icp_port 0</span><br><span class="line"></span><br><span class="line">hierarchy_stoplist cgi-bin ?</span><br><span class="line"></span><br><span class="line">acl QUERY urlpath_regex cgi-bin \? .php .cgi .avi .wmv .rm .ram .mpg .mpeg .zip .exe</span><br><span class="line">cache deny QUERY</span><br><span class="line"></span><br><span class="line">acl apache rep_header Server ^Apache</span><br><span class="line">broken_vary_encoding allow apache</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">refresh_pattern ^ftp:           1440 20%     10080</span><br><span class="line">refresh_pattern ^gopher:        1440 0%    1440</span><br><span class="line">refresh_pattern .             0    20%     4320</span><br><span class="line"></span><br><span class="line">cache_store_log none</span><br><span class="line">pid_filename /usr/local/squid/var/logs/squid.pid</span><br><span class="line">emulate_httpd_log on</span><br></pre></td></tr></table></figure>
+<h2 id="Squid常用命令"><a href="#Squid常用命令" class="headerlink" title="Squid常用命令"></a>Squid常用命令</h2><ol>
+<li>初始化在squid.conf里配置的cache目录<br>squid -z<br>如果有错误提示，请检查cache目录的权限，可以更改目录权限<br>chown -R squid:squid /cache目录</li>
+<li>对squid.conf排错，即验证squid.conf的语法和配置<br>squid -k parse<br>如果在squid.conf中有语法或配置错误，这里会返回提示，若无返回，尝试启动squid</li>
+<li>前台启动squid，并输出启动过程<br>/usr/local/squid/sbin/squid -N -d1<br>如果有ready to server reques相关信息，说明squid启动成功<br>然后ctrl+c ,停止squid,并以后台运行的方式启动它</li>
+<li>启动squid在后台运行<br>squid -s<br>可以使用ps -ax | grep squid 来查看squid进程是否存在</li>
+<li>停止squid<br>squid -k shutdown</li>
+<li>重新引导修改过的squid.conf<br>squid -k reconfigure -f /XXX/squid.conf<br>当squid进行配置更改后，可以使用该命令进行squid配置重载</li>
+<li>把squid添加到系统启动项<br>vim /etc/rc.local<br>/usr/local/squid/sbin/squid -s</li>
+<li>修改cache缓存目录的权限<br>chown -R squid.squid /cache目录<br>cache缓存目录根据自己的配置更改，squid用户和组是squid，squid</li>
+<li>修改squid日志目录的权限<br>chown -R squid.squid 定义的日志文件所在目录<br>这一步并不是适合每一个使用squid的用户，意为让squid有权限在该目录里进行写操作</li>
+<li>查看你的日志文档<br>more /usr/local/squid/var/logs/access.log | grep TCP_MEM_HIT<br>该指令可以看到在squid运行过程中，有那些文件被squid缓存到内存中，并返回给访问用户。<br>more /usr/local/squid/var/logs/access.log | grep TCP_HIT<br>该指令可以看到在squid运行过程中，有那些文件被squid缓存到cache目录中，并返回给访问用户。<br>more /usr/local/squid/var/logs/access.log | grep TCP_MISS<br>该指令可以看到在squid运行过程中，有那些文件没有被squid缓存，而是从原始服务器获取并返回给访问用户。</li>
+</ol>
+<h2 id="Squid命中率分析"><a href="#Squid命中率分析" class="headerlink" title="Squid命中率分析"></a>Squid命中率分析</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/squid/bin/squidclient -p 80 mgr:info</span><br><span class="line">/usr/local/squid/bin/squidclient -p 80 mgr:5min</span><br></pre></td></tr></table></figure>
+<p>可以看到详细的性能情况,其中PORT是你的proxy的端口，5min可以是60min<br>取得squid运行状态信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squidclient -p 80 mgr:info</span><br></pre></td></tr></table></figure>
+<p>取得squid内存使用情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squidclient -p 80 mgr:mem</span><br></pre></td></tr></table></figure>
+<p>取得squid已经缓存的列表：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squidclient -p 80 mgr:bjects. use it carefully,it may crash</span><br></pre></td></tr></table></figure>
+<p>取得squid的磁盘使用情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squidclient -p 80 mgr:diskd</span><br></pre></td></tr></table></figure>
+<p>强制更新某个url：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squidclient -p 80 -m PURGE http://www.xxx.com/xxx.php</span><br></pre></td></tr></table></figure>
+<p>更多的请查看：squidclient-h 或者 squidclient -p 80 mgr:<br>查命中率：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">squidclient -h IP(具体侦听IP) -p 80(具体侦听端口) mgr:info</span><br></pre></td></tr></table></figure>
+<h2 id="定期清理swap-state内无效数据"><a href="#定期清理swap-state内无效数据" class="headerlink" title="定期清理swap.state内无效数据"></a>定期清理swap.state内无效数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/path/to/squid/sbin/squid -k rotate -f /path/to/squid/conf_file</span><br><span class="line">vi /etc/crontab</span><br><span class="line">0        0       *       *       *       root    /usr/local/sbin/squid -k rotate -f /usr/local/etc/squid/squid1.conf</span><br></pre></td></tr></table></figure>
+<p>当squid应用运行了一段时间之后，cache_dir对应的swap.state文件就会变得越来越大，里面的无效接口数据越来越多，这可能影响squid的响应时间，因此需要使用squid清理swap.state里面的无效数据，减少swap.state的大小。</p>
 
       
     </div>
@@ -805,12 +820,12 @@ chrome 应用商店本身需要翻墙才能访问，因此需要先在 shadowsoc
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/2019/05/15/shadowsocks/">科学上网：用 VPS 搭建 shadowsocks 服务器</a></p>
+  <p><span>本文标题:</span><a href="/2019/05/15/squid/">squid介绍及其简单配置</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Shawntan 的个人博客">Shawntan</a></p>
-  <p><span>发布时间:</span>2019年05月15日 - 14:05</p>
+  <p><span>发布时间:</span>2019年05月15日 - 15:05</p>
   <p><span>最后更新:</span>2019年05月15日 - 15:05</p>
-  <p><span>原始链接:</span><a href="/2019/05/15/shadowsocks/" title="科学上网：用 VPS 搭建 shadowsocks 服务器">https://shuntan.github.io/2019/05/15/shadowsocks/</a>
-    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://shuntan.github.io/2019/05/15/shadowsocks/" aria-label="复制成功！"></i></span>
+  <p><span>原始链接:</span><a href="/2019/05/15/squid/" title="squid介绍及其简单配置">https://shuntan.github.io/2019/05/15/squid/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://shuntan.github.io/2019/05/15/squid/" aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -835,9 +850,9 @@ chrome 应用商店本身需要翻墙才能访问，因此需要先在 shadowsoc
       
         <div class="post-tags">
           
-            <a href="/tags/VPS/" rel="tag"><i class="fa fa-tag"></i> VPS</a>
+            <a href="/tags/squid/" rel="tag"><i class="fa fa-tag"></i> squid</a>
           
-            <a href="/tags/shadowsocks/" rel="tag"><i class="fa fa-tag"></i> shadowsocks</a>
+            <a href="/tags/proxy/" rel="tag"><i class="fa fa-tag"></i> proxy</a>
           
         </div>
       
@@ -902,8 +917,8 @@ chrome 应用商店本身需要翻墙才能访问，因此需要先在 shadowsoc
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/10/Tag Plugins/" rel="next" title="Tag Plugins">
-                <i class="fa fa-chevron-left"></i> Tag Plugins
+              <a href="/2019/05/15/shadowsocks/" rel="next" title="科学上网：用 VPS 搭建 shadowsocks 服务器">
+                <i class="fa fa-chevron-left"></i> 科学上网：用 VPS 搭建 shadowsocks 服务器
               </a>
             
           </div>
@@ -911,10 +926,6 @@ chrome 应用商店本身需要翻墙才能访问，因此需要先在 shadowsoc
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/15/squid/" rel="prev" title="squid介绍及其简单配置">
-                squid介绍及其简单配置 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -1205,7 +1216,7 @@ chrome 应用商店本身需要翻墙才能访问，因此需要先在 shadowsoc
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#shadowsocks-简介"><span class="nav-number">1.</span> <span class="nav-text">shadowsocks 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#购买-VPS-服务器"><span class="nav-number">2.</span> <span class="nav-text">购买 VPS 服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程登陆-VPS"><span class="nav-number">3.</span> <span class="nav-text">远程登陆 VPS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-shadowsocks"><span class="nav-number">4.</span> <span class="nav-text">安装 shadowsocks</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#创建文件命令"><span class="nav-number"></span> <span class="nav-text">创建文件命令,</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#若进入了etc目录"><span class="nav-number"></span> <span class="nav-text">若进入了etc目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动"><span class="nav-number"></span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#停止"><span class="nav-number"></span> <span class="nav-text">停止</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重启"><span class="nav-number"></span> <span class="nav-text">重启</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装并启动-shadowsocks-客户端"><span class="nav-number">1.</span> <span class="nav-text">安装并启动 shadowsocks 客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-switchyOmega-实现自动切换代理"><span class="nav-number">2.</span> <span class="nav-text">使用 switchyOmega 实现自动切换代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-shadowsocks-情景模式"><span class="nav-number">2.1.</span> <span class="nav-text">创建 shadowsocks 情景模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置自动切换模式"><span class="nav-number">2.2.</span> <span class="nav-text">设置自动切换模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加自定义规则"><span class="nav-number">2.3.</span> <span class="nav-text">添加自定义规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入和导出-switchyOmega-设置"><span class="nav-number">2.4.</span> <span class="nav-text">导入和导出 switchyOmega 设置</span></a></li></ol></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#squid代理的作用"><span class="nav-number">1.</span> <span class="nav-text">squid代理的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作流程"><span class="nav-number">2.</span> <span class="nav-text">工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid各种代理的定义"><span class="nav-number">3.</span> <span class="nav-text">Squid各种代理的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正向代理"><span class="nav-number">3.1.</span> <span class="nav-text">正向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标准的代理缓冲服务器"><span class="nav-number">3.1.1.</span> <span class="nav-text">标准的代理缓冲服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#透明代理缓冲服务器"><span class="nav-number">3.1.2.</span> <span class="nav-text">透明代理缓冲服务器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向代理"><span class="nav-number">3.2.</span> <span class="nav-text">反向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#反向代理缓冲器"><span class="nav-number">3.2.1.</span> <span class="nav-text">反向代理缓冲器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正向代理与反向代理的区别"><span class="nav-number">3.3.</span> <span class="nav-text">正向代理与反向代理的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">3.4.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用途"><span class="nav-number">3.5.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全性"><span class="nav-number">3.6.</span> <span class="nav-text">安全性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid主要组成部分"><span class="nav-number">4.</span> <span class="nav-text">Squid主要组成部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#squid常用配置选项"><span class="nav-number">5.</span> <span class="nav-text">squid常用配置选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#squid中的访问控制"><span class="nav-number">6.</span> <span class="nav-text">squid中的访问控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ACL元素类型"><span class="nav-number">6.1.</span> <span class="nav-text">ACL元素类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ACL格式"><span class="nav-number">6.2.</span> <span class="nav-text">ACL格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问条目"><span class="nav-number">6.3.</span> <span class="nav-text">访问条目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid-conf配置文件详解"><span class="nav-number">7.</span> <span class="nav-text">Squid.conf配置文件详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid常用命令"><span class="nav-number">8.</span> <span class="nav-text">Squid常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squid命中率分析"><span class="nav-number">9.</span> <span class="nav-text">Squid命中率分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定期清理swap-state内无效数据"><span class="nav-number">10.</span> <span class="nav-text">定期清理swap.state内无效数据</span></a></li></ol></div>
             
 
           </div>
