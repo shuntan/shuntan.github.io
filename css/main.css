@@ -2047,7 +2047,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #793234;
+  background: #f72fff;
 }
 .feed-link,
 .chat {
@@ -3103,7 +3103,7 @@ ul.breadcrumb li+li:last-child {
   padding: 100px 0;
   color: #fff;
   background: #fff;
-  background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557483862162&di=7510258a54958f771ec244625f5cec3b&imgtype=0&src=http%3A%2F%2Fi1.img.969g.com%2Fnews%2Fimgx2015%2F06%2F05%2F310_101412_fa8f6.jpg");
+  background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557919254692&di=c024e447291e35326b2a9217a1cc0ea0&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2018-01-25%2F5a694d793c24b.jpg");
   opacity: 1;
   background-size: cover;
 }
@@ -3350,8 +3350,8 @@ a:hover {
   top: -15px;
   left: 5%;
   z-index: 1;
-  color: #ddd;
-  content: "\f0c2";
+  color: #49b1f5;
+  content: "\f0c4";
   font: normal normal normal 14px/1 FontAwesome;
   font-size: 30px;
   -webkit-transition: all 1s ease-in-out;
