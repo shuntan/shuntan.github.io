@@ -151,18 +151,18 @@
 
 
 
-  <meta name="description" content="目前 shadowsocks 服务已经受到了影响，不过部署在 25 端口目前还可用。 仍然可以通过 ubuntu 的 apt-get 获取到 shadowsocks 服务端，windows、Mac OS X、Android 客户端的 release 下载链接仍然保留。因此在写作本文时，shadowsocks 还是可以使用的。 shadowsocks 简介&amp;nbsp;&amp;nbsp;shadowsock">
+  <meta name="description" content="shadowsocks 简介shadowsocks 是一款自定义协议的代理软件，由于其流量特征不明显，（直到不久前）一直可以稳定提供上网代理。 shadowsocks 客户端会在本地开启一个 socks5 代理，通过此代理的网络访问请求由客户端发送至服务端，服务端发出请求，收到响应数据后再发回客户端。 因此使用 shadowsocks 需要一台墙外的服务器来部署 shadowsocks 服务端。">
 <meta name="keywords" content="VPS,shadowsocks">
 <meta property="og:type" content="article">
 <meta property="og:title" content="科学上网：用 VPS 搭建 shadowsocks 服务器">
 <meta property="og:url" content="https://shuntan.github.io/2019/05/15/shadowsocks/index.html">
 <meta property="og:site_name" content="Shawntan&#39;s Blog">
-<meta property="og:description" content="目前 shadowsocks 服务已经受到了影响，不过部署在 25 端口目前还可用。 仍然可以通过 ubuntu 的 apt-get 获取到 shadowsocks 服务端，windows、Mac OS X、Android 客户端的 release 下载链接仍然保留。因此在写作本文时，shadowsocks 还是可以使用的。 shadowsocks 简介&amp;nbsp;&amp;nbsp;shadowsock">
+<meta property="og:description" content="shadowsocks 简介shadowsocks 是一款自定义协议的代理软件，由于其流量特征不明显，（直到不久前）一直可以稳定提供上网代理。 shadowsocks 客户端会在本地开启一个 socks5 代理，通过此代理的网络访问请求由客户端发送至服务端，服务端发出请求，收到响应数据后再发回客户端。 因此使用 shadowsocks 需要一台墙外的服务器来部署 shadowsocks 服务端。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-15T07:12:16.189Z">
+<meta property="og:updated_time" content="2019-05-15T08:11:15.180Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="科学上网：用 VPS 搭建 shadowsocks 服务器">
-<meta name="twitter:description" content="目前 shadowsocks 服务已经受到了影响，不过部署在 25 端口目前还可用。 仍然可以通过 ubuntu 的 apt-get 获取到 shadowsocks 服务端，windows、Mac OS X、Android 客户端的 release 下载链接仍然保留。因此在写作本文时，shadowsocks 还是可以使用的。 shadowsocks 简介&amp;nbsp;&amp;nbsp;shadowsock">
+<meta name="twitter:description" content="shadowsocks 简介shadowsocks 是一款自定义协议的代理软件，由于其流量特征不明显，（直到不久前）一直可以稳定提供上网代理。 shadowsocks 客户端会在本地开启一个 socks5 代理，通过此代理的网络访问请求由客户端发送至服务端，服务端发出请求，收到响应数据后再发回客户端。 因此使用 shadowsocks 需要一台墙外的服务器来部署 shadowsocks 服务端。">
 
 
 
@@ -548,7 +548,7 @@
                 
               
 
-              <time title="创建时间：2019-05-15 14:38:46 / 修改时间：15:12:16" itemprop="dateCreated datePublished" datetime="2019-05-15T14:38:46+08:00">2019-05-15</time>
+              <time title="创建时间：2019-05-15 14:38:46 / 修改时间：16:11:15" itemprop="dateCreated datePublished" datetime="2019-05-15T14:38:46+08:00">2019-05-15</time>
             
 
             
@@ -619,7 +619,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">3.6k</span>
+                <span title="本文字数">3.4k</span>
               
 
               
@@ -653,11 +653,10 @@
       
 
       
-        <p>目前 shadowsocks 服务已经受到了影响，不过部署在 25 端口目前还可用。</p>
-<p>仍然可以通过 ubuntu 的 apt-get 获取到 shadowsocks 服务端，windows、Mac OS X、Android 客户端的 release 下载链接仍然保留。因此在写作本文时，shadowsocks 还是可以使用的。</p>
-<h2 id="shadowsocks-简介"><a href="#shadowsocks-简介" class="headerlink" title="shadowsocks 简介"></a>shadowsocks 简介</h2><p>&nbsp;&nbsp;shadowsocks 是一款自定义协议的代理软件，由于其流量特征不明显，（直到不久前）一直可以稳定提供上网代理。</p>
-<p>&nbsp;&nbsp;shadowsocks 客户端会在本地开启一个 socks5 代理，通过此代理的网络访问请求由客户端发送至服务端，服务端发出请求，收到响应数据后再发回客户端。</p>
-<p>&nbsp;&nbsp;因此使用 shadowsocks 需要一台墙外的服务器来部署 shadowsocks 服务端。</p>
+        <h2 id="shadowsocks-简介"><a href="#shadowsocks-简介" class="headerlink" title="shadowsocks 简介"></a>shadowsocks 简介</h2><p>shadowsocks 是一款自定义协议的代理软件，由于其流量特征不明显，（直到不久前）一直可以稳定提供上网代理。</p>
+<p>shadowsocks 客户端会在本地开启一个 socks5 代理，通过此代理的网络访问请求由客户端发送至服务端，服务端发出请求，收到响应数据后再发回客户端。</p>
+<p>因此使用 shadowsocks 需要一台墙外的服务器来部署 shadowsocks 服务端。</p>
+<a id="more"></a>
 <h2 id="购买-VPS-服务器"><a href="#购买-VPS-服务器" class="headerlink" title="购买 VPS 服务器"></a>购买 VPS 服务器</h2><p>  主流的 VPS（虚拟主机）服务器提供商有三家：</p>
 <ul>
 <li>linode</li>
@@ -808,7 +807,7 @@ chrome 应用商店本身需要翻墙才能访问，因此需要先在 shadowsoc
   <p><span>本文标题:</span><a href="/2019/05/15/shadowsocks/">科学上网：用 VPS 搭建 shadowsocks 服务器</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Shawntan 的个人博客">Shawntan</a></p>
   <p><span>发布时间:</span>2019年05月15日 - 14:05</p>
-  <p><span>最后更新:</span>2019年05月15日 - 15:05</p>
+  <p><span>最后更新:</span>2019年05月15日 - 16:05</p>
   <p><span>原始链接:</span><a href="/2019/05/15/shadowsocks/" title="科学上网：用 VPS 搭建 shadowsocks 服务器">https://shuntan.github.io/2019/05/15/shadowsocks/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://shuntan.github.io/2019/05/15/shadowsocks/" aria-label="复制成功！"></i></span>
   </p>
@@ -1034,6 +1033,10 @@ chrome 应用商店本身需要翻墙才能访问，因此需要先在 shadowsoc
                     
                   
                     
+                    
+                      
+                    
+                      
                     
                       
                     
