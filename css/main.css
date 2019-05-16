@@ -2047,7 +2047,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #61ff18;
+  background: #fff6ba;
 }
 .feed-link,
 .chat {
@@ -3387,4 +3387,7 @@ a:hover {
 }
 .pagination {
   border-top: none;
+}
+.post-toc .nav-item {
+  text-align: center;
 }
