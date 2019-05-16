@@ -2047,7 +2047,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #fff6ba;
+  background: #b4e434;
 }
 .feed-link,
 .chat {
@@ -3106,6 +3106,13 @@ ul.breadcrumb li+li:last-child {
   background-image: url("http://b-ssl.duitang.com/uploads/item/201408/25/20140825110348_yTYmJ.jpeg");
   opacity: 1;
   background-size: cover;
+}
+.site-meta:hover {
+  -webkit-filter: blur(15px);
+  -moz-filter: blur(15px);
+  -o-filter: blur(15px);
+  -ms-filter: blur(15px);
+  filter: blur(15px);
 }
 .btn {
   color: #49b1f5;
