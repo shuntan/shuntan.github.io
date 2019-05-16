@@ -2047,7 +2047,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #f72fff;
+  background: #6fff93;
 }
 .feed-link,
 .chat {
@@ -3359,4 +3359,34 @@ a:hover {
   -o-transition: all 1s ease-in-out;
   -ms-transition: all 1s ease-in-out;
   transition: all 1s ease-in-out;
+}
+.sidebar-inner {
+  color: #fc6423;
+}
+.pagination .page-number,
+.pagination .prev,
+.pagination .next,
+.page-number.current {
+  border-top: 0px;
+  border: 2px solid #49b1f5;
+  background: #fff !important;
+  color: #49b1f5;
+  width: 10px;
+}
+.pagination .page-number:hover,
+.pagination .prev:hover,
+.pagination .next:hover {
+  background: #49b1f5 !important;
+  color: #fff;
+  border-top-color: #49b1f5;
+}
+.pagination .page-number.current {
+  border: 2px solid #49b1f5;
+  background: #49b1f5 !important;
+  border-top-color: #49b1f5;
+  color: #fff;
+  width: 10px;
+}
+.pagination {
+  border-top: none;
 }
