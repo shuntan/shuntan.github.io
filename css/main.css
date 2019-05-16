@@ -2047,7 +2047,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #2df213;
+  background: #f13;
 }
 .feed-link,
 .chat {
@@ -3103,7 +3103,7 @@ ul.breadcrumb li+li:last-child {
   padding: 100px 0;
   color: #fff;
   background: #fff;
-  background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557919254692&di=c024e447291e35326b2a9217a1cc0ea0&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2018-01-25%2F5a694d793c24b.jpg");
+  background-image: url("http://b-ssl.duitang.com/uploads/item/201408/25/20140825110348_yTYmJ.jpeg");
   opacity: 1;
   background-size: cover;
 }
@@ -3371,8 +3371,7 @@ a:hover {
   border: 2px solid #49b1f5;
   background: #fff !important;
   color: #49b1f5;
-  width: 8px;
-  height: 8px;
+  width: 6px;
 }
 .pagination .page-number:hover,
 .pagination .prev:hover,
@@ -3386,8 +3385,7 @@ a:hover {
   background: #49b1f5 !important;
   border-top-color: #49b1f5;
   color: #fff;
-  width: 8px;
-  height: 8px;
+  width: 6px;
 }
 .pagination {
   border-top: none;
