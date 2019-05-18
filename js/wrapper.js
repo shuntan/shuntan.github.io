@@ -1,7 +1,6 @@
 	// jQuery Selections
 	var $html = $('html'),
 			$container = $('#container-parallax'),
-			$prompt = $('#prompt'),
 			$scene = $('#scene');
 
 	// Hide browser menu.
@@ -17,9 +16,6 @@
 		$container.hammer({drag_lock_to_axis: true});
 		_.tap($html, 'a,button,[data-tap]');
 	}
-
-	// Add touch or mouse class to html element.
-	$html.addClass(Hammer.HAS_TOUCHEVENTS ? 'touch' : 'mouse');
 
 	// Resize handler.
 	(resize = function() {
