@@ -2047,7 +2047,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #cfffbe;
+  background: #39c67f;
 }
 .feed-link,
 .chat {
@@ -3391,8 +3391,9 @@ a:hover {
 .post-toc .nav-item {
   text-align: center;
 }
-.main,
-.header {
+.content-wrap,
+.header-inner,
+.sidebar {
   opacity: 0.8;
 }
 .wrapper {
