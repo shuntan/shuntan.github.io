@@ -2047,7 +2047,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #afec39;
+  background: #59a8ab;
 }
 .feed-link,
 .chat {
@@ -3100,12 +3100,9 @@ ul.breadcrumb li+li:last-child {
   margin: 0 auto;
 }
 .site-meta {
-  padding: 100px 0;
   color: #fff;
-  background: #fff;
-  background-image: url("http://b-ssl.duitang.com/uploads/item/201408/25/20140825110348_yTYmJ.jpeg");
+  background: #49b1f5;
   opacity: 1;
-  background-size: cover;
 }
 .btn {
   color: #49b1f5;
@@ -3390,11 +3387,6 @@ a:hover {
 }
 .post-toc .nav-item {
   text-align: center;
-}
-.content-wrap,
-.header-inner,
-.sidebar {
-  opacity: 0.8;
 }
 .wrapper {
   min-height: 460px;
