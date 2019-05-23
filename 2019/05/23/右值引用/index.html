@@ -159,7 +159,7 @@
 <meta property="og:site_name" content="Shawntan&#39;s Blog">
 <meta property="og:description" content="概述　　右值引用的概念有些读者可能会感到陌生，其实他和C++98/03中的左值引用有些类似，例如，c++98/03中的左值引用是这样的： 12int i = 0;int&amp;amp; j = i; 　　这里的int&amp;amp;是对左值进行绑定（但是int&amp;amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;amp;&amp;amp;，通过双引号来表示绑定类型为A的右值。通过&amp;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-23T07:20:40.572Z">
+<meta property="og:updated_time" content="2019-05-23T07:22:23.156Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从4行代码看右值引用">
 <meta name="twitter:description" content="概述　　右值引用的概念有些读者可能会感到陌生，其实他和C++98/03中的左值引用有些类似，例如，c++98/03中的左值引用是这样的： 12int i = 0;int&amp;amp; j = i; 　　这里的int&amp;amp;是对左值进行绑定（但是int&amp;amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;amp;&amp;amp;，通过双引号来表示绑定类型为A的右值。通过&amp;">
@@ -616,7 +616,7 @@
                 
               
 
-              <time title="创建时间：2019-05-23 14:50:40 / 修改时间：15:20:40" itemprop="dateCreated datePublished" datetime="2019-05-23T14:50:40+08:00">2019-05-23</time>
+              <time title="创建时间：2019-05-23 14:50:40 / 修改时间：15:22:23" itemprop="dateCreated datePublished" datetime="2019-05-23T14:50:40+08:00">2019-05-23</time>
             
 
             
@@ -723,7 +723,7 @@
       
         <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>　　右值引用的概念有些读者可能会感到陌生，其实他和C++98/03中的左值引用有些类似，例如，c++98/03中的左值引用是这样的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int i = 0;</span><br><span class="line">int&amp; j = i;</span><br></pre></td></tr></table></figure>
-<p>　　这里的int&amp;是对左值进行绑定（但是int&amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;&amp;，通过双引号来表示绑定类型为A的右值。通过&amp;&amp;我们就可以很方便的绑定右值了，比如我们可以这样绑定一个右值：</p>
+<p>　　这里的int&amp;是对左值进行绑定（但是int&amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;&amp;，通过双引号来表示绑定类型为A的右值。通过&amp;&amp;我们就可以很方便的绑定右值了，比如我们可以这样绑定一个右值：<br><a id="more"></a>　　</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int&amp;&amp; i = 0;</span><br></pre></td></tr></table></figure>
 <p>　　这里我们绑定了一个右值0，关于右值的概念会在后面介绍。右值引用是C++11中新增加的一个很重要的特性，他主是要用来解决C++98/03中遇到的两个问题，第一个问题就是临时对象非必要的昂贵的拷贝操作，第二个问题是在模板函数中如何按照参数的实际类型进行转发。通过引入右值引用，很好的解决了这两个问题，改进了程序性能，后面将会详细介绍右值引用是如何解决这两个问题的。</p>
 <p>　　和右值引用相关的概念比较多，比如：右值、纯右值、将亡值、universal references、引用折叠、移动语义、move语义和完美转发等等。很多都是新概念，对于刚学习C++11右值引用的初学者来说，可能会觉得右值引用过于复杂，概念之间的关系难以理清。</p>
