@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+<meta charset="utf-8">
+<title>C++ 模板偏特化－来自STL的思考 - Shawntan&#39;s Blog</title>
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<link rel="canonical" href="https://shuntan.github.io/post/模板特化/">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<meta name="description" content="之前学习STL时接触过一段时间的模板，模板是C++泛型编程编程的基础 STL从头到尾都是模板泛型编程，我觉得用的最巧妙的就是在traits萃取技巧时用到的模板偏特化   先简要回顾一下模板吧，模板主要分为函数模板与类模板  函数模板 12345678910template&amp;lt;class T&amp;gt;T add(T a, T b) &amp;#123; return a + b;&amp;#125;int mai">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="website">
+<meta property="og:title" content="C++ 模板偏特化－来自STL的思考">
+<meta property="og:url" content="https://shuntan.github.io/post/模板特化/index.html">
+<meta property="og:site_name" content="Shawntan&#39;s Blog">
+<meta property="og:description" content="之前学习STL时接触过一段时间的模板，模板是C++泛型编程编程的基础 STL从头到尾都是模板泛型编程，我觉得用的最巧妙的就是在traits萃取技巧时用到的模板偏特化   先简要回顾一下模板吧，模板主要分为函数模板与类模板  函数模板 12345678910template&amp;lt;class T&amp;gt;T add(T a, T b) &amp;#123; return a + b;&amp;#125;int mai">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160">
+<meta property="og:updated_time" content="2019-06-05T06:15:31.653Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ 模板偏特化－来自STL的思考">
+<meta name="twitter:description" content="之前学习STL时接触过一段时间的模板，模板是C++泛型编程编程的基础 STL从头到尾都是模板泛型编程，我觉得用的最巧妙的就是在traits萃取技巧时用到的模板偏特化   先简要回顾一下模板吧，模板主要分为函数模板与类模板  函数模板 12345678910template&amp;lt;class T&amp;gt;T add(T a, T b) &amp;#123; return a + b;&amp;#125;int mai">
+<meta name="twitter:image" content="https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160">
+<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"url":"https://shuntan.github.io","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/模板特化/","headline":"C++ 模板偏特化－来自STL的思考","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160","datePublished":"2019-05-31T06:29:52.000Z","dateModified":"2019-06-05T06:15:31.653Z","keywords":"C++","description":"之前学习STL时接触过一段时间的模板，模板是C++泛型编程编程的基础\nSTL从头到尾都是模板泛型编程，我觉得用的最巧妙的就是在traits萃取技巧时用到的模板偏特化\n\n\n先简要回顾一下模板吧，模板主要分为函数模板与类模板\n\n函数模板\n12345678910template&lt;class T&gt;T add(T a, T b) &#123; return a + b;&#125;int main()&#123;    int a = 1, b = 2;    std::cout &lt;&lt; add(a + b) &lt;&lt; std::endl;    return 0;&#125;","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"}},"author":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/模板特化/"}}]</script>
+<link rel="alternate" type="application/atom+xml" title="Shawntan&#39;s Blog" href="/atom.xml">
+<link href="//fonts.googleapis.com/css?family=Baloo+Bhaijaan|Inconsolata|Josefin+Sans|Montserrat" rel="stylesheet">
+<link href="//cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="/styles.6413cb5fd384752f1714.css" rel="stylesheet">
+<link rel="stylesheet" href="/theme.9d21044e4f739a763f54.css">
+<script src="/config.b6faa4b2e591e790ef2a.js"></script>
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-00000000-0"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','UA-00000000-0');</script></head>
+<body lang="en">
+<is-d2a57d></is-d2a57d>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/valine"></script>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="/live2d-widget-master/autoload.js"></script>
+<script src="//platform-api.sharethis.com/js/sharethis.js#property=5d162ed1a89f5100122c1d4a" async></script>
+<script src="/js/main.js"></script>
+<script src="/runtime.9c308a63d02029c20228.js"></script>
+<script src="/polyfills-es5.613d1909ec381c0aefb7.js"></script>
+<script src="/polyfills.23aa31104b29f3163090.js"></script>
+<script src="/main.c0d55e7428280128d494.en.js"></script>
+</body>
+</html>
