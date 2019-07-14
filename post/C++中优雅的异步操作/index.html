@@ -15,19 +15,20 @@
 <meta property="og:site_name" content="Shawntan&#39;s Blog">
 <meta property="og:description" content="c++11中增加了线程，使得我们可以非常方便的创建线程，它的基本用法是这样的： 123void f(int n);std::thread t(f, n + 1);t.join();  　　但是线程毕竟是属于比较低层次的东西，有时候使用有些不便，比如我希望获取线程函数的返回结果的时候，我就不能直接通过thread.join()得到结果，这时就必须定义一个变量，在线程函数中去给这个变量赋值，然后j">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture">
-<meta property="og:updated_time" content="2019-07-03T11:59:47.143Z">
+<meta property="og:image" content="https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160">
+<meta property="og:updated_time" content="2019-07-14T01:23:00.129Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++中优雅的异步操作">
 <meta name="twitter:description" content="c++11中增加了线程，使得我们可以非常方便的创建线程，它的基本用法是这样的： 123void f(int n);std::thread t(f, n + 1);t.join();  　　但是线程毕竟是属于比较低层次的东西，有时候使用有些不便，比如我希望获取线程函数的返回结果的时候，我就不能直接通过thread.join()得到结果，这时就必须定义一个变量，在线程函数中去给这个变量赋值，然后j">
-<meta name="twitter:image" content="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture">
-<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"url":"https://shuntan.github.io","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/C++中优雅的异步操作/","headline":"C++中优雅的异步操作","image":"https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture","datePublished":"2019-06-14T06:21:26.000Z","dateModified":"2019-07-03T11:59:47.143Z","keywords":"C++","description":"　　c++11中增加了线程，使得我们可以非常方便的创建线程，它的基本用法是这样的：\n123void f(int n);std::thread t(f, n + 1);t.join();\n\n　　但是线程毕竟是属于比较低层次的东西，有时候使用有些不便，比如我希望获取线程函数的返回结果的时候，我就不能直接通过thread.join()得到结果，这时就必须定义一个变量，在线程函数中去给这个变量赋值，然后join,最后得到结果，这个过程是比较繁琐的。c++11还提供了异步接口std::async，通过这个异步接口可以很方便的获取线程函数的执行结果。std::async会自动创建一个线程去调用线程函数，它返回一个std::future，这个future中存储了线程函数返回的结果，当我们需要线程函数的结果时，直接从future中获取，非常方便。但是我想说的是，其实std::async给我们提供的便利可不仅仅是这一点，它首先解耦了线程的创建和执行，使得我们可以在需要的时候获取异步操作的结果；其次它还提供了线程的创建策略（比如可以通过延迟加载的方式去创建线程），使得我们可以以多种方式去创建线程。在介绍async具体用法以及为什么要用std::async代替线程的创建之前，我想先说一说std::future、std::promise和std::packaged_task。","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"}},"author":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/C++中优雅的异步操作/"},"thumbnailUrl":"https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"}]</script>
+<meta name="twitter:image" content="https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160">
+<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"url":"https://shuntan.github.io","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/post/C++中优雅的异步操作/","headline":"C++中优雅的异步操作","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160","datePublished":"2019-06-14T06:21:26.000Z","dateModified":"2019-07-14T01:23:00.129Z","keywords":"C++","description":"　　c++11中增加了线程，使得我们可以非常方便的创建线程，它的基本用法是这样的：\n123void f(int n);std::thread t(f, n + 1);t.join();\n\n　　但是线程毕竟是属于比较低层次的东西，有时候使用有些不便，比如我希望获取线程函数的返回结果的时候，我就不能直接通过thread.join()得到结果，这时就必须定义一个变量，在线程函数中去给这个变量赋值，然后join,最后得到结果，这个过程是比较繁琐的。c++11还提供了异步接口std::async，通过这个异步接口可以很方便的获取线程函数的执行结果。std::async会自动创建一个线程去调用线程函数，它返回一个std::future，这个future中存储了线程函数返回的结果，当我们需要线程函数的结果时，直接从future中获取，非常方便。但是我想说的是，其实std::async给我们提供的便利可不仅仅是这一点，它首先解耦了线程的创建和执行，使得我们可以在需要的时候获取异步操作的结果；其次它还提供了线程的创建策略（比如可以通过延迟加载的方式去创建线程），使得我们可以以多种方式去创建线程。在介绍async具体用法以及为什么要用std::async代替线程的创建之前，我想先说一说std::future、std::promise和std::packaged_task。","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"}},"author":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/post/C++中优雅的异步操作/"}}]</script>
 <link rel="alternate" type="application/atom+xml" title="Shawntan&#39;s Blog" href="/atom.xml">
 <link href="//fonts.googleapis.com/css?family=Baloo+Bhaijaan|Inconsolata|Josefin+Sans|Montserrat" rel="stylesheet">
 <link href="//cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-<link href="/styles.6413cb5fd384752f1714.css" rel="stylesheet">
-<link rel="stylesheet" href="/theme.9d21044e4f739a763f54.css">
-<script src="/config.6b4477f8342caac8bc3b.js"></script>
+<link href="/css/tags.css" rel="stylesheet">
+<link href="/styles.b052e0427aa70b7d0587.css" rel="stylesheet">
+<link rel="stylesheet" href="/theme.3fc702c679b43d7be78e.css">
+<script src="/config.41856b8a8f70da255080.js"></script>
 <script async src="//www.googletagmanager.com/gtag/js?id=UA-00000000-0"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','UA-00000000-0');</script></head>
 <body lang="en">
@@ -38,9 +39,10 @@
 <script src="/live2d-widget-master/autoload.js"></script>
 <script src="//platform-api.sharethis.com/js/sharethis.js#property=5d162ed1a89f5100122c1d4a" async></script>
 <script src="/js/main.js"></script>
+<script src="//cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/runtime.9c308a63d02029c20228.js"></script>
 <script src="/polyfills-es5.613d1909ec381c0aefb7.js"></script>
 <script src="/polyfills.23aa31104b29f3163090.js"></script>
-<script src="/main.c0d55e7428280128d494.en.js"></script>
+<script src="/main.7c07007d02c08b471cdf.en.js"></script>
 </body>
 </html>

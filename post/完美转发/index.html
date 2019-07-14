@@ -15,19 +15,20 @@
 <meta property="og:site_name" content="Shawntan&#39;s Blog">
 <meta property="og:description" content="C++中的万能引用和完美转发 阅读这篇博文需要了解C++中的左值（lvalue）和右值（rvalue）的概念，详情参见我的另外一篇博文：C++移动语义及拷贝优化  万能引用和完美转发多涉及到模板的使用，如若不是自己写模板，则可不用关心   万能引用（Universal Reference）首先，我们来看一个例子：">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture">
-<meta property="og:updated_time" content="2019-07-03T11:59:36.523Z">
+<meta property="og:image" content="https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160">
+<meta property="og:updated_time" content="2019-07-14T01:22:44.423Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++中的万能引用和完美转发">
 <meta name="twitter:description" content="C++中的万能引用和完美转发 阅读这篇博文需要了解C++中的左值（lvalue）和右值（rvalue）的概念，详情参见我的另外一篇博文：C++移动语义及拷贝优化  万能引用和完美转发多涉及到模板的使用，如若不是自己写模板，则可不用关心   万能引用（Universal Reference）首先，我们来看一个例子：">
-<meta name="twitter:image" content="https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture">
-<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"url":"https://shuntan.github.io","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/完美转发/","headline":"C++中的万能引用和完美转发","image":"https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture","datePublished":"2019-05-29T02:05:19.000Z","dateModified":"2019-07-03T11:59:36.523Z","keywords":"C++","description":"C++中的万能引用和完美转发\n阅读这篇博文需要了解C++中的左值（lvalue）和右值（rvalue）的概念，详情参见我的另外一篇博文：C++移动语义及拷贝优化\n\n万能引用和完美转发多涉及到模板的使用，如若不是自己写模板，则可不用关心\n\n\n万能引用（Universal Reference）首先，我们来看一个例子：","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"}},"author":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/完美转发/"},"thumbnailUrl":"https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture"}]</script>
+<meta name="twitter:image" content="https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160">
+<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"url":"https://shuntan.github.io","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/post/完美转发/","headline":"C++中的万能引用和完美转发","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160","datePublished":"2019-05-29T02:05:19.000Z","dateModified":"2019-07-14T01:22:44.423Z","keywords":"C++","description":"C++中的万能引用和完美转发\n阅读这篇博文需要了解C++中的左值（lvalue）和右值（rvalue）的概念，详情参见我的另外一篇博文：C++移动语义及拷贝优化\n\n万能引用和完美转发多涉及到模板的使用，如若不是自己写模板，则可不用关心\n\n\n万能引用（Universal Reference）首先，我们来看一个例子：","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"}},"author":{"@type":"Person","name":"Shawntan","description":"Awesome guy.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/post/完美转发/"}}]</script>
 <link rel="alternate" type="application/atom+xml" title="Shawntan&#39;s Blog" href="/atom.xml">
 <link href="//fonts.googleapis.com/css?family=Baloo+Bhaijaan|Inconsolata|Josefin+Sans|Montserrat" rel="stylesheet">
 <link href="//cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-<link href="/styles.6413cb5fd384752f1714.css" rel="stylesheet">
-<link rel="stylesheet" href="/theme.9d21044e4f739a763f54.css">
-<script src="/config.6b4477f8342caac8bc3b.js"></script>
+<link href="/css/tags.css" rel="stylesheet">
+<link href="/styles.b052e0427aa70b7d0587.css" rel="stylesheet">
+<link rel="stylesheet" href="/theme.3fc702c679b43d7be78e.css">
+<script src="/config.41856b8a8f70da255080.js"></script>
 <script async src="//www.googletagmanager.com/gtag/js?id=UA-00000000-0"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','UA-00000000-0');</script></head>
 <body lang="en">
@@ -38,9 +39,10 @@
 <script src="/live2d-widget-master/autoload.js"></script>
 <script src="//platform-api.sharethis.com/js/sharethis.js#property=5d162ed1a89f5100122c1d4a" async></script>
 <script src="/js/main.js"></script>
+<script src="//cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/runtime.9c308a63d02029c20228.js"></script>
 <script src="/polyfills-es5.613d1909ec381c0aefb7.js"></script>
 <script src="/polyfills.23aa31104b29f3163090.js"></script>
-<script src="/main.c0d55e7428280128d494.en.js"></script>
+<script src="/main.7c07007d02c08b471cdf.en.js"></script>
 </body>
 </html>
