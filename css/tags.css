@@ -37,13 +37,13 @@
 }
 
 .btn {
-  border-bottom: 2px black solid !important;
+  border-bottom: 2px #55acee solid !important;
   display: inline-block;
   padding: 0 20px;
   font-size: 14px;
-  color: #555;
+  color: #55acee;
   background: #fff;
-  border: 2px solid #555;
+  border: 2px solid #55acee;
   text-decoration: none;
   border-radius: 2px;
   transition-property: background-color;
@@ -53,9 +53,9 @@
   line-height: 2;
 }
 .btn:hover {
-  border-color: #222;
+  border-color: #55acee !important;
   color: #fff !important;
-  background: #222;
+  background: #55acee;
 }
 .btn +.btn {
   margin: 0 0 8px 8px;
@@ -130,7 +130,7 @@
 .tabs ul.nav-tabs li.tab.active {
   border-top: 3px solid #fc6423;
   border-right: 1px solid #ddd;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid hsla(0,0%,100%,.9);
   border-left: 1px solid #ddd;
 }
 @media (max-width: 413px) {
@@ -187,6 +187,8 @@
   top: -20px;
   background-image: url("../images/quote-l.svg");
   border-top: 1px solid #ccc;
+  background-color: unset !important;
+  width: -webkit-fill-available !important;
 }
 .blockquote-center::after,
 .post-type-quote blockquote::after,
