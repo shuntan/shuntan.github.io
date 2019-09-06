@@ -133,6 +133,9 @@
   border-bottom: 1px solid hsla(0,0%,100%,.9);
   border-left: 1px solid #ddd;
 }
+i.fa{
+  display: inline !important;
+}
 @media (max-width: 413px) {
   .tabs ul.nav-tabs li.tab.active {
     border-top: 1px solid #ddd;
