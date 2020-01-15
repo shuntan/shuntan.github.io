@@ -128,7 +128,7 @@
   width: 1.285714285714286em;
 }
 .tabs ul.nav-tabs li.tab.active {
-  border-top: 3px solid #fc6423;
+  border-top: 1px solid #ddd;
   border-right: 1px solid #ddd;
   border-bottom: 1px solid hsla(0,0%,100%,.9);
   border-left: 1px solid #ddd;
@@ -247,9 +247,16 @@ i.fa{
 .note h5,
 .note h6 {
   margin-top: 3px !important;
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
   border-bottom: initial;
   padding-top: 0 !important;
+}
+.note h2:hover,
+.note h3:hover,
+.note h4:hover,
+.note h5:hover,
+.note h6:hover {
+  margin-left: 20px;
 }
 .note p:first-child,
 .note ul:first-child,
@@ -268,7 +275,7 @@ i.fa{
   margin-bottom: 0;
 }
 .note:not(.no-icon) {
-  padding-left: 45px;
+  padding-left: 20px;
 }
 .note:not(.no-icon):before {
   position: absolute;
