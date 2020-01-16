@@ -189,7 +189,6 @@ i.fa{
 .post-type-quote blockquote::before {
   top: -20px;
   background-image: url("../images/quote-l.svg");
-  border-top: 1px solid #ccc;
   background-color: unset !important;
   width: -webkit-fill-available !important;
 }
@@ -198,7 +197,6 @@ i.fa{
 .post-type-quote blockquote::after {
   bottom: -20px;
   background-image: url("../images/quote-r.svg");
-  border-bottom: 1px solid #ccc;
   background-position: 100% 8px;
 }
 .blockquote-center p,
@@ -275,7 +273,7 @@ i.fa{
   margin-bottom: 0;
 }
 .note:not(.no-icon) {
-  padding-left: 20px;
+  padding-left: 15px;
 }
 .note:not(.no-icon):before {
   position: absolute;
