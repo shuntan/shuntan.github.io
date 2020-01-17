@@ -169,8 +169,7 @@
                 f || (f = window.__inside__),
                 l || (l = f && f.$update),
                 l && (l(t),
-                t._color ? f.color = t._color : t.accent_color && (f.color = [t.accent_color]),
-                u.content = f.color[0]))
+                t._color ? f.color = t._color : t.accent_color && (f.color = [t.accent_color])))
             }
             )),
             e
