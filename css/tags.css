@@ -453,9 +453,6 @@ i.fa{
 }
 .group-picture-column {
   float: left;
-}
-.group-picture-column {
-  float: none;
   margin-top: 10px;
   width: auto !important;
 }
