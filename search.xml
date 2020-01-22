@@ -1419,10 +1419,12 @@ chrome 应用商店本身需要翻墙才能访问，因此需要先在 shadowsoc
     <title>Tag Plugins</title>
     <url>/posts/Tag%20Plugins/</url>
     <content><![CDATA[<div class="note info">
-            <h3 id="faq">FAQ</h3><p><strong>Welcome</strong> to <a href="https://theme-next.org/docs/tag-plugins/" target="_blank" rel="noopener">tag-plugins</a></p>
+            <h3 id="FAQ"><a href="posts/Tag Plugins#FAQ" class="headerlink" title="FAQ"></a>FAQ</h3><p><strong>Welcome</strong> to <a href="https://theme-next.org/docs/tag-plugins/" target="_blank" rel="noopener">tag-plugins</a></p>
           </div>
+
 <p>Tag Plugin is a way to make special style contents supported by Hexo. For example, we cannot show a image with custom size in standard Markdown. And then we can use tag plugins to solve it. <a href="https://hexo.io/docs/tag-plugins" target="_blank" rel="noopener">Hexo has a lot of tags</a> which can help user. And Hexo also have interfaces to themes which make themes able to create their own tags. Following tags is provided by NexT:</p>
 <a id="more"></a>
+
 <ul>
 <li><a href="posts/Tag Plugins#Centered-Quote">Centered Quote</a></li>
 <li><a href="posts/Tag Plugins#Include-Raw">Include Raw</a></li>
@@ -1435,93 +1437,103 @@ chrome 应用商店本身需要翻墙才能访问，因此需要先在 shadowsoc
 <li><a href="/docs/tag-plugins/tabs">Tabs</a></li>
 <li><a href="/docs/tag-plugins/video">Video</a></li>
 </ul>
-<h3 id="centered-quote">Centered Quote<a href="posts/Tag Plugins#centered-quote"></a></h3>
-<p>This tag will make a quote with two lines before and after it, and text quoted will be centered. When using centered quote, if we have multi-line text, and each line has a different length, the quote won’t be symmetrical, so it’s recommended to use when only have single line text. For example before article all after article to make a summary.</p>
-<h4 id="usage">Usage<a href="posts/Tag Plugins#usage"></a></h4>
-<figure class="highlight"><figcaption><span>center-quote.js</span></figcaption><div><table><tr><td class="code"><pre><span class="line">&#123;% centerquote %&#125;Something&#123;% endcenterquote %&#125;</span><br><span class="line"><span class="comment">&lt;!-- Tag Alias --&gt;</span></span><br><span class="line">&#123;% cq %&#125;Something&#123;% endcq %&#125;</span><br></pre></td></tr></table></div></figure>
-<h4 id="example">Example<a href="posts/Tag Plugins#example"></a></h4>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;% cq %&#125;Elegant in code, simple in core&#123;% endcq %&#125;</span><br></pre></td></tr></table></div></figure>
+<h3 id="Centered-Quote">Centered Quote<a href="posts/Tag Plugins#Centered-Quote"></a></h3><p>This tag will make a quote with two lines before and after it, and text quoted will be centered. When using centered quote, if we have multi-line text, and each line has a different length, the quote won’t be symmetrical, so it’s recommended to use when only have single line text. For example before article all after article to make a summary.</p>
+<h4 id="Usage">Usage<a href="posts/Tag Plugins#Usage"></a></h4><figure class="highlight"><figcaption><span>center-quote.js</span></figcaption><div><table><tr><td class="code"><pre><span class="line">&#123;% centerquote %&#125;Something&#123;% endcenterquote %&#125;</span><br><span class="line"><span class="comment">&lt;!-- Tag Alias --&gt;</span></span><br><span class="line">&#123;% cq %&#125;Something&#123;% endcq %&#125;</span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Example">Example<a href="posts/Tag Plugins#Example"></a></h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;% cq %&#125;Elegant in code, simple in core&#123;% endcq %&#125;</span><br></pre></td></tr></table></div></figure>
+
 <blockquote class="blockquote-center"><p>Elegant in code, simple in core</p>
 </blockquote>
-<h3 id="include-raw">Include Raw<a href="posts/Tag Plugins#include-raw"></a></h3>
-<p>This tag include any raw content into your posts. Path is relative to your site source directory.</p>
-<h4 id="usage-v2">Usage<a href="posts/Tag Plugins#usage-v2"></a></h4>
-<figure class="highlight"><figcaption><span>include-raw.js</span></figcaption><div><table><tr><td class="code"><pre><span class="line">&#123;% include_raw '_data/path/to/file.html' %&#125;</span><br></pre></td></tr></table></div></figure>
-<h4 id="example-v2">Example<a href="posts/Tag Plugins#example-v2"></a></h4>
-<p>Let’s create <code>include-raw.html</code> file in <code>_data</code> directory under <span class="label info">site root directory</span> with following content:</p>
+
+<h3 id="Include-Raw">Include Raw<a href="posts/Tag Plugins#Include-Raw"></a></h3><p>This tag include any raw content into your posts. Path is relative to your site source directory.</p>
+<h4 id="Usage-1">Usage<a href="posts/Tag Plugins#Usage-1"></a></h4><figure class="highlight"><figcaption><span>include-raw.js</span></figcaption><div><table><tr><td class="code"><pre><span class="line">&#123;% include_raw '_data/path/to/file.html' %&#125;</span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Example-1">Example<a href="posts/Tag Plugins#Example-1"></a></h4><p>Let’s create <code>include-raw.html</code> file in <code>_data</code> directory under <span class="label info">site root directory</span> with following content:</p>
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">Any <span class="tag">&lt;<span class="name">strong</span>&gt;</span>raw content<span class="tag">&lt;/<span class="name">strong</span>&gt;</span> may be included with this tag.</span><br></pre></td></tr></table></div></figure>
+
 <p>Then in any post we can use this content with <code>include_raw</code> tag:</p>
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;% include<span class="emphasis">_raw '_</span>data/path/to/include-raw.html' %&#125;</span><br></pre></td></tr></table></div></figure>
-<h3 id="button">Button<a href="posts/Tag Plugins#button"></a></h3>
-<h4 id="usage-v3">Usage<a href="posts/Tag Plugins#usage-v3"></a></h4>
-<figure class="highlight"><figcaption><span>button.js</span></figcaption><div><table><tr><td class="code"><pre><span class="line">&#123;% button url, text, icon [class], [title] %&#125;</span><br><span class="line"><span class="comment">&lt;!-- Tag Alias --&gt;</span></span><br><span class="line">&#123;% btn url, text, icon [class], [title] %&#125;</span><br><span class="line"></span><br><span class="line">url     : Absolute or relative path to URL.</span><br><span class="line">text    : Button text. Required if no icon specified.</span><br><span class="line">icon    : FontAwesome icon name (without 'fa-' at the begining). Required if no text specified.</span><br><span class="line">[class] : FontAwesome class(es): fa-fw | fa-lg | fa-2x | fa-3x | fa-4x | fa-5x</span><br><span class="line">          Optional parameter.</span><br><span class="line">[title] : Tooltip at mouseover.</span><br><span class="line">          Optional parameter.</span><br></pre></td></tr></table></div></figure>
-<h4 id="examples">Examples<a href="posts/Tag Plugins#examples"></a></h4>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">button</span> #, Text %&#125;</span><span class="xml"></span></span><br></pre></td></tr></table></div></figure>
+
+<h3 id="Button">Button<a href="posts/Tag Plugins#Button"></a></h3><h4 id="Usage-2">Usage<a href="posts/Tag Plugins#Usage-2"></a></h4><figure class="highlight"><figcaption><span>button.js</span></figcaption><div><table><tr><td class="code"><pre><span class="line">&#123;% button url, text, icon [class], [title] %&#125;</span><br><span class="line"><span class="comment">&lt;!-- Tag Alias --&gt;</span></span><br><span class="line">&#123;% btn url, text, icon [class], [title] %&#125;</span><br><span class="line"></span><br><span class="line">url     : Absolute or relative path to URL.</span><br><span class="line">text    : Button text. Required if no icon specified.</span><br><span class="line">icon    : FontAwesome icon name (without 'fa-' at the begining). Required if no text specified.</span><br><span class="line">[class] : FontAwesome class(es): fa-fw | fa-lg | fa-2x | fa-3x | fa-4x | fa-5x</span><br><span class="line">          Optional parameter.</span><br><span class="line">[title] : Tooltip at mouseover.</span><br><span class="line">          Optional parameter.</span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Examples">Examples<a href="posts/Tag Plugins#Examples"></a></h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">button</span> #, Text %&#125;</span><span class="xml"></span></span><br></pre></td></tr></table></div></figure>
+
 <a class="btn" href="posts/Tag Plugins#">Text</a>
-<h4 id="button-with-text-title">Button with text &amp; title<a href="posts/Tag Plugins#button-with-text-title"></a></h4>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Text %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Text &amp; Title,, Title %&#125;</span><span class="xml"></span></span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Button-with-text-amp-title">Button with text &amp; title<a href="posts/Tag Plugins#Button-with-text-amp-title"></a></h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Text %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Text &amp; Title,, Title %&#125;</span><span class="xml"></span></span><br></pre></td></tr></table></div></figure>
+
 <a class="btn" href="posts/Tag Plugins#">Text</a><a class="btn" href="posts/Tag Plugins#" title="Title">Text & Title</a>
+
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Text %&#125;</span><span class="xml"> </span><span class="template-tag">&#123;% <span class="name">btn</span> #, Text &amp; Title,, Title %&#125;</span><span class="xml"></span></span><br></pre></td></tr></table></div></figure>
+
 <a class="btn" href="posts/Tag Plugins#">Text</a> <a class="btn" href="posts/Tag Plugins#" title="Title">Text & Title</a>
+
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Text %&#125;</span><span class="xml"></span></span><br><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Text &amp; Title,, Title %&#125;</span><span class="xml"></span></span><br></pre></td></tr></table></div></figure>
+
 <a class="btn" href="posts/Tag Plugins#">Text</a>
 <a class="btn" href="posts/Tag Plugins#" title="Title">Text & Title</a>
-<h4 id="button-with-icon">Button with icon<a href="posts/Tag Plugins#button-with-icon"></a></h4>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-5x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-5x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-5x %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-4x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-4x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-4x %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-3x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-3x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-3x %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-2x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-2x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-2x %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-lg %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-lg %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-lg %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Button-with-icon">Button with icon<a href="posts/Tag Plugins#Button-with-icon"></a></h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-5x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-5x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-5x %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-4x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-4x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-4x %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-3x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-3x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-3x %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-2x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-2x %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-2x %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-lg %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-lg %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home fa-lg %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, home %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></div></figure>
+
 <div><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-5x"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-5x"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-5x"></i></a></div>
 <div><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-4x"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-4x"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-4x"></i></a></div>
 <div><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-3x"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-3x"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-3x"></i></a></div>
 <div><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-2x"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-2x"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-2x"></i></a></div>
 <div><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-lg"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-lg"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-lg"></i></a></div>
 <div><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home"></i></a></div>
-<h4 id="button-with-text-icon">Button with text &amp; icon<a href="posts/Tag Plugins#button-with-text-icon"></a></h4>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Text &amp; Icon (buggy), home %&#125;</span><span class="xml"></span></span><br><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Text &amp; Icon (fixed width), home fa-fw %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Button-with-text-amp-icon">Button with text &amp; icon<a href="posts/Tag Plugins#Button-with-text-amp-icon"></a></h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Text &amp; Icon (buggy), home %&#125;</span><span class="xml"></span></span><br><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Text &amp; Icon (fixed width), home fa-fw %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></div></figure>
+
 <p><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home"></i>Text & Icon (buggy)</a>
 <a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-fw"></i>Text & Icon (fixed width)</a></p>
+
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Text &amp; Large Icon, home fa-fw fa-lg %&#125;</span><span class="xml"></span></span><br><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Text &amp; Large Icon &amp; Title, home fa-fw fa-lg, Title %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br></pre></td></tr></table></div></figure>
+
 <p><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-fw fa-lg"></i>Text & Large Icon</a>
 <a class="btn" href="posts/Tag Plugins#" title="Title"><i class="fa fa-home fa-fw fa-lg"></i>Text & Large Icon & Title</a></p>
-<h4 id="button-inside-text">Button inside text<a href="posts/Tag Plugins#button-inside-text"></a></h4>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">Lorem &#123;% btn #, Lorem, home fa-fw fa-lg %&#125; ipsum dolor sit amet, consectetur adipiscing elit, sed <span class="keyword">do</span> eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip <span class="keyword">ex</span> ea commodo consequat. Duis aute irure dolor <span class="keyword">in</span> reprehenderit <span class="keyword">in</span> voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt <span class="keyword">in</span> culpa <span class="keyword">qui</span> officia deserunt mollit anim id <span class="keyword">est</span> laborum.</span><br><span class="line"></span><br><span class="line">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed <span class="keyword">do</span> eiusmod tempor incididu</span><br></pre></td></tr></table></div></figure>
-<h4 id="button-inside-other-tag">Button inside other tag<a href="posts/Tag Plugins#button-inside-other-tag"></a></h4>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;%<span class="built_in"> note </span><span class="builtin-name">info</span> %&#125;</span><br><span class="line">&#123;% btn #, Text &amp; Icon, home fa-fw %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% btn #,, home, Title %&#125;&#123;% btn #, Text %&#125;</span><br><span class="line">[Link](#)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Button-inside-text">Button inside text<a href="posts/Tag Plugins#Button-inside-text"></a></h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">Lorem &#123;% btn #, Lorem, home fa-fw fa-lg %&#125; ipsum dolor sit amet, consectetur adipiscing elit, sed <span class="keyword">do</span> eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip <span class="keyword">ex</span> ea commodo consequat. Duis aute irure dolor <span class="keyword">in</span> reprehenderit <span class="keyword">in</span> voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt <span class="keyword">in</span> culpa <span class="keyword">qui</span> officia deserunt mollit anim id <span class="keyword">est</span> laborum.</span><br><span class="line"></span><br><span class="line">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed <span class="keyword">do</span> eiusmod tempor incididu</span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Button-inside-other-tag">Button inside other tag<a href="posts/Tag Plugins#Button-inside-other-tag"></a></h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;%<span class="built_in"> note </span><span class="builtin-name">info</span> %&#125;</span><br><span class="line">&#123;% btn #, Text &amp; Icon, home fa-fw %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% btn #,, home, Title %&#125;&#123;% btn #, Text %&#125;</span><br><span class="line">[Link](#)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></div></figure>
+
 <div class="note info">
-            <h4 id="button">button</h4><p><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-fw"></i>Text &amp; Icon</a></p><p><a class="btn" href="posts/Tag Plugins#" title="Title"><i class="fa fa-home"></i></a><a class="btn" href="posts/Tag Plugins#">Text</a><br><a href="posts/Tag Plugins#">Link</a></p>
+            <h4 id="button"><a href="posts/Tag Plugins#button" class="headerlink" title="button"></a>button</h4><p><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-home fa-fw"></i>Text &amp; Icon</a></p><p><a class="btn" href="posts/Tag Plugins#" title="Title"><i class="fa fa-home"></i></a><a class="btn" href="posts/Tag Plugins#">Text</a><br><a href="posts/Tag Plugins#">Link</a></p>
           </div>
-<h4 id="button-margin">Button margin<a href="posts/Tag Plugins#button-margin"></a></h4>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"text-center"</span>&gt;</span><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, header %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, edge %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, times %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, circle-o %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, italic %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, scribd %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, google %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, chrome %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, opera %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, diamond fa-rotate-270 %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Button-margin">Button margin<a href="posts/Tag Plugins#Button-margin"></a></h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"text-center"</span>&gt;</span><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, header %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, edge %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, times %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, circle-o %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, italic %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, scribd %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, google %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, chrome %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, opera %&#125;</span><span class="xml"></span><span class="template-tag">&#123;% <span class="name">btn</span> #,, diamond fa-rotate-270 %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></div></figure>
+
 <div class="text-center"><div><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-header"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-edge"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-times"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-circle-o"></i></a></div>
 <div><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-italic"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-scribd"></i></a></div>
 <div><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-google"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-chrome"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-opera"></i></a><a class="btn" href="posts/Tag Plugins#"><i class="fa fa-diamond fa-rotate-270"></i></a></div></div>
-<h4 id="button-with-relative-url">Button with relative URL<a href="posts/Tag Plugins#button-with-relative-url"></a></h4>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"text-center"</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Previous Chapter, arrow-left fa-fw fa-lg, Previous Chapter (Full Image) %&#125;</span><span class="xml"> </span><span class="template-tag">&#123;% <span class="name">btn</span> #, Next Chapter, arrow-right fa-fw fa-lg, Next Chapter (Label) %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Button-with-relative-URL">Button with relative URL<a href="posts/Tag Plugins#Button-with-relative-URL"></a></h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"text-center"</span>&gt;</span></span><span class="template-tag">&#123;% <span class="name">btn</span> #, Previous Chapter, arrow-left fa-fw fa-lg, Previous Chapter (Full Image) %&#125;</span><span class="xml"> </span><span class="template-tag">&#123;% <span class="name">btn</span> #, Next Chapter, arrow-right fa-fw fa-lg, Next Chapter (Label) %&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></div></figure>
+
 <div class="text-center"><a class="btn" href="posts/Tag Plugins#" title="Previous Chapter (Full Image)"><i class="fa fa-arrow-left fa-fw fa-lg"></i>Previous Chapter</a> <a class="btn" href="posts/Tag Plugins#" title="Next Chapter (Label)"><i class="fa fa-arrow-right fa-fw fa-lg"></i>Next Chapter</a></div>
-<h4 id="button-with-absolute-url">Button with absolute URL<a href="posts/Tag Plugins#button-with-absolute-url"></a></h4>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&lt;div class=<span class="string">"text-center"</span>&gt;&#123;% btn http<span class="variable">s:</span>//github.<span class="keyword">com</span>/theme-<span class="keyword">next</span>/hexo-theme-<span class="keyword">next</span>, NexT, github fa-fw fa-<span class="keyword">lg</span>, NexT <span class="keyword">source</span> code %&#125;&lt;/div&gt;</span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Button-with-absolute-URL">Button with absolute URL<a href="posts/Tag Plugins#Button-with-absolute-URL"></a></h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&lt;div class=<span class="string">"text-center"</span>&gt;&#123;% btn http<span class="variable">s:</span>//github.<span class="keyword">com</span>/theme-<span class="keyword">next</span>/hexo-theme-<span class="keyword">next</span>, NexT, github fa-fw fa-<span class="keyword">lg</span>, NexT <span class="keyword">source</span> code %&#125;&lt;/div&gt;</span><br></pre></td></tr></table></div></figure>
+
 <div class="text-center"><a class="btn" href="https://github.com/theme-next/hexo-theme-next" title="NexT source code" target="_blank" rel="noopener"><i class="fa fa-github fa-fw fa-lg"></i>NexT</a></div>
-<h3 id="group-pictures">Group Pictures<a href="posts/Tag Plugins#group-pictures"></a></h3>
-<h4 id="usage-v4">Usage<a href="posts/Tag Plugins#usage-v4"></a></h4>
-<figure class="highlight"><figcaption><span>group-pictures.js</span></figcaption><div><table><tr><td class="code"><pre><span class="line">&#123;% grouppicture [group]-[layout] %&#125;&#123;% endgrouppicture %&#125;</span><br><span class="line">&#123;% gp [group]-[layout] %&#125;&#123;% endgp %&#125;</span><br><span class="line"></span><br><span class="line">[group]  : Total number of pictures to add in the group.</span><br><span class="line">[layout] : Default picture under the group to show.</span><br></pre></td></tr></table></div></figure>
-<h4 id="examples-v2">Examples<a href="posts/Tag Plugins#examples-v2"></a></h4>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;% <span class="selector-tag">grouppicture</span> <span class="selector-tag">6-3</span> %&#125;</span><br><span class="line">  !<span class="selector-attr">[]</span>(/images/docs/github.png)</span><br><span class="line">  !<span class="selector-attr">[]</span>(/images/docs/github.png)</span><br><span class="line">  !<span class="selector-attr">[]</span>(/images/docs/github.png)</span><br><span class="line">  !<span class="selector-attr">[]</span>(/images/docs/github.png)</span><br><span class="line">  !<span class="selector-attr">[]</span>(/images/docs/github.png)</span><br><span class="line">  !<span class="selector-attr">[]</span>(/images/docs/github.png)</span><br><span class="line">&#123;% <span class="selector-tag">endgrouppicture</span> %&#125;</span><br></pre></td></tr></table></div></figure>
+
+<h3 id="Group-Pictures">Group Pictures<a href="posts/Tag Plugins#Group-Pictures"></a></h3><h4 id="Usage-3">Usage<a href="posts/Tag Plugins#Usage-3"></a></h4><figure class="highlight"><figcaption><span>group-pictures.js</span></figcaption><div><table><tr><td class="code"><pre><span class="line">&#123;% grouppicture [group]-[layout] %&#125;&#123;% endgrouppicture %&#125;</span><br><span class="line">&#123;% gp [group]-[layout] %&#125;&#123;% endgp %&#125;</span><br><span class="line"></span><br><span class="line">[group]  : Total number of pictures to add in the group.</span><br><span class="line">[layout] : Default picture under the group to show.</span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Examples-1">Examples<a href="posts/Tag Plugins#Examples-1"></a></h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;% <span class="selector-tag">grouppicture</span> <span class="selector-tag">6-3</span> %&#125;</span><br><span class="line">  !<span class="selector-attr">[]</span>(/images/docs/github.png)</span><br><span class="line">  !<span class="selector-attr">[]</span>(/images/docs/github.png)</span><br><span class="line">  !<span class="selector-attr">[]</span>(/images/docs/github.png)</span><br><span class="line">  !<span class="selector-attr">[]</span>(/images/docs/github.png)</span><br><span class="line">  !<span class="selector-attr">[]</span>(/images/docs/github.png)</span><br><span class="line">  !<span class="selector-attr">[]</span>(/images/docs/github.png)</span><br><span class="line">&#123;% <span class="selector-tag">endgrouppicture</span> %&#125;</span><br></pre></td></tr></table></div></figure>
+
 <div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="https://res.smzdm.com/images/emotions/137.png" alt></div><div class="group-picture-column" style="width: 50%;"><img src="https://res.smzdm.com/images/emotions/137.png" alt></div></div><div class="group-picture-row"><div class="group-picture-column" style="width: 100%;"><img src="https://res.smzdm.com/images/emotions/137.png" alt></div></div><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="https://res.smzdm.com/images/emotions/137.png" alt></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="https://res.smzdm.com/images/emotions/137.png" alt></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="https://res.smzdm.com/images/emotions/137.png" alt></div></div></div></div>
-<h3 id="label">Label<a href="posts/Tag Plugins#label"></a></h3>
-<h4 id="usage-v5">Usage<a href="posts/Tag Plugins#usage-v5"></a></h4>
-<figure class="highlight"><figcaption><span>label.js</span></figcaption><div><table><tr><td class="code"><pre><span class="line">&#123;% label [class]@Text %&#125;</span><br><span class="line"></span><br><span class="line">[class] : default | primary | success | info | warning | danger.</span><br><span class="line">          '@Text' can be specified with or without space</span><br><span class="line">          E.g. 'success @text' similar to 'success@text'.</span><br><span class="line">          If not specified, default class will be selected.</span><br></pre></td></tr></table></div></figure>
-<h4 id="examples-v3">Examples<a href="posts/Tag Plugins#examples-v3"></a></h4>
-<p>Lorem <span class="label default">ipsum</span> <span class="label primary">dolor sit</span> amet, consectetur <span class="label success">adipiscing elit,</span> sed <span class="label info">do eiusmod</span> tempor incididunt ut labore et dolore magna aliqua.</p>
-<p>Ut enim <em><span class="label warning">ad</span></em> minim veniam, quis <strong><span class="label danger">nostrud</span></strong> exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-<p>Duis aute irure dolor in reprehenderit in voluptate <s><span class="label default">velit</span></s> <mark>esse</mark> cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+<h3 id="Label">Label<a href="posts/Tag Plugins#Label"></a></h3><h4 id="Usage-4">Usage<a href="posts/Tag Plugins#Usage-4"></a></h4><figure class="highlight"><figcaption><span>label.js</span></figcaption><div><table><tr><td class="code"><pre><span class="line">&#123;% label [class]@Text %&#125;</span><br><span class="line"></span><br><span class="line">[class] : default | primary | success | info | warning | danger.</span><br><span class="line">          '@Text' can be specified with or without space</span><br><span class="line">          E.g. 'success @text' similar to 'success@text'.</span><br><span class="line">          If not specified, default class will be selected.</span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Examples-2">Examples<a href="posts/Tag Plugins#Examples-2"></a></h4><p>Lorem <span class="label default">ipsum</span> <span class="label primary">dolor sit</span> amet, consectetur <span class="label success">adipiscing elit,</span> sed <span class="label info">do eiusmod</span> tempor incididunt ut labore et dolore magna aliqua.</p>
+<p>Ut enim *<span class="label warning">ad</span>* minim veniam, quis <strong><span class="label danger">nostrud</span></strong> exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+<p>Duis aute irure dolor in reprehenderit in voluptate <del><span class="label default">velit</span></del> <mark>esse</mark> cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 <p>Ut enim <em>ad</em> minim veniam, quis <strong>nostrud</strong> exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-<p>Duis aute irure dolor in reprehenderit in voluptate <s>velit</s> esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<h3 id="mermaid">Mermaid<a href="posts/Tag Plugins#mermaid"></a></h3>
-<h4 id="settings">Settings<a href="posts/Tag Plugins#settings"></a></h4>
-<figure class="highlight"><figcaption><span>next/_config.yml</span></figcaption><div><table><tr><td class="code"><pre><span class="line"># Mermaid tag</span><br><span class="line">mermaid:</span><br><span class="line">  enable: true</span><br><span class="line">  # Available themes: default | dark | forest | neutral</span><br><span class="line">  theme: forest</span><br></pre></td></tr></table></div></figure>
-<h4 id="usage-v6">Usage<a href="posts/Tag Plugins#usage-v6"></a></h4>
-<figure class="highlight"><figcaption><span>mermaid.js</span></figcaption><div><table><tr><td class="code"><pre><span class="line">&#123;% mermaid type %&#125;</span><br><span class="line">&#123;% endmermaid %&#125;</span><br><span class="line"></span><br><span class="line">type : type of the mermaid chart, visit https://github.com/knsv/mermaid for more information.</span><br></pre></td></tr></table></div></figure>
-<h4 id="examples-v4">Examples<a href="posts/Tag Plugins#examples-v4"></a></h4>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;% mermaid graph TD %&#125;</span><br><span class="line">A[Christmas] --&gt;|<span class="type">Get</span> money| <span class="type">B</span>(Go shopping)</span><br><span class="line">B --&gt; C&#123;<span class="keyword">Let</span> me thinksssss&lt;br&gt;ssssssssssssssssssssss&lt;br&gt;sssssssssssssssssssssssssss&#125;</span><br><span class="line">C --&gt;|<span class="type">One</span>| <span class="type">D</span>[Laptop]</span><br><span class="line">C --&gt;|<span class="type">Two</span>| <span class="type">E</span>[iPhone]</span><br><span class="line">C --&gt;|<span class="type">Three</span>| <span class="type">F</span>[Car]</span><br><span class="line">&#123;% endmermaid %&#125;</span><br></pre></td></tr></table></div></figure>
+<p>Duis aute irure dolor in reprehenderit in voluptate <del>velit</del> esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<h3 id="Mermaid">Mermaid<a href="posts/Tag Plugins#Mermaid"></a></h3><h4 id="Settings">Settings<a href="posts/Tag Plugins#Settings"></a></h4><figure class="highlight"><figcaption><span>next/_config.yml</span></figcaption><div><table><tr><td class="code"><pre><span class="line"># Mermaid tag</span><br><span class="line">mermaid:</span><br><span class="line">  enable: true</span><br><span class="line">  # Available themes: default | dark | forest | neutral</span><br><span class="line">  theme: forest</span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Usage-5">Usage<a href="posts/Tag Plugins#Usage-5"></a></h4><figure class="highlight"><figcaption><span>mermaid.js</span></figcaption><div><table><tr><td class="code"><pre><span class="line">&#123;% mermaid type %&#125;</span><br><span class="line">&#123;% endmermaid %&#125;</span><br><span class="line"></span><br><span class="line">type : type of the mermaid chart, visit https://github.com/knsv/mermaid for more information.</span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Examples-3">Examples<a href="posts/Tag Plugins#Examples-3"></a></h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;% mermaid graph TD %&#125;</span><br><span class="line">A[Christmas] --&gt;|<span class="type">Get</span> money| <span class="type">B</span>(Go shopping)</span><br><span class="line">B --&gt; C&#123;<span class="keyword">Let</span> me thinksssss&lt;br&gt;ssssssssssssssssssssss&lt;br&gt;sssssssssssssssssssssssssss&#125;</span><br><span class="line">C --&gt;|<span class="type">One</span>| <span class="type">D</span>[Laptop]</span><br><span class="line">C --&gt;|<span class="type">Two</span>| <span class="type">E</span>[iPhone]</span><br><span class="line">C --&gt;|<span class="type">Three</span>| <span class="type">F</span>[Car]</span><br><span class="line">&#123;% endmermaid %&#125;</span><br></pre></td></tr></table></div></figure>
+
 <pre class="mermaid" style="text-align: center;">
             graph TD
             A[Christmas] -->|Get money| B(Go shopping)
@@ -1530,82 +1542,96 @@ C -->|One| D[Laptop]
 C -->|Two| E[iPhone]
 C -->|Three| F[Car]
           </pre>
-<h3 id="note">Note<a href="posts/Tag Plugins#note"></a></h3>
-<h4 id="settings-v2">Settings<a href="posts/Tag Plugins#settings-v2"></a></h4>
-<figure class="highlight"><figcaption><span>next/_config.yml</span></figcaption><div><table><tr><td class="code"><pre><span class="line">note:</span><br><span class="line">  # Note tag style values:</span><br><span class="line">  #  - simple    bs-callout old alert style. Default.</span><br><span class="line">  #  - modern    bs-callout new (v2-v3) alert style.</span><br><span class="line">  #  - flat      flat callout style with background, like on Mozilla or StackOverflow.</span><br><span class="line">  #  - disabled  disable all CSS styles import of note tag.</span><br><span class="line">  style: simple</span><br><span class="line">  icons: false</span><br><span class="line">  # Offset lighter of background in % for modern and flat styles (modern: -12 | 12; flat: -18 | 6).</span><br><span class="line">  # Offset also applied to label tag variables. This option can work with disabled note tag.</span><br><span class="line">  light_bg_offset: 0</span><br></pre></td></tr></table></div></figure>
-<h4 id="usage-v7">Usage<a href="posts/Tag Plugins#usage-v7"></a></h4>
-<figure class="highlight"><figcaption><span>note.js</span></figcaption><div><table><tr><td class="code"><pre><span class="line">&#123;% note [class] [no-icon] %&#125;</span><br><span class="line">Any content (support inline tags too.io).</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">[class]   : default | primary | success | info | warning | danger.</span><br><span class="line">[no-icon] : Disable icon in note.</span><br><span class="line"></span><br><span class="line">All parameters are optional.</span><br></pre></td></tr></table></div></figure>
+
+<h3 id="Note">Note<a href="posts/Tag Plugins#Note"></a></h3><h4 id="Settings-1">Settings<a href="posts/Tag Plugins#Settings-1"></a></h4><figure class="highlight"><figcaption><span>next/_config.yml</span></figcaption><div><table><tr><td class="code"><pre><span class="line">note:</span><br><span class="line">  # Note tag style values:</span><br><span class="line">  #  - simple    bs-callout old alert style. Default.</span><br><span class="line">  #  - modern    bs-callout new (v2-v3) alert style.</span><br><span class="line">  #  - flat      flat callout style with background, like on Mozilla or StackOverflow.</span><br><span class="line">  #  - disabled  disable all CSS styles import of note tag.</span><br><span class="line">  style: simple</span><br><span class="line">  icons: false</span><br><span class="line">  # Offset lighter of background in % for modern and flat styles (modern: -12 | 12; flat: -18 | 6).</span><br><span class="line">  # Offset also applied to label tag variables. This option can work with disabled note tag.</span><br><span class="line">  light_bg_offset: 0</span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Usage-6">Usage<a href="posts/Tag Plugins#Usage-6"></a></h4><figure class="highlight"><figcaption><span>note.js</span></figcaption><div><table><tr><td class="code"><pre><span class="line">&#123;% note [class] [no-icon] %&#125;</span><br><span class="line">Any content (support inline tags too.io).</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">[class]   : default | primary | success | info | warning | danger.</span><br><span class="line">[no-icon] : Disable icon in note.</span><br><span class="line"></span><br><span class="line">All parameters are optional.</span><br></pre></td></tr></table></div></figure>
+
 <div class="note danger">
-            <h4 id="known-issues">Known Issues</h4><p>It’s wrong to write this tag with 1 line if you don’t want to see possible bugs.</p><p>For example, here is wrong syntax to write content like that:</p><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&lt;div <span class="keyword">class</span>="<span class="symbol">note</span> <span class="symbol">danger</span>"&gt;</span><br><span class="line">            &lt;<span class="symbol">p</span>&gt;<span class="symbol">note</span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text</span>&lt;/<span class="symbol">p</span>&gt;</span><br><span class="line">          &lt;/<span class="symbol">div</span>&gt;</span><br></pre></td></tr></table></div></figure><p>Or like that:</p><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&lt;div <span class="keyword">class</span>="<span class="symbol">note</span> <span class="symbol">danger</span>"&gt;</span><br><span class="line">            &lt;<span class="symbol">p</span>&gt;<span class="symbol">note</span> <span class="symbol">text</span>&lt;<span class="symbol">br</span>&gt;<span class="symbol">note</span> <span class="symbol">text</span>&lt;<span class="symbol">br</span>&gt;<span class="symbol">note</span> <span class="symbol">text</span>&lt;/<span class="symbol">p</span>&gt;</span><br><span class="line">          &lt;/<span class="symbol">div</span>&gt;</span><br></pre></td></tr></table></div></figure><p>Need to write content at new line, like this:</p><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&lt;div <span class="keyword">class</span>="<span class="symbol">note</span> <span class="symbol">danger</span>"&gt;</span><br><span class="line">            &lt;<span class="symbol">p</span>&gt;<span class="symbol">note</span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text</span>&lt;<span class="symbol">br</span>&gt;<span class="symbol">note</span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text</span>&lt;<span class="symbol">br</span>&gt;<span class="symbol">note</span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text</span>&lt;/<span class="symbol">p</span>&gt;</span><br><span class="line">          &lt;/<span class="symbol">div</span>&gt;</span><br></pre></td></tr></table></div></figure>
+            <h4 id="Known-Issues"><a href="posts/Tag Plugins#Known-Issues" class="headerlink" title="Known Issues"></a>Known Issues</h4><p>It’s wrong to write this tag with 1 line if you don’t want to see possible bugs.</p><p>For example, here is wrong syntax to write content like that:</p><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&lt;div <span class="keyword">class</span>="<span class="symbol">note</span> <span class="symbol">danger</span>"&gt;</span><br><span class="line">            &lt;<span class="symbol">p</span>&gt;<span class="symbol">note</span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text</span>&lt;/<span class="symbol">p</span>&gt;</span><br><span class="line">          &lt;/<span class="symbol">div</span>&gt;</span><br></pre></td></tr></table></div></figure><p>Or like that:</p><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&lt;div <span class="keyword">class</span>="<span class="symbol">note</span> <span class="symbol">danger</span>"&gt;</span><br><span class="line">            &lt;<span class="symbol">p</span>&gt;<span class="symbol">note</span> <span class="symbol">text</span>&lt;<span class="symbol">br</span>&gt;<span class="symbol">note</span> <span class="symbol">text</span>&lt;<span class="symbol">br</span>&gt;<span class="symbol">note</span> <span class="symbol">text</span>&lt;/<span class="symbol">p</span>&gt;</span><br><span class="line">          &lt;/<span class="symbol">div</span>&gt;</span><br></pre></td></tr></table></div></figure><p>Need to write content at new line, like this:</p><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&lt;div <span class="keyword">class</span>="<span class="symbol">note</span> <span class="symbol">danger</span>"&gt;</span><br><span class="line">            &lt;<span class="symbol">p</span>&gt;<span class="symbol">note</span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text</span>&lt;<span class="symbol">br</span>&gt;<span class="symbol">note</span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text</span>&lt;<span class="symbol">br</span>&gt;<span class="symbol">note</span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text, <span class="symbol">note</span></span> <span class="symbol">text</span>&lt;/<span class="symbol">p</span>&gt;</span><br><span class="line">          &lt;/<span class="symbol">div</span>&gt;</span><br></pre></td></tr></table></div></figure>
           </div>
-<h4 id="examples-v5">Examples<a href="posts/Tag Plugins#examples-v5"></a></h4>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;%<span class="built_in"> note </span>%&#125;</span><br><span class="line"><span class="comment">#### Header</span></span><br><span class="line">(without define class style)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></div></figure>
+
+<h4 id="Examples-4">Examples<a href="posts/Tag Plugins#Examples-4"></a></h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;%<span class="built_in"> note </span>%&#125;</span><br><span class="line"><span class="comment">#### Header</span></span><br><span class="line">(without define class style)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></div></figure>
+
 <div class="note ">
-            <h4 id="header">Header</h4><p>(without define class style)</p>
+            <h4 id="Header"><a href="posts/Tag Plugins#Header" class="headerlink" title="Header"></a>Header</h4><p>(without define class style)</p>
           </div>
+
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;% note default %&#125;</span><br><span class="line"><span class="section">#### Default Header</span></span><br><span class="line">Welcome to [<span class="string">Hexo!</span>](<span class="link">https://hexo.io</span>)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></div></figure>
+
 <div class="note default">
-            <h4 id="default-header">Default Header</h4><p>Welcome to <a href="https://hexo.io" target="_blank" rel="noopener">Hexo!</a></p>
+            <h4 id="Default-Header"><a href="posts/Tag Plugins#Default-Header" class="headerlink" title="Default Header"></a>Default Header</h4><p>Welcome to <a href="https://hexo.io" target="_blank" rel="noopener">Hexo!</a></p>
           </div>
+
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;% note primary %&#125;</span><br><span class="line"><span class="section">#### Primary Header</span></span><br><span class="line"><span class="strong">**Welcome**</span> to [<span class="string">Hexo!</span>](<span class="link">https://hexo.io</span>)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></div></figure>
+
 <div class="note primary">
-            <h4 id="primary-header">Primary Header</h4><p><strong>Welcome</strong> to <a href="https://hexo.io" target="_blank" rel="noopener">Hexo!</a></p>
+            <h4 id="Primary-Header"><a href="posts/Tag Plugins#Primary-Header" class="headerlink" title="Primary Header"></a>Primary Header</h4><p><strong>Welcome</strong> to <a href="https://hexo.io" target="_blank" rel="noopener">Hexo!</a></p>
           </div>
+
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;% note info %&#125;</span><br><span class="line"><span class="section">### Info Header</span></span><br><span class="line"><span class="strong">**Welcome**</span> to [<span class="string">Hexo!</span>](<span class="link">https://hexo.io</span>)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></div></figure>
+
 <div class="note info">
-            <h4 id="info-header">Info Header</h4><p><strong>Welcome</strong> to <a href="https://hexo.io" target="_blank" rel="noopener">Hexo!</a></p>
+            <h4 id="Info-Header"><a href="posts/Tag Plugins#Info-Header" class="headerlink" title="Info Header"></a>Info Header</h4><p><strong>Welcome</strong> to <a href="https://hexo.io" target="_blank" rel="noopener">Hexo!</a></p>
           </div>
+
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;% note success %&#125;</span><br><span class="line"><span class="section">#### Success Header</span></span><br><span class="line"><span class="strong">**Welcome**</span> to [<span class="string">Hexo!</span>](<span class="link">https://hexo.io</span>)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></div></figure>
+
 <div class="note success">
-            <h4 id="success-header">Success Header</h4><p><strong>Welcome</strong> to <a href="https://hexo.io" target="_blank" rel="noopener">Hexo!</a></p>
+            <h4 id="Success-Header"><a href="posts/Tag Plugins#Success-Header" class="headerlink" title="Success Header"></a>Success Header</h4><p><strong>Welcome</strong> to <a href="https://hexo.io" target="_blank" rel="noopener">Hexo!</a></p>
           </div>
+
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;% note warning %&#125;</span><br><span class="line"><span class="section">#### Warning Header</span></span><br><span class="line"><span class="strong">**Welcome**</span> to [<span class="string">Hexo!</span>](<span class="link">https://hexo.io</span>)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></div></figure>
+
 <div class="note warning">
-            <h4 id="warning-header">Warning Header</h4><p><strong>Welcome</strong> to <a href="https://hexo.io" target="_blank" rel="noopener">Hexo!</a></p>
+            <h4 id="Warning-Header"><a href="posts/Tag Plugins#Warning-Header" class="headerlink" title="Warning Header"></a>Warning Header</h4><p><strong>Welcome</strong> to <a href="https://hexo.io" target="_blank" rel="noopener">Hexo!</a></p>
           </div>
+
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;% note danger %&#125;</span><br><span class="line"><span class="section">#### Danger Header</span></span><br><span class="line"><span class="strong">**Welcome**</span> to [<span class="string">Hexo!</span>](<span class="link">https://hexo.io</span>)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></div></figure>
+
 <div class="note danger">
-            <h4 id="danger-header">Danger Header</h4><p><strong>Welcome</strong> to <a href="https://hexo.io" target="_blank" rel="noopener">Hexo!</a></p>
+            <h4 id="Danger-Header"><a href="posts/Tag Plugins#Danger-Header" class="headerlink" title="Danger Header"></a>Danger Header</h4><p><strong>Welcome</strong> to <a href="https://hexo.io" target="_blank" rel="noopener">Hexo!</a></p>
           </div>
+
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;%<span class="built_in"> note </span><span class="builtin-name">info</span> no-icon %&#125;</span><br><span class="line"><span class="comment">#### No icon note</span></span><br><span class="line">Note **without** icon: `note <span class="builtin-name">info</span> no-icon`</span><br><span class="line"></span><br><span class="line">note info,<span class="built_in"> note </span>info,<span class="built_in"> note </span>info</span><br><span class="line">note info,<span class="built_in"> note </span>info,<span class="built_in"> note </span>info</span><br><span class="line">note info,<span class="built_in"> note </span>info,<span class="built_in"> note </span>info</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></div></figure>
+
 <div class="note info no-icon">
-            <h4 id="no-icon-note">No icon note</h4><p>Note <strong>without</strong> icon: <code>note info no-icon</code></p><p>note info, note info, note info<br>note info, note info, note info<br>note info, note info, note info</p>
+            <h4 id="No-icon-note"><a href="posts/Tag Plugins#No-icon-note" class="headerlink" title="No icon note"></a>No icon note</h4><p>Note <strong>without</strong> icon: <code>note info no-icon</code></p><p>note info, note info, note info<br>note info, note info, note info<br>note info, note info, note info</p>
           </div>
+
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;%<span class="built_in"> note </span>success %&#125;</span><br><span class="line"><span class="comment">#### Codeblock in note</span></span><br><span class="line">&#123;% code %&#125;</span><br><span class="line">code block <span class="keyword">in</span><span class="built_in"> note </span>tag</span><br><span class="line">code block <span class="keyword">in</span><span class="built_in"> note </span>tag</span><br><span class="line">code block <span class="keyword">in</span><span class="built_in"> note </span>tag</span><br><span class="line">&#123;% endcode %&#125;</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></div></figure>
+
 <div class="note success">
-            <h4 id="codeblock-in-note">Codeblock in note</h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">code block <span class="keyword">in</span><span class="built_in"> note </span>tag</span><br><span class="line">code block <span class="keyword">in</span><span class="built_in"> note </span>tag</span><br><span class="line">code block <span class="keyword">in</span><span class="built_in"> note </span>tag</span><br></pre></td></tr></table></div></figure>
+            <h4 id="Codeblock-in-note"><a href="posts/Tag Plugins#Codeblock-in-note" class="headerlink" title="Codeblock in note"></a>Codeblock in note</h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">code block <span class="keyword">in</span><span class="built_in"> note </span>tag</span><br><span class="line">code block <span class="keyword">in</span><span class="built_in"> note </span>tag</span><br><span class="line">code block <span class="keyword">in</span><span class="built_in"> note </span>tag</span><br></pre></td></tr></table></div></figure>
           </div>
+
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&#123;%<span class="built_in"> note default </span>%&#125;</span><br><span class="line"><span class="comment">#### Lists in note</span></span><br><span class="line">* ul</span><br><span class="line">* ul</span><br><span class="line">  * ul</span><br><span class="line">  * ul</span><br><span class="line">* ul</span><br><span class="line"></span><br><span class="line">1. ol</span><br><span class="line">2. ol</span><br><span class="line">  1. ol</span><br><span class="line">  2. ol</span><br><span class="line">3. ol</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></div></figure>
-<h4 id="lists-in-note">Lists in note<a href="posts/Tag Plugins#lists-in-note"></a></h4>
-<div class="note default">
-            <h4 id="lists-in-note">Lists in note</h4><ul><li>ul</li><li>ul<ul><li>ul</li><li>ul</li></ul></li><li>ul</li></ul><ol><li>ol</li><li>ol</li><li>ol</li><li>ol</li><li>ol</li></ol>
+
+<h4 id="Lists-in-note">Lists in note<a href="posts/Tag Plugins#Lists-in-note"></a></h4><div class="note default">
+            <h4 id="Lists-in-note"><a href="posts/Tag Plugins#Lists-in-note" class="headerlink" title="Lists in note"></a>Lists in note</h4><ul><li>ul</li><li>ul<ul><li>ul</li><li>ul</li></ul></li><li>ul</li></ul><ol><li>ol</li><li>ol<ol><li>ol</li><li>ol</li></ol></li><li>ol</li></ol>
           </div>
+
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="comment">#### Table in Note</span></span><br><span class="line">&#123;% note default %&#125;</span><br><span class="line">|<span class="string"> 1 </span>|<span class="string"> 2 </span>|</span><br><span class="line">|<span class="string"> - </span>|<span class="string"> - </span>|</span><br><span class="line">|<span class="string"> 3 </span>|<span class="string"> 4 </span>|</span><br><span class="line">|<span class="string"> 5 </span>|<span class="string"> 6 </span>|</span><br><span class="line">|<span class="string"> 7 </span>|<span class="string"> 8 </span>|</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></div></figure>
-<h4 id="table-in-note">Table in note<a href="posts/Tag Plugins#table-in-note"></a></h4>
-<div class="note default">
-            <h4 id="table-in-note">Table in Note</h4><table><thead><tr><th>1</th><th>2</th></tr></thead><tbody><tr><td>3</td><td>4</td></tr><tr><td>5</td><td>6</td></tr><tr><td>7</td><td>8</td></tr></tbody></table>
+
+<h4 id="Table-in-note">Table in note<a href="posts/Tag Plugins#Table-in-note"></a></h4><div class="note default">
+            <h4 id="Table-in-Note"><a href="posts/Tag Plugins#Table-in-Note" class="headerlink" title="Table in Note"></a>Table in Note</h4><table><thead><tr><th>1</th><th>2</th></tr></thead><tbody><tr><td>3</td><td>4</td></tr><tr><td>5</td><td>6</td></tr><tr><td>7</td><td>8</td></tr></tbody></table>
           </div>
-<h3 id="inline-image">Inline image<a href="posts/Tag Plugins#inline-image"></a></h3>
-<p>Not bad.<img src="https://res.smzdm.com/images/emotions/138.png" alt="yes"></p>
-<h3 id="with-link">With link<a href="posts/Tag Plugins#with-link"></a></h3>
-<ul>
-<li>Travis CI build status: <a href="https://github.com/ikeq/hexo-theme-inside" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/ikeq/hexo-theme-inside.svg?longCache=true&amp;style=flat-square" alt="build-img"></a></li>
-<li>Lastest release: <a href="https://github.com/ikeq/hexo-theme-inside/releases" target="_blank" rel="noopener"><img src="https://img.shields.io/github/release/ikeq/hexo-theme-inside.svg?longCache=true&amp;style=flat-square" alt="release-img"></a></li>
-<li>License: <a href="https://blog.oniuo.com/LICENSE" target="_blank" rel="noopener"><img src="https://img.shields.io/github/license/ikeq/hexo-theme-inside.svg?longCache=true&amp;style=flat-square" alt="license-img"></a></li>
+
+<h3 id="Inline-image">Inline image<a href="posts/Tag Plugins#Inline-image"></a></h3><p>Not bad.<img src="https://res.smzdm.com/images/emotions/138.png" alt="yes"></p>
+<h3 id="With-link">With link<a href="posts/Tag Plugins#With-link"></a></h3><ul>
+<li>Travis CI build status: <a href="https://github.com/ikeq/hexo-theme-inside" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/ikeq/hexo-theme-inside.svg?longCache=true&style=flat-square" alt="build-img"></a></li>
+<li>Lastest release: <a href="https://github.com/ikeq/hexo-theme-inside/releases" target="_blank" rel="noopener"><img src="https://img.shields.io/github/release/ikeq/hexo-theme-inside.svg?longCache=true&style=flat-square" alt="release-img"></a></li>
+<li>License: <a href="https://blog.oniuo.com/LICENSE" target="_blank" rel="noopener"><img src="https://img.shields.io/github/license/ikeq/hexo-theme-inside.svg?longCache=true&style=flat-square" alt="license-img"></a></li>
 </ul>
-<h3 id="hr">hr<a href="posts/Tag Plugins#hr"></a></h3>
-<p>Below is a <code>&lt;hr&gt;</code>, I guess.</p>
+<h3 id="hr">hr<a href="posts/Tag Plugins#hr"></a></h3><p>Below is a <code>&lt;hr&gt;</code>, I guess.</p>
 <hr>
+
 <p>Above is a <a href="https://blog.oniuo.com/post/inside-theme-showcase#hr" target="_blank" rel="noopener"><code>&lt;hr&gt;</code></a>, I guess.</p>
-<h3 id="list">List<a href="posts/Tag Plugins#list"></a></h3>
-<h4 id="unordered-list">Unordered list<a href="posts/Tag Plugins#unordered-list"></a></h4>
-<ul>
+<h3 id="List">List<a href="posts/Tag Plugins#List"></a></h3><h4 id="Unordered-list">Unordered list<a href="posts/Tag Plugins#Unordered-list"></a></h4><ul>
 <li>list item</li>
-<li>list item
-<ul>
+<li>list item<ul>
 <li>list item</li>
-<li>list item
-<ul>
+<li>list item<ul>
 <li>list item</li>
 <li>list item</li>
 </ul>
@@ -1614,14 +1640,11 @@ C -->|Three| F[Car]
 </li>
 <li>list item</li>
 </ul>
-<h4 id="ordered-list">Ordered list<a href="posts/Tag Plugins#ordered-list"></a></h4>
-<ol>
+<h4 id="Ordered-list">Ordered list<a href="posts/Tag Plugins#Ordered-list"></a></h4><ol>
 <li>list item</li>
-<li>list item
-<ol>
+<li>list item<ol>
 <li>list item</li>
-<li>list item
-<ol>
+<li>list item<ol>
 <li>list item</li>
 <li>list item</li>
 </ol>
@@ -1630,14 +1653,12 @@ C -->|Three| F[Car]
 </li>
 <li>list item</li>
 </ol>
-<h4 id="checklist">Checklist<a href="posts/Tag Plugins#checklist"></a></h4>
-<ul>
-<li>[ ] Get up at 7:00 AM</li>
-<li>[ ] Eat breakfast</li>
-<li>[ ] Go to bet before 11:00 PM</li>
+<h4 id="Checklist">Checklist<a href="posts/Tag Plugins#Checklist"></a></h4><ul>
+<li><input disabled type="checkbox"> Get up at 7:00 AM</li>
+<li><input disabled type="checkbox"> Eat breakfast</li>
+<li><input disabled type="checkbox"> Go to bet before 11:00 PM</li>
 </ul>
-<h3 id="table">Table<a href="posts/Tag Plugins#table"></a></h3>
-<div class="article-bounded"><div class="article-table"><table>
+<h3 id="Table">Table<a href="posts/Tag Plugins#Table"></a></h3><div class="article-bounded"><div class="article-table"><table>
 <thead>
 <tr>
 <th>Hear no evil</th>
@@ -1645,45 +1666,37 @@ C -->|Three| F[Car]
 <th>See no evil</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>🙉</td>
 <td>🙊</td>
 <td>🙈</td>
 </tr>
-</tbody>
-</table></div></div>
-<h4 id="text-align">Text align<a href="posts/Tag Plugins#text-align"></a></h4>
-<div class="article-bounded"><div class="article-table"><table>
+</tbody></table></div></div>
+<h4 id="Text-align">Text align<a href="posts/Tag Plugins#Text-align"></a></h4><div class="article-bounded"><div class="article-table"><table>
 <thead>
 <tr>
 <th>Hear no evil</th>
-<th style="text-align:center">Speak no evil</th>
-<th style="text-align:right">See no evil</th>
+<th align="center">Speak no evil</th>
+<th align="right">See no evil</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>🙉</td>
-<td style="text-align:center">🙊</td>
-<td style="text-align:right">🙈</td>
+<td align="center">🙊</td>
+<td align="right">🙈</td>
 </tr>
-</tbody>
-</table></div></div>
-<h4 id="headless">Headless<a href="posts/Tag Plugins#headless"></a></h4>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&amp;nbsp; <span class="params">| &amp;nbsp; |</span> &amp;nbsp;</span><br><span class="line"><span class="symbol">:-----</span><span class="symbol">:|</span><span class="symbol">:------</span><span class="symbol">:|</span><span class="symbol">:-</span><span class="symbol">:</span></span><br><span class="line">A      <span class="params">| B      |</span> 🙈</span><br></pre></td></tr></table></div></figure>
+</tbody></table></div></div>
+<h4 id="Headless">Headless<a href="posts/Tag Plugins#Headless"></a></h4><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">&amp;nbsp; <span class="params">| &amp;nbsp; |</span> &amp;nbsp;</span><br><span class="line"><span class="symbol">:-----</span><span class="symbol">:|</span><span class="symbol">:------</span><span class="symbol">:|</span><span class="symbol">:-</span><span class="symbol">:</span></span><br><span class="line">A      <span class="params">| B      |</span> 🙈</span><br></pre></td></tr></table></div></figure>
+
 <div class="article-bounded"><div class="article-table"><table>
 
-<tbody>
-<tr>
-<td style="text-align:center">A</td>
-<td style="text-align:center">B</td>
-<td style="text-align:center">🙈</td>
+<tbody><tr>
+<td align="center">A</td>
+<td align="center">B</td>
+<td align="center">🙈</td>
 </tr>
-</tbody>
-</table></div></div>
-<h4 id="long-table">Long table<a href="posts/Tag Plugins#long-table"></a></h4>
-<div class="article-bounded"><div class="article-table"><table>
+</tbody></table></div></div>
+<h4 id="Long-table">Long table<a href="posts/Tag Plugins#Long-table"></a></h4><div class="article-bounded"><div class="article-table"><table>
 <thead>
 <tr>
 <th>Sun With Face</th>
@@ -1699,8 +1712,7 @@ C -->|Three| F[Car]
 <th>Face Vomiting</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>🌞</td>
 <td>😀</td>
 <td>☺️</td>
@@ -1713,10 +1725,8 @@ C -->|Three| F[Car]
 <td>🤔</td>
 <td>🤮</td>
 </tr>
-</tbody>
-</table></div></div>
-<h3 id="blockquote">Blockquote<a href="posts/Tag Plugins#blockquote"></a></h3>
-<p>(<a href="https://hexo.io/docs/tag-plugins#Block-Quote" target="_blank" rel="noopener">https://hexo.io/docs/tag-plugins#Block-Quote</a>)</p>
+</tbody></table></div></div>
+<h3 id="Blockquote">Blockquote<a href="posts/Tag Plugins#Blockquote"></a></h3><p>(<a href="https://hexo.io/docs/tag-plugins#Block-Quote" target="_blank" rel="noopener">https://hexo.io/docs/tag-plugins#Block-Quote</a>)</p>
 <blockquote>
 <p>Every interaction is both precious and an opportunity to delight.</p>
 <p><strong>Seth Godin</strong><a href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html" target="_blank" rel="noopener">Welcome to Island Marketing</a></p>
@@ -1725,24 +1735,22 @@ C -->|Three| F[Car]
 <p>NEW: DevDocs now comes with syntax highlighting. <a href="http://devdocs.io/" target="_blank" rel="noopener">http://devdocs.io</a></p>
 <p><strong>@DevDocs</strong><a href="https://twitter.com/devdocs/status/356095192085962752" target="_blank" rel="noopener">twitter.com/devdocs/status/356095192085962752</a></p>
 </blockquote>
-<h3 id="code-block">Code Block<a href="posts/Tag Plugins#code-block"></a></h3>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">class Utils &#123;</span><br><span class="line">  animate(element: Element, attr: string, change: &#123; <span class="keyword">from</span>: number, <span class="keyword">to</span>: number, duration?: number &#125;, onEnd?: () =&gt; void) &#123;</span><br><span class="line">    <span class="keyword">if</span> (change.<span class="keyword">from</span> === change.<span class="keyword">to</span>) return;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!change.duration)</span><br><span class="line">      element[attr] = change.<span class="keyword">to</span>;</span><br><span class="line"></span><br><span class="line">    const easing = (t, b, c, d) =&gt; c * ((t = t / d - 1) * t * t + 1) + b,</span><br><span class="line">      &#123; <span class="keyword">from</span>, <span class="keyword">to</span> &#125; = change,</span><br><span class="line">      during = Math.ceil((change.duration || 300) / 17) || 1;</span><br><span class="line"></span><br><span class="line">    let start = 0,</span><br><span class="line">     <span class="built_in"> instance </span>= <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">step</span>();</span><br><span class="line"></span><br><span class="line">    function <span class="keyword">step</span>() &#123;</span><br><span class="line">      const value = Math.ceil(easing(start, <span class="keyword">from</span>, <span class="keyword">to</span> - <span class="keyword">from</span>, during));</span><br><span class="line"></span><br><span class="line">      start++;</span><br><span class="line">      <span class="keyword">if</span> (start &lt;= during) &#123;</span><br><span class="line">        element[attr] = value;</span><br><span class="line">       <span class="built_in"> instance </span>= requestAnimationFrame(<span class="keyword">step</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (onEnd) onEnd();</span><br><span class="line">        cancelAnimationFrame(instance);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
-<h3 id="with-caption">With caption<a href="posts/Tag Plugins#with-caption"></a></h3>
-<p>(<a href="https://hexo.io/docs/tag-plugins#Code-Block" target="_blank" rel="noopener">https://hexo.io/docs/tag-plugins#Code-Block</a>)</p>
+<h3 id="Code-Block">Code Block<a href="posts/Tag Plugins#Code-Block"></a></h3><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">class Utils &#123;</span><br><span class="line">  animate(element: Element, attr: string, change: &#123; <span class="keyword">from</span>: number, <span class="keyword">to</span>: number, duration?: number &#125;, onEnd?: () =&gt; void) &#123;</span><br><span class="line">    <span class="keyword">if</span> (change.<span class="keyword">from</span> === change.<span class="keyword">to</span>) return;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!change.duration)</span><br><span class="line">      element[attr] = change.<span class="keyword">to</span>;</span><br><span class="line"></span><br><span class="line">    const easing = (t, b, c, d) =&gt; c * ((t = t / d - 1) * t * t + 1) + b,</span><br><span class="line">      &#123; <span class="keyword">from</span>, <span class="keyword">to</span> &#125; = change,</span><br><span class="line">      during = Math.ceil((change.duration || 300) / 17) || 1;</span><br><span class="line"></span><br><span class="line">    let start = 0,</span><br><span class="line">     <span class="built_in"> instance </span>= <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">step</span>();</span><br><span class="line"></span><br><span class="line">    function <span class="keyword">step</span>() &#123;</span><br><span class="line">      const value = Math.ceil(easing(start, <span class="keyword">from</span>, <span class="keyword">to</span> - <span class="keyword">from</span>, during));</span><br><span class="line"></span><br><span class="line">      start++;</span><br><span class="line">      <span class="keyword">if</span> (start &lt;= during) &#123;</span><br><span class="line">        element[attr] = value;</span><br><span class="line">       <span class="built_in"> instance </span>= requestAnimationFrame(<span class="keyword">step</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (onEnd) onEnd();</span><br><span class="line">        cancelAnimationFrame(instance);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<h3 id="With-caption">With caption<a href="posts/Tag Plugins#With-caption"></a></h3><p>(<a href="https://hexo.io/docs/tag-plugins#Code-Block" target="_blank" rel="noopener">https://hexo.io/docs/tag-plugins#Code-Block</a>)</p>
 <figure class="highlight"><figcaption><span>_.compact</span><a href="http://underscorejs.org/#compact" target="_blank" rel="noopener">Underscore.js</a></figcaption><div><table><tr><td class="code"><pre><span class="line">_.compact([<span class="number">0</span>, <span class="number">1</span>, <span class="literal">false</span>, <span class="number">2</span>, <span class="string">''</span>, <span class="number">3</span>]);=&gt; [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></div></figure>
-<h3 id="gist">Gist<a href="posts/Tag Plugins#gist"></a></h3>
-<p>(<a href="https://hexo.io/docs/tag-plugins#Gist" target="_blank" rel="noopener">https://hexo.io/docs/tag-plugins#Gist</a>)</p>
-<h3 id="jsfiddle">JSFiddle<a href="posts/Tag Plugins#jsfiddle"></a></h3>
-<p>(<a href="https://hexo.io/docs/tag-plugins#jsFiddle" target="_blank" rel="noopener">https://hexo.io/docs/tag-plugins#jsFiddle</a>)</p>
-<h3 id="script">script<a href="posts/Tag Plugins#script"></a></h3>
-<figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">stars: <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"stargazers_count"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">fetch(<span class="string">'https://api.github.com/repos/ikeq/hexo-theme-inside'</span>)</span></span><br><span class="line"><span class="actionscript">  .then(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> </span>&#123; <span class="keyword">return</span> res.json() &#125;)</span></span><br><span class="line"><span class="actionscript">  .then(<span class="function"><span class="keyword">function</span><span class="params">(json)</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.getElementById(<span class="string">'stargazers_count'</span>).innerHTML = json.stargazers_count;</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+<h3 id="Gist">Gist<a href="posts/Tag Plugins#Gist"></a></h3><p>(<a href="https://hexo.io/docs/tag-plugins#Gist" target="_blank" rel="noopener">https://hexo.io/docs/tag-plugins#Gist</a>)</p>
+<h3 id="JSFiddle">JSFiddle<a href="posts/Tag Plugins#JSFiddle"></a></h3><p>(<a href="https://hexo.io/docs/tag-plugins#jsFiddle" target="_blank" rel="noopener">https://hexo.io/docs/tag-plugins#jsFiddle</a>)</p>
+<h3 id="script">script<a href="posts/Tag Plugins#script"></a></h3><figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">stars: <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"stargazers_count"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">fetch(<span class="string">'https://api.github.com/repos/ikeq/hexo-theme-inside'</span>)</span></span><br><span class="line"><span class="actionscript">  .then(<span class="function"><span class="keyword">function</span><span class="params">(res)</span> </span>&#123; <span class="keyword">return</span> res.json() &#125;)</span></span><br><span class="line"><span class="actionscript">  .then(<span class="function"><span class="keyword">function</span><span class="params">(json)</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.getElementById(<span class="string">'stargazers_count'</span>).innerHTML = json.stargazers_count;</span></span><br><span class="line"><span class="undefined">  &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
 <p>stars: 309</p>
-<p>For the lastest ES grammar and code minification.<br>
-Run the following command in the root directory of Hexo (not <code>themes/inside</code>):</p>
+<p>For the lastest ES grammar and code minification.<br>Run the following command in the root directory of Hexo (not <code>themes/inside</code>):</p>
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line">npm <span class="keyword">install </span><span class="keyword">babel-core </span><span class="keyword">babel-preset-env </span>html-minifier uglify-<span class="keyword">js </span>--save</span><br></pre></td></tr></table></div></figure>
-<h3 id="canvas">Canvas<a href="posts/Tag Plugins#canvas"></a></h3>
-<p>Syntax：</p>
+
+<h3 id="Canvas">Canvas<a href="posts/Tag Plugins#Canvas"></a></h3><p>Syntax：</p>
 <figure class="highlight"><div><table><tr><td class="code"><pre><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">canvas</span> [width] [height] %&#125;</span><span class="xml"></span></span><br><span class="line"><span class="xml">ctx.fillStyle = 'red';</span></span><br><span class="line"><span class="xml">ctx.fillRect(0, 0, w, h);</span></span><br><span class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">endcanvas</span> %&#125;</span><span class="xml"></span></span><br></pre></td></tr></table></div></figure>
+
 <p>width is default to <code>300</code>, height is default to <code>150</code>，also the following constants are available in the scope:</p>
 <div class="article-bounded"><div class="article-table"><table>
 <thead>
@@ -1751,8 +1759,7 @@ Run the following command in the root directory of Hexo (not <code>themes/inside
 <th></th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>ctx</td>
 <td>CanvasRenderingContext2D</td>
 </tr>
@@ -1764,15 +1771,14 @@ Run the following command in the root directory of Hexo (not <code>themes/inside
 <td>h</td>
 <td>Canvas height</td>
 </tr>
-</tbody>
-</table></div></div>
+</tbody></table></div></div>
 <p>For example:</p>
 <div class="is-snippet"><p><canvas id="canvas-0" width="100" height="100"></canvas></p><script>(function(){var canvas = document.getElementById('canvas-0'), ctx = canvas.getContext('2d'), w = 100, h = 100; const r = w / 2;
 ctx.fillStyle = 'antiquewhite';
 ctx.arc(r, r, r, 0, Math.PI * 2);
 ctx.fill();})();</script></div>
-<h3 id="mathjax-ssr">MathJax (SSR)<a href="posts/Tag Plugins#mathjax-ssr"></a></h3>
-<p>When <svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.491ex" height="2.676ex" style="vertical-align: -0.838ex;" viewbox="0 -791.3 2364.1 1152.1" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-1-Title">
+
+<h3 id="MathJax-SSR">MathJax (SSR)<a href="posts/Tag Plugins#MathJax-SSR"></a></h3><p>When <svg xmlns:xlink="http://www.w3.org/1999/xlink" width="5.491ex" height="2.676ex" style="vertical-align: -0.838ex;" viewbox="0 -791.3 2364.1 1152.1" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-1-Title">
 <title id="MathJax-SVG-1-Title">a \ne 0</title>
 <defs aria-hidden="true">
 <path stroke-width="1" id="E1-MJMATHI-61" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"/>
@@ -1810,8 +1816,7 @@ ctx.fill();})();</script></div>
  <use xlink:href="#E1-MJMAIN-3D" x="5715" y="0"/>
  <use xlink:href="#E1-MJMAIN-30" x="6771" y="0"/>
 </g>
-</svg> and they are<br>
-MATHJAX-SSR-0</p>
+</svg> and they are<br>MATHJAX-SSR-0</p>
 <p style="text-align:center"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="29.985ex" height="14.176ex" style="vertical-align: -6.505ex;" viewbox="0 -3302.9 12910.1 6103.5" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-1-Title">
 <title id="MathJax-SVG-1-Title">A= \begin{bmatrix}
 {a_{11}}&amp;{a_{12}}&amp;{\cdots}&amp;{a_{1n}}\\
