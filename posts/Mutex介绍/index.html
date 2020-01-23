@@ -12,22 +12,22 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<meta name="description" content="Mutex 又称互斥量，C++ 11中与 Mutex 相关的类（包括锁类型）和函数都声明在  头文件中，所以如果你需要使用 std::mutex，就必须包含  头文件。  头文件介绍 Mutex 系列类(四种)   std::mutex，最基本的 Mutex 类。   std::recursive_mutex，递归 Mutex 类。   std::time_mutex，定时 Mutex 类。">
+<meta name="description" content="Mutex 又称互斥量，C++ 11中与 Mutex 相关的类（包括锁类型）和函数都声明在  头文件中，所以如果你需要使用 std::mutex，就必须包含  头文件。  头文件介绍Mutex 系列类(四种) std::mutex，最基本的 Mutex 类。  std::recursive_mutex，递归 Mutex 类。  std::time_mutex，定时 Mutex 类。  std::r">
 <meta name="keywords" content="C++">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mutex介绍">
 <meta property="og:url" content="https://shuntan.github.io/posts/Mutex介绍/index.html">
 <meta property="og:site_name" content="Shawntan&#39;s Blog">
-<meta property="og:description" content="Mutex 又称互斥量，C++ 11中与 Mutex 相关的类（包括锁类型）和函数都声明在  头文件中，所以如果你需要使用 std::mutex，就必须包含  头文件。  头文件介绍 Mutex 系列类(四种)   std::mutex，最基本的 Mutex 类。   std::recursive_mutex，递归 Mutex 类。   std::time_mutex，定时 Mutex 类。">
+<meta property="og:description" content="Mutex 又称互斥量，C++ 11中与 Mutex 相关的类（包括锁类型）和函数都声明在  头文件中，所以如果你需要使用 std::mutex，就必须包含  头文件。  头文件介绍Mutex 系列类(四种) std::mutex，最基本的 Mutex 类。  std::recursive_mutex，递归 Mutex 类。  std::time_mutex，定时 Mutex 类。  std::r">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://shuntan.github.io/posts/Mutex介绍/20190905201210.jpg">
 <meta property="og:updated_time" content="2019-09-05T12:18:27.005Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mutex介绍">
-<meta name="twitter:description" content="Mutex 又称互斥量，C++ 11中与 Mutex 相关的类（包括锁类型）和函数都声明在  头文件中，所以如果你需要使用 std::mutex，就必须包含  头文件。  头文件介绍 Mutex 系列类(四种)   std::mutex，最基本的 Mutex 类。   std::recursive_mutex，递归 Mutex 类。   std::time_mutex，定时 Mutex 类。">
+<meta name="twitter:description" content="Mutex 又称互斥量，C++ 11中与 Mutex 相关的类（包括锁类型）和函数都声明在  头文件中，所以如果你需要使用 std::mutex，就必须包含  头文件。  头文件介绍Mutex 系列类(四种) std::mutex，最基本的 Mutex 类。  std::recursive_mutex，递归 Mutex 类。  std::time_mutex，定时 Mutex 类。  std::r">
 <meta name="twitter:image" content="https://shuntan.github.io/posts/Mutex介绍/20190905201210.jpg">
 
-<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"url":"https://shuntan.github.io","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/Mutex介绍/","headline":"Mutex介绍","image":"/posts/Mutex介绍/20190905201210.jpg","datePublished":"2019-06-14T03:00:47.000Z","dateModified":"2019-09-05T12:18:27.005Z","keywords":"C++","description":"Mutex 又称互斥量，C++ 11中与 Mutex 相关的类（包括锁类型）和函数都声明在  头文件中，所以如果你需要使用 std::mutex，就必须包含  头文件。\n 头文件介绍\nMutex 系列类(四种)\n\n\nstd::mutex，最基本的 Mutex 类。\n\n\nstd::recursive_mutex，递归 Mutex 类。\n\n\nstd::time_mutex，定时 Mutex 类。\n\n\nstd::recursive_timed_mutex，定时递归 Mutex 类。\n\n","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/Mutex介绍/"},"thumbnailUrl":"/posts/Mutex介绍/20190905201210.jpg"}]</script>
+<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"url":"https://shuntan.github.io","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/Mutex介绍/","headline":"Mutex介绍","image":"/posts/Mutex介绍/20190905201210.jpg","datePublished":"2019-06-14T03:00:47.000Z","dateModified":"2019-09-05T12:18:27.005Z","keywords":"C++","description":"Mutex 又称互斥量，C++ 11中与 Mutex 相关的类（包括锁类型）和函数都声明在  头文件中，所以如果你需要使用 std::mutex，就必须包含  头文件。\n 头文件介绍Mutex 系列类(四种)\nstd::mutex，最基本的 Mutex 类。\n\nstd::recursive_mutex，递归 Mutex 类。\n\nstd::time_mutex，定时 Mutex 类。\n\nstd::recursive_timed_mutex，定时递归 Mutex 类。\n\n","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=160"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/Mutex介绍/"},"thumbnailUrl":"/posts/Mutex介绍/20190905201210.jpg"}]</script>
 
 
 <link rel="alternate" type="application/atom+xml" title="Shawntan's Blog" href="/atom.xml">
@@ -43,7 +43,7 @@
 </style>
 <link href="/styles.f6e745592a9a46992ff6.css" rel="stylesheet">
 <link rel="stylesheet" href="/theme.44dfa8d190f95eefe8a8.css">
-<script src="/config.9828f43992f1580471f4.js"></script>
+<script src="/config.091bea3ed393e9a9ea84.js"></script>
 
 <script async src="//www.googletagmanager.com/gtag/js?id=UA-00000000-0"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','UA-00000000-0');</script>
