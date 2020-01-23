@@ -249,13 +249,6 @@ i.fa{
   border-bottom: initial;
   padding-top: 0 !important;
 }
-.note h2:hover,
-.note h3:hover,
-.note h4:hover,
-.note h5:hover,
-.note h6:hover {
-  margin-left: 20px;
-}
 .note p:first-child,
 .note ul:first-child,
 .note ol:first-child,
@@ -273,7 +266,7 @@ i.fa{
   margin-bottom: 0;
 }
 .note:not(.no-icon) {
-  padding-left: 15px;
+  padding-left: 35px;
 }
 .note:not(.no-icon):before {
   position: absolute;
@@ -281,6 +274,14 @@ i.fa{
   font-size: larger;
   top: 13px;
   left: 15px;
+}
+.note h1 a:last-child:after,
+.note h2 a:last-child:after,
+.note h3 a:last-child:after,
+.note h4 a:last-child:after,
+.note h5 a:last-child:after,
+.note h6 a:last-child:after {
+  content: "" !important;
 }
 .note.default {
   border-left-color: #777;
