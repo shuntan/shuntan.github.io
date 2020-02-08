@@ -13,7 +13,7 @@
 <p><img src="/posts/RetroArch%E4%B8%8A%E6%89%8B%E6%95%99%E7%A8%8B/WX20200208-123514@2x.png" alt="WX20200208-123514@2x.png" class="article-img"></p>
 <p><img src="/posts/RetroArch%E4%B8%8A%E6%89%8B%E6%95%99%E7%A8%8B/WX20200208-123623@2x.png" alt="WX20200208-123623@2x.png" class="article-img"></p>
 <h2 id="下载">下载<a href="posts/RetroArch上手教程#下载"></a></h2><h3 id="模拟器下载">模拟器下载<a href="posts/RetroArch上手教程#模拟器下载"></a></h3><div class="note danger">
-            <p> <strong>RetroArch</strong></p><p><strong>下载地址:</strong>  <a href="https://retroarch.com/?page=platforms" target="_blank" rel="noopener">(https://retroarch.com/?page=platforms)</a></p><p>当前的稳定版本是：1.8.4</p><div class="text-center"><a class="btn" href="posts/RetroArch上手教程#http://buildbot.libretro.com/stable/1.8.4/windows/x86_64/RetroArch-x64-setup.exe"><i class="fa fa-exe"></i>Windows</a> <a class="btn" href="posts/RetroArch上手教程#http://buildbot.libretro.com/stable/1.8.4/apple/osx/x86_64/RetroArch.dmg"><i class="fa fa-dmg"></i>MacOS</a></div>
+            <p> <strong>RetroArch</strong></p><p><strong>下载地址:</strong>  <a href="https://retroarch.com/?page=platforms" target="_blank" rel="noopener">(https://retroarch.com/?page=platforms)</a></p><p>当前的稳定版本是：1.8.4</p><div class="text-center"><a class="btn" href="http://buildbot.libretro.com/stable/1.8.4/windows/x86_64/RetroArch-x64-setup.exe" target="_blank" rel="noopener"><i class="fa fa-exe"></i>Windows</a> <a class="btn" href="http://buildbot.libretro.com/stable/1.8.4/apple/osx/x86_64/RetroArch.dmg" target="_blank" rel="noopener"><i class="fa fa-dmg"></i>MacOS</a></div>
           </div>
 
 
