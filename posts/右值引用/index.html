@@ -12,22 +12,22 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<meta name="description" content="概述　　右值引用的概念有些读者可能会感到陌生，其实他和C++98/03中的左值引用有些类似，例如，c++98/03中的左值引用是这样的： 12int i = 0;int&amp;amp; j = i;  　　这里的int&amp;amp;是对左值进行绑定（但是int&amp;amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;amp;&amp;amp;，通过双引号来表示绑定类型为A的右值。通过">
+<meta name="description" content="概述 右值引用的概念有些读者可能会感到陌生，其实他和C98/03中的左值引用有些类似，例如，c98/03中的左值引用是这样的： 12int i = 0;int&amp;amp; j = i; 这里的int&amp;amp;是对左值进行绑定（但是int&amp;amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;amp;&amp;amp;，通过双引号来表示绑定类型为A的右值。通过&amp;amp;&amp;am">
 <meta name="keywords" content="C++">
 <meta property="og:type" content="website">
 <meta property="og:title" content="从4行代码看右值引用">
 <meta property="og:url" content="https://shuntan.github.io/posts/右值引用/index.html">
 <meta property="og:site_name" content="Shawntan&#39;s Blog">
-<meta property="og:description" content="概述　　右值引用的概念有些读者可能会感到陌生，其实他和C++98/03中的左值引用有些类似，例如，c++98/03中的左值引用是这样的： 12int i = 0;int&amp;amp; j = i;  　　这里的int&amp;amp;是对左值进行绑定（但是int&amp;amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;amp;&amp;amp;，通过双引号来表示绑定类型为A的右值。通过">
+<meta property="og:description" content="概述 右值引用的概念有些读者可能会感到陌生，其实他和C98/03中的左值引用有些类似，例如，c98/03中的左值引用是这样的： 12int i = 0;int&amp;amp; j = i; 这里的int&amp;amp;是对左值进行绑定（但是int&amp;amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;amp;&amp;amp;，通过双引号来表示绑定类型为A的右值。通过&amp;amp;&amp;am">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://shuntan.github.io/images/avatar.jpg">
 <meta property="og:updated_time" content="2020-04-14T14:01:35.643Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从4行代码看右值引用">
-<meta name="twitter:description" content="概述　　右值引用的概念有些读者可能会感到陌生，其实他和C++98/03中的左值引用有些类似，例如，c++98/03中的左值引用是这样的： 12int i = 0;int&amp;amp; j = i;  　　这里的int&amp;amp;是对左值进行绑定（但是int&amp;amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;amp;&amp;amp;，通过双引号来表示绑定类型为A的右值。通过">
+<meta name="twitter:description" content="概述 右值引用的概念有些读者可能会感到陌生，其实他和C98/03中的左值引用有些类似，例如，c98/03中的左值引用是这样的： 12int i = 0;int&amp;amp; j = i; 这里的int&amp;amp;是对左值进行绑定（但是int&amp;amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;amp;&amp;amp;，通过双引号来表示绑定类型为A的右值。通过&amp;amp;&amp;am">
 <meta name="twitter:image" content="https://shuntan.github.io/images/avatar.jpg">
 
-<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"url":"https://shuntan.github.io","image":"https://shuntan.github.io/images/avatar.jpg","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/右值引用/","headline":"从4行代码看右值引用","image":"https://shuntan.github.io/images/avatar.jpg","datePublished":"2019-05-23T06:50:40.000Z","dateModified":"2020-04-14T14:01:35.643Z","keywords":"C++","description":"概述　　右值引用的概念有些读者可能会感到陌生，其实他和C++98/03中的左值引用有些类似，例如，c++98/03中的左值引用是这样的：\n12int i = 0;int&amp; j = i;\n\n　　这里的int&amp;是对左值进行绑定（但是int&amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;&amp;，通过双引号来表示绑定类型为A的右值。通过&amp;&amp;我们就可以很方便的绑定右值了，比如我们可以这样绑定一个右值：\n　　","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://shuntan.github.io/images/avatar.jpg"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/右值引用/"}}]</script>
+<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"url":"https://shuntan.github.io","image":"https://shuntan.github.io/images/avatar.jpg","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/右值引用/","headline":"从4行代码看右值引用","image":"https://shuntan.github.io/images/avatar.jpg","datePublished":"2019-05-23T06:50:40.000Z","dateModified":"2020-04-14T14:01:35.643Z","keywords":"C++","description":"概述\n右值引用的概念有些读者可能会感到陌生，其实他和C98/03中的左值引用有些类似，例如，c98/03中的左值引用是这样的：\n12int i = 0;int&amp; j = i;\n这里的int&amp;是对左值进行绑定（但是int&amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;&amp;，通过双引号来表示绑定类型为A的右值。通过&amp;&amp;我们就可以很方便的绑定右值了，比如我们可以这样绑定一个右值：","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://shuntan.github.io/images/avatar.jpg"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/右值引用/"}}]</script>
 
 
 <link rel="alternate" type="application/atom+xml" title="Shawntan's Blog" href="/atom.xml">
@@ -43,7 +43,7 @@
 </style>
 <link href="/styles.f6e745592a9a46992ff6.css" rel="stylesheet">
 <link rel="stylesheet" href="/theme.44dfa8d190f95eefe8a8.css">
-<script src="/config.0680630607be178d96c4.js"></script>
+<script src="/config.b36ad9f290edee585b97.js"></script>
 
 <script async src="//www.googletagmanager.com/gtag/js?id=UA-00000000-0"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','UA-00000000-0');</script>
@@ -55,6 +55,14 @@
 <script src="/js/Valine.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 <script src="/live2d-widget-master/autoload.js"></script>
+<script type="text/javascript">window.onload = function() { 
+  if (document.getElementById("hexo-blog-encrypt")) {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "/lib/blog-encrypt.js";
+    document.getElementsByTagName("head")[0].appendChild(script); }
+  };
+</script>
 <script src="//platform-api.sharethis.com/js/sharethis.js#property=5d162ed1a89f5100122c1d4a" async="false"></script>
 <script src="/js/palette.js"></script>
 <script src="/js/theme.js"></script>
