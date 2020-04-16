@@ -42,7 +42,7 @@
 </style>
 <link href="/styles.f6e745592a9a46992ff6.css" rel="stylesheet">
 <link rel="stylesheet" href="/theme.44dfa8d190f95eefe8a8.css">
-<script src="/config.84669d7ab95e4a481d01.js"></script>
+<script src="/config.589a004b565d89f2a9d7.js"></script>
 
 <script async src="//www.googletagmanager.com/gtag/js?id=UA-00000000-0"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','UA-00000000-0');</script>
@@ -54,15 +54,17 @@
 <script src="/js/Valine.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 <script src="/live2d-widget-master/autoload.js"></script>
-<script type="text/javascript">window.onload = function() { 
-  if (document.getElementById("hexo-blog-encrypt")) {
+<script type="text/javascript">document.getElementsByTagName("title")[0].addEventListener('DOMNodeInserted', function() { 
+$(document).ready(function() {
+    if (document.getElementById("hexo-blog-encrypt")) {
     var script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "/lib/blog-encrypt.js";
     document.getElementsByTagName("head")[0].appendChild(script); }
-  };
+});  
+});
 </script>
-<script src="//platform-api.sharethis.com/js/sharethis.js#property=5d162ed1a89f5100122c1d4a" async="false"></script>
+<script src="//platform-api.sharethis.com/js/sharethis.js#property=5d162ed1a89f5100122c1d4a"></script>
 <script src="/js/palette.js"></script>
 <script src="/js/theme.js"></script>
 <script src="//cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
