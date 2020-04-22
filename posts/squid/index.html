@@ -19,16 +19,16 @@
 <meta property="og:site_name" content="Shawntan&#39;s Blog">
 <meta property="og:description" content="squid的概念 squid是一种用来缓存Internet数据的软件。接受来自人们需要下载的目标（object）的请求并适当的处理这些请求。也就是说，如果一个人想下载一web界面，他请求squid为他取得这个页面。squid随之连接到远程服务器并向这个页面发出请求。然后，squid显式地聚集数据到客户端机器，而且同时复制一份。当下一次有人需要同一页面时， squid可以简单的从磁盘中读到它，那样数">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://shuntan.github.io/images/avatar.jpg">
+<meta property="og:image" content="https://shuntan.github.io/posts/squid/squid.png">
 <meta property="article:published_time" content="2019-05-15T07:15:30.000Z">
-<meta property="article:modified_time" content="2020-04-14T14:02:18.986Z">
+<meta property="article:modified_time" content="2020-04-22T07:21:20.523Z">
 <meta property="article:author" content="Shawntan">
 <meta property="article:tag" content="squid">
 <meta property="article:tag" content="proxy">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://shuntan.github.io/images/avatar.jpg">
+<meta name="twitter:image" content="https://shuntan.github.io/posts/squid/squid.png">
 
-<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"url":"https://shuntan.github.io","image":"https://shuntan.github.io/images/avatar.jpg","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"Linux","url":"https://shuntan.github.io/posts/squid/","headline":"squid介绍及其简单配置","image":"https://shuntan.github.io/images/avatar.jpg","datePublished":"2019-05-15T07:15:30.000Z","dateModified":"2020-04-14T14:02:18.986Z","keywords":"squid,proxy","description":"squid的概念\nsquid是一种用来缓存Internet数据的软件。接受来自人们需要下载的目标（object）的请求并适当的处理这些请求。也就是说，如果一个人想下载一web界面，他请求squid为他取得这个页面。squid随之连接到远程服务器并向这个页面发出请求。然后，squid显式地聚集数据到客户端机器，而且同时复制一份。当下一次有人需要同一页面时， squid可以简单的从磁盘中读到它，那样数据会立即传输到客户机上。","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://shuntan.github.io/images/avatar.jpg"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/squid/"}}]</script>
+<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"url":"https://shuntan.github.io","image":"https://shuntan.github.io/images/avatar.jpg","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"Linux","url":"https://shuntan.github.io/posts/squid/","headline":"squid介绍及其简单配置","image":"/posts/squid/squid.png","datePublished":"2019-05-15T07:15:30.000Z","dateModified":"2020-04-22T07:21:20.523Z","keywords":"squid,proxy","description":"squid的概念\nsquid是一种用来缓存Internet数据的软件。接受来自人们需要下载的目标（object）的请求并适当的处理这些请求。也就是说，如果一个人想下载一web界面，他请求squid为他取得这个页面。squid随之连接到远程服务器并向这个页面发出请求。然后，squid显式地聚集数据到客户端机器，而且同时复制一份。当下一次有人需要同一页面时， squid可以简单的从磁盘中读到它，那样数据会立即传输到客户机上。","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://shuntan.github.io/images/avatar.jpg"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/squid/"},"thumbnailUrl":"/posts/squid/squid.png"}]</script>
 
 
 <link href="//fonts.googleapis.com/css?family=Baloo+Bhaijaan|Inconsolata|Josefin+Sans|Montserrat|Lobster|cursive|Microsoft+YaHei|PingFang+SC|IM+Fell+DW+Pica+SC" rel="stylesheet">
@@ -45,7 +45,7 @@
 <link rel="stylesheet" href="/theme.f0f2649c4bb23a69dce6.css" is="theme">
 
 
-<script src="/config.3ee6aeb3a5c4b406b35a.js"></script>
+<script src="/config.16680354c50571d60084.js"></script>
 
 
 <script async src="//www.googletagmanager.com/gtag/js?id=UA-00000000-0"></script>
@@ -56,7 +56,7 @@
 <is-a></is-a>
 <script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+<script src="/js/valine.min.js"></script>
 <script src="/live2d-widget-master/autoload.js"></script>
 <script src="/js/palette.js"></script>
 <script src="/js/theme.js"></script>

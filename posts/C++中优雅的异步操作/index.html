@@ -19,15 +19,15 @@
 <meta property="og:site_name" content="Shawntan&#39;s Blog">
 <meta property="og:description" content="c++11中增加了线程，使得我们可以非常方便的创建线程，它的基本用法是这样的： 123void f(int n);std::thread t(f, n + 1);t.join();">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://shuntan.github.io/posts/C++%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C/0341e046a16c2b9a2762a35c3cde7dbf.jpg">
+<meta property="og:image" content="https://shuntan.github.io/posts/C++%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C/sync.png">
 <meta property="article:published_time" content="2019-06-14T06:21:26.000Z">
-<meta property="article:modified_time" content="2020-04-22T04:38:52.380Z">
+<meta property="article:modified_time" content="2020-04-22T06:56:23.983Z">
 <meta property="article:author" content="Shawntan">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://shuntan.github.io/posts/C++%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C/0341e046a16c2b9a2762a35c3cde7dbf.jpg">
+<meta name="twitter:image" content="https://shuntan.github.io/posts/C++%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C/sync.png">
 
-<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"url":"https://shuntan.github.io","image":"https://shuntan.github.io/images/avatar.jpg","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/C++%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C/","headline":"C++中优雅的异步操作","image":"/posts/C++中优雅的异步操作/0341e046a16c2b9a2762a35c3cde7dbf.jpg","datePublished":"2019-06-14T06:21:26.000Z","dateModified":"2020-04-22T04:38:52.380Z","keywords":"C++","description":"c++11中增加了线程，使得我们可以非常方便的创建线程，它的基本用法是这样的：\n123void f(int n);std::thread t(f, n + 1);t.join();","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://shuntan.github.io/images/avatar.jpg"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/C++%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C/"},"thumbnailUrl":"/posts/C++中优雅的异步操作/0341e046a16c2b9a2762a35c3cde7dbf.jpg"}]</script>
+<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"url":"https://shuntan.github.io","image":"https://shuntan.github.io/images/avatar.jpg","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/C++%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C/","headline":"C++中优雅的异步操作","image":"/posts/C++中优雅的异步操作/sync.png","datePublished":"2019-06-14T06:21:26.000Z","dateModified":"2020-04-22T06:56:23.983Z","keywords":"C++","description":"c++11中增加了线程，使得我们可以非常方便的创建线程，它的基本用法是这样的：\n123void f(int n);std::thread t(f, n + 1);t.join();","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://shuntan.github.io/images/avatar.jpg"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/C++%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C/"},"thumbnailUrl":"/posts/C++中优雅的异步操作/sync.png"}]</script>
 
 
 <link href="//fonts.googleapis.com/css?family=Baloo+Bhaijaan|Inconsolata|Josefin+Sans|Montserrat|Lobster|cursive|Microsoft+YaHei|PingFang+SC|IM+Fell+DW+Pica+SC" rel="stylesheet">
@@ -44,7 +44,7 @@
 <link rel="stylesheet" href="/theme.f0f2649c4bb23a69dce6.css" is="theme">
 
 
-<script src="/config.3ee6aeb3a5c4b406b35a.js"></script>
+<script src="/config.16680354c50571d60084.js"></script>
 
 
 <script async src="//www.googletagmanager.com/gtag/js?id=UA-00000000-0"></script>
@@ -55,7 +55,7 @@
 <is-a></is-a>
 <script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+<script src="/js/valine.min.js"></script>
 <script src="/live2d-widget-master/autoload.js"></script>
 <script src="/js/palette.js"></script>
 <script src="/js/theme.js"></script>

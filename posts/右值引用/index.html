@@ -19,15 +19,15 @@
 <meta property="og:site_name" content="Shawntan&#39;s Blog">
 <meta property="og:description" content="概述 右值引用的概念有些读者可能会感到陌生，其实他和C98&#x2F;03中的左值引用有些类似，例如，c98&#x2F;03中的左值引用是这样的： 12int i &#x3D; 0;int&amp; j &#x3D; i; 这里的int&amp;是对左值进行绑定（但是int&amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;&amp;，通过双引号来表示绑定类型为A的右值。通过&amp;&amp;am">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://shuntan.github.io/images/avatar.jpg">
+<meta property="og:image" content="https://shuntan.github.io/posts/%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8/app-launch.png">
 <meta property="article:published_time" content="2019-05-23T06:50:40.000Z">
-<meta property="article:modified_time" content="2020-04-14T14:01:35.643Z">
+<meta property="article:modified_time" content="2020-04-22T07:28:05.889Z">
 <meta property="article:author" content="Shawntan">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://shuntan.github.io/images/avatar.jpg">
+<meta name="twitter:image" content="https://shuntan.github.io/posts/%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8/app-launch.png">
 
-<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"url":"https://shuntan.github.io","image":"https://shuntan.github.io/images/avatar.jpg","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8/","headline":"从4行代码看右值引用","image":"https://shuntan.github.io/images/avatar.jpg","datePublished":"2019-05-23T06:50:40.000Z","dateModified":"2020-04-14T14:01:35.643Z","keywords":"C++","description":"概述\n右值引用的概念有些读者可能会感到陌生，其实他和C98/03中的左值引用有些类似，例如，c98/03中的左值引用是这样的：\n12int i = 0;int&amp; j = i;\n这里的int&amp;是对左值进行绑定（但是int&amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;&amp;，通过双引号来表示绑定类型为A的右值。通过&amp;&amp;我们就可以很方便的绑定右值了，比如我们可以这样绑定一个右值：","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://shuntan.github.io/images/avatar.jpg"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8/"}}]</script>
+<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"url":"https://shuntan.github.io","image":"https://shuntan.github.io/images/avatar.jpg","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8/","headline":"从4行代码看右值引用","image":"/posts/右值引用/app-launch.png","datePublished":"2019-05-23T06:50:40.000Z","dateModified":"2020-04-22T07:28:05.889Z","keywords":"C++","description":"概述\n右值引用的概念有些读者可能会感到陌生，其实他和C98/03中的左值引用有些类似，例如，c98/03中的左值引用是这样的：\n12int i = 0;int&amp; j = i;\n这里的int&amp;是对左值进行绑定（但是int&amp;却不能绑定右值），相应的，对右值进行绑定的引用就是右值引用，他的语法是这样的A&amp;&amp;，通过双引号来表示绑定类型为A的右值。通过&amp;&amp;我们就可以很方便的绑定右值了，比如我们可以这样绑定一个右值：","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://shuntan.github.io/images/avatar.jpg"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8/"},"thumbnailUrl":"/posts/右值引用/app-launch.png"}]</script>
 
 
 <link href="//fonts.googleapis.com/css?family=Baloo+Bhaijaan|Inconsolata|Josefin+Sans|Montserrat|Lobster|cursive|Microsoft+YaHei|PingFang+SC|IM+Fell+DW+Pica+SC" rel="stylesheet">
@@ -44,7 +44,7 @@
 <link rel="stylesheet" href="/theme.f0f2649c4bb23a69dce6.css" is="theme">
 
 
-<script src="/config.3ee6aeb3a5c4b406b35a.js"></script>
+<script src="/config.16680354c50571d60084.js"></script>
 
 
 <script async src="//www.googletagmanager.com/gtag/js?id=UA-00000000-0"></script>
@@ -55,7 +55,7 @@
 <is-a></is-a>
 <script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+<script src="/js/valine.min.js"></script>
 <script src="/live2d-widget-master/autoload.js"></script>
 <script src="/js/palette.js"></script>
 <script src="/js/theme.js"></script>

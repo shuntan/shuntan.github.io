@@ -19,15 +19,15 @@
 <meta property="og:site_name" content="Shawntan&#39;s Blog">
 <meta property="og:description" content="C++中的万能引用和完美转发  阅读这篇博文需要了解C中的左值（lvalue）和右值（rvalue）的概念，详情参见我的另外一篇博文：C移动语义及拷贝优化 万能引用和完美转发多涉及到模板的使用，如若不是自己写模板，则可不用关心">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://shuntan.github.io/images/avatar.jpg">
+<meta property="og:image" content="https://shuntan.github.io/posts/%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/apple.png">
 <meta property="article:published_time" content="2019-05-29T02:05:19.000Z">
-<meta property="article:modified_time" content="2020-04-22T04:40:39.318Z">
+<meta property="article:modified_time" content="2020-04-22T07:26:24.324Z">
 <meta property="article:author" content="Shawntan">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://shuntan.github.io/images/avatar.jpg">
+<meta name="twitter:image" content="https://shuntan.github.io/posts/%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/apple.png">
 
-<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"url":"https://shuntan.github.io","image":"https://shuntan.github.io/images/avatar.jpg","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/","headline":"C++中的万能引用和完美转发","image":"https://shuntan.github.io/images/avatar.jpg","datePublished":"2019-05-29T02:05:19.000Z","dateModified":"2020-04-22T04:40:39.318Z","keywords":"C++","description":"C++中的万能引用和完美转发\n\n阅读这篇博文需要了解C中的左值（lvalue）和右值（rvalue）的概念，详情参见我的另外一篇博文：C移动语义及拷贝优化\n万能引用和完美转发多涉及到模板的使用，如若不是自己写模板，则可不用关心\n","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://shuntan.github.io/images/avatar.jpg"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/"}}]</script>
+<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"url":"https://shuntan.github.io","image":"https://shuntan.github.io/images/avatar.jpg","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/","headline":"C++中的万能引用和完美转发","image":"/posts/完美转发/apple.png","datePublished":"2019-05-29T02:05:19.000Z","dateModified":"2020-04-22T07:26:24.324Z","keywords":"C++","description":"C++中的万能引用和完美转发\n\n阅读这篇博文需要了解C中的左值（lvalue）和右值（rvalue）的概念，详情参见我的另外一篇博文：C移动语义及拷贝优化\n万能引用和完美转发多涉及到模板的使用，如若不是自己写模板，则可不用关心\n","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://shuntan.github.io/images/avatar.jpg"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/"},"thumbnailUrl":"/posts/完美转发/apple.png"}]</script>
 
 
 <link href="//fonts.googleapis.com/css?family=Baloo+Bhaijaan|Inconsolata|Josefin+Sans|Montserrat|Lobster|cursive|Microsoft+YaHei|PingFang+SC|IM+Fell+DW+Pica+SC" rel="stylesheet">
@@ -44,7 +44,7 @@
 <link rel="stylesheet" href="/theme.f0f2649c4bb23a69dce6.css" is="theme">
 
 
-<script src="/config.3ee6aeb3a5c4b406b35a.js"></script>
+<script src="/config.16680354c50571d60084.js"></script>
 
 
 <script async src="//www.googletagmanager.com/gtag/js?id=UA-00000000-0"></script>
@@ -55,7 +55,7 @@
 <is-a></is-a>
 <script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+<script src="/js/valine.min.js"></script>
 <script src="/live2d-widget-master/autoload.js"></script>
 <script src="/js/palette.js"></script>
 <script src="/js/theme.js"></script>

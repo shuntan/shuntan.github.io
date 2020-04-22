@@ -19,15 +19,15 @@
 <meta property="og:site_name" content="Shawntan&#39;s Blog">
 <meta property="og:description" content="1. 申请的内存所在位置 new操作符从自由存储区（free store）上为对象动态分配内存空间，而malloc函数从堆上动态分配内存。 自由存储区是C++基于new操作符的一个抽象概念，凡是通过new操作符进行内存申请，该内存即为自由存储区。而堆是操作系统中的术语，是操作系统所维护的一块特殊内存，用于程序的内存动态分配，C语言使用malloc从堆上分配内存，使用free释放已分配的对应内存。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://shuntan.github.io/images/avatar.jpg">
+<meta property="og:image" content="https://shuntan.github.io/posts/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/malloc.png">
 <meta property="article:published_time" content="2019-09-19T06:58:35.000Z">
-<meta property="article:modified_time" content="2020-04-14T14:02:07.071Z">
+<meta property="article:modified_time" content="2020-04-22T12:23:24.908Z">
 <meta property="article:author" content="Shawntan">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://shuntan.github.io/images/avatar.jpg">
+<meta name="twitter:image" content="https://shuntan.github.io/posts/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/malloc.png">
 
-<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"url":"https://shuntan.github.io","image":"https://shuntan.github.io/images/avatar.jpg","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/","headline":"new和malloc的区别","image":"https://shuntan.github.io/images/avatar.jpg","datePublished":"2019-09-19T06:58:35.000Z","dateModified":"2020-04-14T14:02:07.071Z","keywords":"C++","description":"1. 申请的内存所在位置\nnew操作符从自由存储区（free store）上为对象动态分配内存空间，而malloc函数从堆上动态分配内存。\n自由存储区是C++基于new操作符的一个抽象概念，凡是通过new操作符进行内存申请，该内存即为自由存储区。而堆是操作系统中的术语，是操作系统所维护的一块特殊内存，用于程序的内存动态分配，C语言使用malloc从堆上分配内存，使用free释放已分配的对应内存。\n那么自由存储区是否能够是堆（问题等价于new是否能在堆上动态分配内存），这取决于operator new 的实现细节。自由存储区不仅可以是堆，还可以是静态存储区，这都看operator new在哪里为对象分配内存。","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://shuntan.github.io/images/avatar.jpg"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/"}}]</script>
+<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"url":"https://shuntan.github.io","image":"https://shuntan.github.io/images/avatar.jpg","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"C++","url":"https://shuntan.github.io/posts/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/","headline":"new和malloc的区别","image":"/posts/new和malloc的区别/malloc.png","datePublished":"2019-09-19T06:58:35.000Z","dateModified":"2020-04-22T12:23:24.908Z","keywords":"C++","description":"1. 申请的内存所在位置\nnew操作符从自由存储区（free store）上为对象动态分配内存空间，而malloc函数从堆上动态分配内存。\n自由存储区是C++基于new操作符的一个抽象概念，凡是通过new操作符进行内存申请，该内存即为自由存储区。而堆是操作系统中的术语，是操作系统所维护的一块特殊内存，用于程序的内存动态分配，C语言使用malloc从堆上分配内存，使用free释放已分配的对应内存。\n那么自由存储区是否能够是堆（问题等价于new是否能在堆上动态分配内存），这取决于operator new 的实现细节。自由存储区不仅可以是堆，还可以是静态存储区，这都看operator new在哪里为对象分配内存。","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://shuntan.github.io/images/avatar.jpg"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/"},"thumbnailUrl":"/posts/new和malloc的区别/malloc.png"}]</script>
 
 
 <link href="//fonts.googleapis.com/css?family=Baloo+Bhaijaan|Inconsolata|Josefin+Sans|Montserrat|Lobster|cursive|Microsoft+YaHei|PingFang+SC|IM+Fell+DW+Pica+SC" rel="stylesheet">
@@ -44,7 +44,7 @@
 <link rel="stylesheet" href="/theme.f0f2649c4bb23a69dce6.css" is="theme">
 
 
-<script src="/config.3ee6aeb3a5c4b406b35a.js"></script>
+<script src="/config.16680354c50571d60084.js"></script>
 
 
 <script async src="//www.googletagmanager.com/gtag/js?id=UA-00000000-0"></script>
@@ -55,7 +55,7 @@
 <is-a></is-a>
 <script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+<script src="/js/valine.min.js"></script>
 <script src="/live2d-widget-master/autoload.js"></script>
 <script src="/js/palette.js"></script>
 <script src="/js/theme.js"></script>
