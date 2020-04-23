@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>理解 Go defer - Shawntan's Blog</title>
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<link rel="canonical" href="https://shuntan.github.io/posts/go-defer/">
+<link rel="icon" type="image/x-icon" href="/images/emoji.ico">
+
+<link rel="manifest" href="/manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<meta name="description" content="defer 的作用和执行时机 go 的 defer 语句是用来延迟执行函数的，而且延迟发生在调用函数 return 之后，比如 1234func a() int &amp;#123;  defer b()  return 0&amp;#125; b 的执行是发生在 return 0 之后，注意 defer 的语法，关键字 defer 之后是函数的调用。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="理解 Go defer">
+<meta property="og:url" content="https://shuntan.github.io/posts/go-defer/index.html">
+<meta property="og:site_name" content="Shawntan&#39;s Blog">
+<meta property="og:description" content="defer 的作用和执行时机 go 的 defer 语句是用来延迟执行函数的，而且延迟发生在调用函数 return 之后，比如 1234func a() int &amp;#123;  defer b()  return 0&amp;#125; b 的执行是发生在 return 0 之后，注意 defer 的语法，关键字 defer 之后是函数的调用。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://shuntan.github.io/posts/go-defer/go-defer.png">
+<meta property="article:published_time" content="2020-04-23T14:57:34.000Z">
+<meta property="article:modified_time" content="2020-04-23T15:12:54.701Z">
+<meta property="article:author" content="Shawntan">
+<meta property="article:tag" content="go">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shuntan.github.io/posts/go-defer/go-defer.png">
+
+<script type="application/ld+json">[{"@context":"http://schema.org","@type":"WebSite","publisher":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"url":"https://shuntan.github.io","image":"https://shuntan.github.io/images/avatar.jpg","description":"shawntan@tencent.com","author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"}},{"@context":"http://schema.org","@type":"Article","articleSection":"go","url":"https://shuntan.github.io/posts/go-defer/","headline":"理解 Go defer","image":"/posts/go-defer/go-defer.png","datePublished":"2020-04-23T14:57:34.000Z","dateModified":"2020-04-23T15:12:54.701Z","keywords":"go","description":"defer 的作用和执行时机\ngo 的 defer 语句是用来延迟执行函数的，而且延迟发生在调用函数 return 之后，比如\n1234func a() int &#123;  defer b()  return 0&#125;\nb 的执行是发生在 return 0 之后，注意 defer 的语法，关键字 defer 之后是函数的调用。","publisher":{"@type":"Organization","name":"Shawntan's Blog","logo":{"@type":"ImageObject","url":"https://shuntan.github.io/images/avatar.jpg"}},"author":{"@type":"Person","name":"Shawntan","description":"The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.","image":"https://shuntan.github.io/images/avatar.jpg"},"inLanguage":{"@type":"Language","alternateName":"en"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://shuntan.github.io/posts/go-defer/"},"thumbnailUrl":"/posts/go-defer/go-defer.png"}]</script>
+
+
+<link href="//fonts.googleapis.com/css?family=Baloo+Bhaijaan|Inconsolata|Josefin+Sans|Montserrat|Lobster|cursive|Microsoft+YaHei|PingFang+SC|IM+Fell+DW+Pica+SC" rel="stylesheet">
+<link href="//cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="/css/tags.css" rel="stylesheet">
+<style>a.dt.v {
+   font-size: x-large !important;
+   text-align: center !important;
+   font-family: Lobster,cursive,'Josefin Sans','PingFang SC','Microsoft YaHei'
+}
+</style>
+<link href="/styles.c3f8d35f4c49a6d852da.css" rel="stylesheet">
+
+<link rel="stylesheet" href="/theme.f0f2649c4bb23a69dce6.css" is="theme">
+
+
+<script src="/config.29c8077aa7dd94009d97.js"></script>
+
+
+<script async src="//www.googletagmanager.com/gtag/js?id=UA-00000000-0"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','UA-00000000-0');</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body lang="en">
+<is-a></is-a>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/js/valine.js"></script>
+<script src="/live2d-widget-master/autoload.js"></script>
+<script src="/js/palette.js"></script>
+<script src="/js/theme.js"></script>
+<script src="//cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/runtime.1720a40670866f12654e.js"></script>
+<script src="/polyfills.eefc5b1aaca1e85d221f.js"></script>
+<script src="/main.41823d1d138ca02e839b.js"></script>
+</body>
+</html>
