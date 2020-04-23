@@ -82,6 +82,84 @@
       </tags>
   </entry>
   <entry>
+    <title>理解 Go defer</title>
+    <url>/posts/go-defer/</url>
+    <content><![CDATA[<h2 id="defer-的作用和执行时机">defer 的作用和执行时机<a title="#defer-的作用和执行时机" href="#defer-的作用和执行时机"></a></h2>
+<p>go 的 defer 语句是用来<strong>延迟执行函数的</strong>，而且延迟发生在<strong>调用函数 return 之后</strong>，比如</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">a</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  <span class="keyword">defer</span> b()</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>b 的执行是发生在 return 0 之后，注意 defer 的语法，关键字 defer 之后是函数的调用。</p>
+<a id="more"></a>
+<h2 id="defer-的重要用途一：清理释放资源">defer 的重要用途一：清理释放资源<a title="#defer-的重要用途一：清理释放资源" href="#defer-的重要用途一：清理释放资源"></a></h2>
+<p>由于 defer 的延迟特性，defer 常用在函数调用结束之后清理相关的资源，比如</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">f, _ := os.Open(filename)</span><br><span class="line"><span class="keyword">defer</span> f.Close()</span><br></pre></td></tr></table></figure>
+<p>文件资源的释放会在函数调用结束之后借助 defer 自动执行，不需要时刻记住哪里的资源需要释放，打开和释放必须相对应。</p>
+<p>用一个例子深刻诠释一下 defer 带来的便利和简洁。</p>
+<p>代码的主要目的是打开一个文件，然后复制内容到另一个新的文件中，没有 defer 时这样写：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CopyFile</span><span class="params">(dstName, srcName <span class="keyword">string</span>)</span> <span class="params">(written <span class="keyword">int64</span>, err error)</span></span> &#123;</span><br><span class="line">    src, err := os.Open(srcName)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dst, err := os.Create(dstName)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123; <span class="comment">//1</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    written, err = io.Copy(dst, src)</span><br><span class="line">    dst.Close()</span><br><span class="line">    src.Close()</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码在 <code>#1</code> 处返回之后，src 文件没有执行关闭操作，可能会导致资源不能正确释放，改用 defer 实现：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CopyFile</span><span class="params">(dstName, srcName <span class="keyword">string</span>)</span> <span class="params">(written <span class="keyword">int64</span>, err error)</span></span> &#123;</span><br><span class="line">    src, err := os.Open(srcName)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> src.Close()</span><br><span class="line"></span><br><span class="line">    dst, err := os.Create(dstName)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> dst.Close()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> io.Copy(dst, src)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>src 和 dst 都能及时清理和释放，无论 return 在什么地方执行。</p>
+<p>鉴于 defer 的这种作用，defer 常用来释放数据库连接，文件打开句柄等释放资源的操作。</p>
+<h2 id="defer-的重要用途二：执行-recover">defer 的重要用途二：执行 recover<a title="#defer-的重要用途二：执行-recover" href="#defer-的重要用途二：执行-recover"></a></h2>
+<p>被 defer 的函数在 return 之后执行，这个时机点正好可以捕获函数抛出的 panic，因而 defer 的另一个重要用途就是执行 recover。</p>
+<p>recover 只有在 defer 中使用才更有意义，如果在其他地方使用，由于 program 已经调用结束而提前返回而无法有效捕捉错误。</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> ok := <span class="built_in">recover</span>(); ok != <span class="literal">nil</span> &#123;</span><br><span class="line">            fmt.Println(<span class="string">"recover"</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    <span class="built_in">panic</span>(<span class="string">"error"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>记住 defer 要放在 panic 执行之前。</p>
+<h2 id="多个-defer-的执行顺序">多个 defer 的执行顺序<a title="#多个-defer-的执行顺序" href="#多个-defer-的执行顺序"></a></h2>
+<p>defer 的作用就是把关键字之后的函数执行压入一个栈中延迟执行，多个 defer 的执行顺序是后进先出 LIFO ：</p>
+<figure class="highlight autoit"><table><tr><td class="code"><pre><span class="line">defer <span class="function"><span class="keyword">func</span><span class="params">()</span> &#123; <span class="title">fmt</span>.<span class="title">Println</span><span class="params">(<span class="string">"1"</span>)</span> &#125;<span class="params">()</span></span></span><br><span class="line">defer <span class="function"><span class="keyword">func</span><span class="params">()</span> &#123; <span class="title">fmt</span>.<span class="title">Println</span><span class="params">(<span class="string">"2"</span>)</span> &#125;<span class="params">()</span></span></span><br><span class="line">defer <span class="function"><span class="keyword">func</span><span class="params">()</span> &#123; <span class="title">fmt</span>.<span class="title">Println</span><span class="params">(<span class="string">"3"</span>)</span> &#125;<span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>输出顺序是 321。</p>
+<p>这个特性可以对一个 array 实现逆序操作。</p>
+<h2 id="被-deferred-函数的参数在-defer-时确定">被 deferred 函数的参数在 defer 时确定<a title="#被-deferred-函数的参数在-defer-时确定" href="#被-deferred-函数的参数在-defer-时确定"></a></h2>
+<p>这是 defer 的特点，一个函数被 defer 时，它的参数在 defer 时进行计算确定，即使 defer 之后参数发生修改，对已经 defer 的函数没有影响，什么意思？看例子：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">func</span> <span class="selector-tag">a</span>() &#123;</span><br><span class="line">    <span class="attribute">i </span>:= <span class="number">0</span></span><br><span class="line">    defer fmt.<span class="built_in">Println</span>(i)</span><br><span class="line">    i++</span><br><span class="line">    return</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>a 执行输出的是 0 而不是 1，因为 defer 时，i 的值是 0，此时被 defer 的函数参数已经进行执行计算并确定了。</p>
+<p>再看一个例子：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">calc</span><span class="params">(index <span class="keyword">string</span>, a, b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    ret := a + b</span><br><span class="line">    fmt.Println(index, a, b, ret)</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    a := <span class="number">1</span></span><br><span class="line">    b := <span class="number">2</span></span><br><span class="line">    <span class="keyword">defer</span> calc(<span class="string">"1"</span>, a, calc(<span class="string">"10"</span>, a, b))</span><br><span class="line">    a = <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行代码输出</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">10 </span><span class="number">1</span> <span class="number">2</span> <span class="number">3</span> </span><br><span class="line"><span class="symbol">1 </span><span class="number">1</span> <span class="number">3</span> <span class="number">4</span></span><br></pre></td></tr></table></figure>
+<p>defer 函数的参数 第三个参数在 defer 时就已经计算完成并确定，第二个参数 a 也是如此，无论之后 a 变量是否修改都不影响。</p>
+<h2 id="被-defer-的函数可以读取和修改带名称的返回值">被 defer 的函数可以读取和修改带名称的返回值<a title="#被-defer-的函数可以读取和修改带名称的返回值" href="#被-defer-的函数可以读取和修改带名称的返回值"></a></h2>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">c</span><span class="params">()</span> <span class="params">(i <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123; i++ &#125;()</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>被 defer 的函数是在 return 之后执行，可以修改带名称的返回值，上面的函数 c 返回的是 2。</p>
+<h2 id="go语言-异常panic和恢复recover用法">Go语言 异常panic和恢复recover用法<a title="#go语言-异常panic和恢复recover用法" href="#go语言-异常panic和恢复recover用法"></a></h2>
+<p>背景：Go语言追求简洁优雅，所以，Go语言不支持传统的 try…catch…finally 这种异常，因为Go语言的设计者们认为，将异常与控制结构混在一起会很容易使得代码变得混乱。因为开发者很容易滥用异常，甚至一个小小的错误都抛出一个异常。在Go语言中，使用多值返回来返回错误。不要用异常代替错误，更不要用来控制流程。在极个别的情况下，才使用Go中引入的Exception处理：defer, panic, recover。</p>
+<h2 id="panic：">panic：<a title="#panic：" href="#panic："></a></h2>
+<p>1、内建函数</p>
+<p>2、假如函数F中书写了panic语句，会终止其后要执行的代码，在panic所在函数F内如果存在要执行的defer函数列表，按照defer的逆序执行</p>
+<p>比如panic函数内有：</p>
+<ul>
+<li>defer  函数1</li>
+<li>defer  函数2</li>
+<li>defer  函数3</li>
+<li>那么执行顺序就是：</li>
+<li>函数3</li>
+<li>函数2</li>
+<li>函数1</li>
+</ul>
+<p>3、返回函数F的调用者G，在G中，调用函数F语句之后的代码不会执行，假如函数G中存在要执行的defer函数列表，按照defer的逆序执行，这里的defer 有点类似 try-catch-finally 中的 finally</p>
+<p>4、直到goroutine整个退出，并报告错误</p>
+<h2 id="recover：">recover：<a title="#recover：" href="#recover："></a></h2>
+<p>1、内建函数</p>
+<p>2、用来控制一个goroutine的panicking行为，捕获panic，从而影响应用的行为</p>
+<p>3、一般的调用建议</p>
+<p>a). 在defer函数中，通过recever来终止一个gojroutine的panicking过程，从而恢复正常代码的执行</p>
+<p>b). 可以获取通过panic传递的error</p>
+<p>简单来讲：go中可以抛出一个panic的异常，然后在defer中通过recover捕获这个异常，然后正常处理。</p>
+<p>示例代码 main函数相当于调用者G，f函数相当于函数F</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">      fmt.Println(<span class="string">"c"</span>)</span><br><span class="line">   <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123; <span class="comment">// 必须要先声明defer，否则不能捕获到panic异常</span></span><br><span class="line">      fmt.Println(<span class="string">"d"</span>)</span><br><span class="line">      <span class="keyword">if</span> err := <span class="built_in">recover</span>(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">         fmt.Println(err) <span class="comment">// 这里的err其实就是panic传入的内容</span></span><br><span class="line">      &#125;</span><br><span class="line">      fmt.Println(<span class="string">"e"</span>)</span><br><span class="line">   &#125;()</span><br><span class="line">   f() <span class="comment">//开始调用f</span></span><br><span class="line">   fmt.Println(<span class="string">"f"</span>) <span class="comment">//这里开始下面代码不会再执行</span></span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f</span><span class="params">()</span></span> &#123;</span><br><span class="line">   fmt.Println(<span class="string">"a"</span>)</span><br><span class="line">   <span class="built_in">panic</span>(<span class="string">"异常信息"</span>)</span><br><span class="line">   fmt.Println(<span class="string">"b"</span>) <span class="comment">//这里开始下面代码不会再执行</span></span><br><span class="line">&#125;</span><br><span class="line">-------output-------</span><br><span class="line">c</span><br><span class="line">a</span><br><span class="line">d</span><br><span class="line">异常信息</span><br><span class="line">e</span><br></pre></td></tr></table></figure>
+<p><strong>注意：利用recover处理panic指令，defer必须在panic之前声明，否则当panic时，recover无法捕获到panic．</strong></p>
+<h2 id="参考资料">参考资料<a title="#参考资料" href="#参考资料"></a></h2>
+<p><a href="https://blog.golang.org/defer-panic-and-recover" target="_blank" rel="noopener">https://blog.golang.org/defer-panic-and-recover</a></p>
+]]></content>
+      <categories>
+        <category>go</category>
+      </categories>
+      <tags>
+        <tag>go</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/posts/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank">GitHub</a>.</p>
@@ -321,44 +399,6 @@ chrome 应用商店本身需要翻墙才能访问，因此需要先在 shadowsoc
       </tags>
   </entry>
   <entry>
-    <title>巫师三干货收藏</title>
-    <url>/posts/%E5%B7%AB%E5%B8%88%E4%B8%89%E5%B9%B2%E8%B4%A7%E6%94%B6%E8%97%8F/</url>
-    <content><![CDATA[<blockquote class="blockquote-center"><p><strong>The wither 3</strong>：萝卜是狩魔猎人世界中最强大的生物。它可以瞬间移动到杰洛特的身边，并且不受任何魔法的影响。没有人能伤到萝卜，当萝卜受到攻击时，它会愤怒的抬起它那粗壮的后腿进行反击。在堕入悬崖时，萝卜会使用瞬间移动逃脱，并且在世界上消失，根本找不到一丝踪迹。而当杰洛特再次召唤萝卜时 萝卜会从某个地方突然蹿出来 慢慢悠悠的走向杰洛特。。<br>
-　　“要说萝卜有什么不足的话，大概是它不会打昆特牌吧”——利维亚的杰洛特</p>
-</blockquote>
-<a id="more"></a>
-<div class="note info">
-            <h3 id="《开场-cg》">《开场-CG》<a title="#《开场-cg》" href="#《开场-cg》"></a></h3><p><strong>寻找叶奈法</strong></p>
-          </div>
-<iframe height=370 width=510 src='http://player.youku.com/embed/XODEwNzE1MTAw' frameborder=0 'allowfullscreen'></iframe>
-<div class="note info">
-            <h3 id="《present-cg》">《Present-CG》<a title="#《present-cg》" href="#《present-cg》"></a></h3><p><strong>怪物猎人</strong></p>
-          </div>
-<iframe height=370 width=510 src='http://player.youku.com/embed/XNDAwNzQ0NDM1Mg==' frameborder=0 'allowfullscreen'></iframe>
-<div class="note info">
-            <h3 id="《难忘之夜-cg》">《难忘之夜-CG》<a title="#《难忘之夜-cg》" href="#《难忘之夜-cg》"></a></h3><p><strong>血与酒</strong></p>
-          </div>
-<iframe height=370 width=510 src='http://player.youku.com/embed/XMTgxOTI0OTcyOA==' frameborder=0 'allowfullscreen'></iframe>
-<div class="note info">
-            <h3 id="《e3-cg》">《E3-CG》<a title="#《e3-cg》" href="#《e3-cg》"></a></h3><p><strong>E3游戏会展</strong></p>
-          </div>
-<iframe height=370 width=510 src='http://player.youku.com/embed/XMjcyMzI3MDc2MA==' frameborder=0 'allowfullscreen'></iframe>
-<div class="note danger">
-            <h3 id="《marcin-przybyłowicz》">《Marcin Przybyłowicz》<a title="#《marcin-przybyłowicz》" href="#《marcin-przybyłowicz》"></a></h3><p><strong>50首经典单曲</strong></p>
-          </div>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=510 height=430 src="//music.163.com/outchain/player?type=0&id=2493215421&auto=0&height=430"></iframe>
-<div class="note danger">
-            <h3 id="《the-sansretour》">《The Sansretour》<a title="#《the-sansretour》" href="#《the-sansretour》"></a></h3><p><strong>12首经典单曲</strong></p>
-          </div>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=510 height=430 src="//music.163.com/outchain/player?type=0&id=2684241951&auto=1&height=430"></iframe>]]></content>
-      <categories>
-        <category>PC</category>
-      </categories>
-      <tags>
-        <tag>巫师3</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>给hexo博客next主题添加背景音乐</title>
     <url>/posts/%E7%BB%99hexo%E5%8D%9A%E5%AE%A2next%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E8%83%8C%E6%99%AF%E9%9F%B3%E4%B9%90/</url>
     <content><![CDATA[<ul>
@@ -399,6 +439,130 @@ chrome 应用商店本身需要翻墙才能访问，因此需要先在 shadowsoc
       </categories>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>巫师三干货收藏</title>
+    <url>/posts/%E5%B7%AB%E5%B8%88%E4%B8%89%E5%B9%B2%E8%B4%A7%E6%94%B6%E8%97%8F/</url>
+    <content><![CDATA[<blockquote class="blockquote-center"><p><strong>The wither 3</strong>：萝卜是狩魔猎人世界中最强大的生物。它可以瞬间移动到杰洛特的身边，并且不受任何魔法的影响。没有人能伤到萝卜，当萝卜受到攻击时，它会愤怒的抬起它那粗壮的后腿进行反击。在堕入悬崖时，萝卜会使用瞬间移动逃脱，并且在世界上消失，根本找不到一丝踪迹。而当杰洛特再次召唤萝卜时 萝卜会从某个地方突然蹿出来 慢慢悠悠的走向杰洛特。。<br>
+　　“要说萝卜有什么不足的话，大概是它不会打昆特牌吧”——利维亚的杰洛特</p>
+</blockquote>
+<a id="more"></a>
+<div class="note info">
+            <h3 id="《开场-cg》">《开场-CG》<a title="#《开场-cg》" href="#《开场-cg》"></a></h3><p><strong>寻找叶奈法</strong></p>
+          </div>
+<iframe height=370 width=510 src='http://player.youku.com/embed/XODEwNzE1MTAw' frameborder=0 'allowfullscreen'></iframe>
+<div class="note info">
+            <h3 id="《present-cg》">《Present-CG》<a title="#《present-cg》" href="#《present-cg》"></a></h3><p><strong>怪物猎人</strong></p>
+          </div>
+<iframe height=370 width=510 src='http://player.youku.com/embed/XNDAwNzQ0NDM1Mg==' frameborder=0 'allowfullscreen'></iframe>
+<div class="note info">
+            <h3 id="《难忘之夜-cg》">《难忘之夜-CG》<a title="#《难忘之夜-cg》" href="#《难忘之夜-cg》"></a></h3><p><strong>血与酒</strong></p>
+          </div>
+<iframe height=370 width=510 src='http://player.youku.com/embed/XMTgxOTI0OTcyOA==' frameborder=0 'allowfullscreen'></iframe>
+<div class="note info">
+            <h3 id="《e3-cg》">《E3-CG》<a title="#《e3-cg》" href="#《e3-cg》"></a></h3><p><strong>E3游戏会展</strong></p>
+          </div>
+<iframe height=370 width=510 src='http://player.youku.com/embed/XMjcyMzI3MDc2MA==' frameborder=0 'allowfullscreen'></iframe>
+<div class="note danger">
+            <h3 id="《marcin-przybyłowicz》">《Marcin Przybyłowicz》<a title="#《marcin-przybyłowicz》" href="#《marcin-przybyłowicz》"></a></h3><p><strong>50首经典单曲</strong></p>
+          </div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=510 height=430 src="//music.163.com/outchain/player?type=0&id=2493215421&auto=0&height=430"></iframe>
+<div class="note danger">
+            <h3 id="《the-sansretour》">《The Sansretour》<a title="#《the-sansretour》" href="#《the-sansretour》"></a></h3><p><strong>12首经典单曲</strong></p>
+          </div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=510 height=430 src="//music.163.com/outchain/player?type=0&id=2684241951&auto=1&height=430"></iframe>]]></content>
+      <categories>
+        <category>PC</category>
+      </categories>
+      <tags>
+        <tag>巫师3</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>问道</title>
+    <url>/posts/%E9%97%AE%E9%81%93/</url>
+    <content><![CDATA[<h3 id="游戏背景介绍">游戏背景介绍<a title="#游戏背景介绍" href="#游戏背景介绍"></a></h3>
+<p>鸿蒙开化之初，中州大陆昆仑之颠的鸿钧上人创立道教，并收徒三人，各授以道门绝技，三徒皆修成混元大罗金仙万劫不坏之体，分别发展出道教的人道、阐教和截教三个分支。此三徒正是人道教主太上老君、阐教教主元始天尊和截教的通天教主。</p>
+<a id="more"></a>
+<p>三教主秉承师父鸿钧上人教诲，广收门徒将道教流传于世。只因入道门中即可修仙，使人跳出三界之外，不在五行之中，免除生死轮回之苦，使得入道修行之人多不胜数。但修仙之道并非苦心修炼便可达成，修行路上，均要经历三百年一小劫，一千五百年一大劫的劫数。修行之人均无法避开劫数，只能根据自身道行的深浅去经历劫数。值商周两朝交替之时，恰逢修仙一千五百年仙劫，于是三教主共议封神榜，以观众仙根行浅深。然劫数难逃，封神一役，致使道门内部阐教和截教不和，修仙众人俱遭屠戮，更引来西方教派参与纷争，后因鸿钧上人亲自出面调停，终得以平息。通天教主被鸿钧上人禁制在紫霄宫昆仑之颠修行思过。<br>
+时光如梭，转眼已过千年，师尊鸿钧上人外出云游，不知所踪。而通天仿佛已经习惯了这种被禁固的生活，除了每日的必做的修真炼气和静诵《黄庭》，他更多的时间总是在断崖边静静坐着。也许只有这个时刻，他才能真真实实地感觉到自己的存在，千年的苦行使他的修为倍增，同时也让他饱受了孤单和寂寞，他已经很久没有说过一句话了，很久是多久，他自己也不知道，他只知道他在等，他们都在等。.<br>
+空旷的断崖边，一个人影伫立，良久，一动不动。山风劲袭，人犹如与山浑然一体，仍是一动不动，坚毅的面容毫无表情，只有明亮的双眸在黑夜印衬下寒光闪现，眺望着远方。远处，骷髅山顶，一块顽石好象动了一动，又动了一动，仿佛有了呼吸。慢慢地，顽石周围竟然忽隐忽现出着玄黄色的光芒，最终幻化为一个人形的光团，缓缓飘向山后的幽冥涧。此时，人影的苍白面容上浮现出奇怪的笑意，令人不寒而栗，他是通天。<br>
+五百年后的中洲大陆。<br>
+在东海渔村，世世代代以捕鱼为生的渔民有一天突然发现离他们村子不远的海面上，竟然出现一个异常美丽的仙岛。<br>
+在天墉城，熙熙攘攘地街道上突然多了一些身着奇装奇服，行为举止十分可疑之人。<br>
+在揽仙镇，一个平凡冷清的小镇上突然间热闹了起来，从四面八方赶来的俊男美女络绎不绝。<br>
+本来平静的《问道》世界中出现各种异象和征兆，而此时，准备一探究竟的玩家，正赶往揽仙镇的途中。 [1]</p>
+<h3 id="截图">截图<a title="#截图" href="#截图"></a></h3>
+<p><img src="/posts/%E9%97%AE%E9%81%93/261557566768_.pic_hd.jpg" alt="" class="φcx"></p>
+<span class="label default">截图内容和实际无关</span>
+<h3 id="下载">下载<a title="#下载" href="#下载"></a></h3>
+<div class="tabs" id="fourth-unique-name"><ul class="nav-tabs"><li class="tab active"><a href="#fourth-unique-name-1" data-toggle="tab"><i class="fa fa-text-width"></i>客户端下载</a></li><li class="tab"><a href="#fourth-unique-name-2" data-toggle="tab">登录器下载</a></li></ul><div class="tab-content"><div class="tab-pane active" id="fourth-unique-name-1"><div class="note success">
+            <h3 id="目前只提供1.60.0905版本客户端百度云下载链接🔗">目前只提供1.60.0905版本客户端百度云下载链接🔗<a title="#目前只提供1.60.0905版本客户端百度云下载链接🔗" href="#目前只提供1.60.0905版本客户端百度云下载链接🔗"></a></h3>
+          </div>
+<p><a class="btn" href="https://pan.baidu.com/s/1rsdS6oiuAxoYr5wXeZr22A" target="_blank" rel="noopener" title="kq7m"><i class="fa fa-edge"></i>百度云 密码(kq7m)</a></p></div><div class="tab-pane" id="fourth-unique-name-2"><div class="note warning">
+            <h3 id="与版本对应的登录器，服务器为公益服，不做任何盈利和不具备商业性质！">与版本对应的登录器，服务器为公益服，不做任何盈利和不具备商业性质！<a title="#与版本对应的登录器，服务器为公益服，不做任何盈利和不具备商业性质！" href="#与版本对应的登录器，服务器为公益服，不做任何盈利和不具备商业性质！"></a></h3>
+          </div>
+<p>链接：<a href="https://pan.baidu.com/s/1dllSI4gk4dEjf_84bf0AZQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1dllSI4gk4dEjf_84bf0AZQ</a></p>
+<p>提取码：bebc<br>
+复制这段内容后打开百度网盘手机App，操作更方便哦</p>
+<img src="/posts/问道/281557578598_.pic_hd.jpg" width = "100px" height = "100px" /></div></div></div>
+<p>更多资讯: <a href="https://hexo.io/docs/deployment.html" target="_blank">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>PC</category>
+      </categories>
+      <tags>
+        <tag>online</tag>
+        <tag>game</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++中优雅的异步操作</title>
+    <url>/posts/C++%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<p>c++11中增加了线程，使得我们可以非常方便的创建线程，它的基本用法是这样的：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> n)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t</span><span class="params">(f, n + <span class="number">1</span>)</span></span>;</span><br><span class="line">t.join();</span><br></pre></td></tr></table></figure>
+<a id="more"></a>　　
+<p>​		但是线程毕竟是属于比较低层次的东西，有时候使用有些不便，比如我希望获取线程函数的返回结果的时候，我就不能直接通过thread.join()得到结果，这时就必须定义一个变量，在线程函数中去给这个变量赋值，然后join,最后得到结果，这个过程是比较繁琐的。c++11还提供了异步接口std::async，通过这个异步接口可以很方便的获取线程函数的执行结果。std::async会自动创建一个线程去调用线程函数，它返回一个std::future，这个future中存储了线程函数返回的结果，当我们需要线程函数的结果时，直接从future中获取，非常方便。但是我想说的是，<strong>其实std::async给我们提供的便利可不仅仅是这一点，它首先解耦了线程的创建和执行，使得我们可以在需要的时候获取异步操作的结果；其次它还提供了线程的创建策略（比如可以通过延迟加载的方式去创建线程）</strong>，使得我们可以以多种方式去创建线程。在介绍async具体用法以及为什么要用std::async代替线程的创建之前，我想先说一说std::future、std::promise和std::packaged_task。</p>
+<h2 id="std::futur">std::futur<a title="#std::futur" href="#std::futur"></a></h2>
+<p>std::future是一个非常有用也很有意思的东西，简单说std::future提供了一种访问异步操作结果的机制。从字面意思来理解，它表示未来，我觉得这个名字非常贴切，因为一个异步操作我们是不可能马上就获取操作结果的，只能在未来某个时候获取，但是我们可以以同步等待的方式来获取结果，可以通过查询future的状态（future_status）来获取异步操作的结果。future_status有三种状态：</p>
+<ul>
+<li>deferred：异步操作还没开始</li>
+<li>ready：异步操作已经完成</li>
+<li>timeout：异步操作超时</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//查询future的状态</span></span><br><span class="line"><span class="built_in">std</span>::future_status status;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        status = future.wait_for(<span class="built_in">std</span>::chrono::seconds(<span class="number">1</span>));</span><br><span class="line">        <span class="keyword">if</span> (status == <span class="built_in">std</span>::future_status::deferred) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"deferred\n"</span>; <span class="comment">//代表延迟执行</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (status == <span class="built_in">std</span>::future_status::timeout) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"timeout\n"</span>;  <span class="comment">//代表执行中</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (status == <span class="built_in">std</span>::future_status::ready) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ready!\n"</span>;   <span class="comment">//代表已经执行完成</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> (status != <span class="built_in">std</span>::future_status::ready);</span><br></pre></td></tr></table></figure>
+<p>获取future结果有三种方式：get、wait、wait_for，其中get等待异步操作结束并返回结果，wait只是等待异步操作完成，没有返回值，wait_for是超时等待返回结果。</p>
+<h2 id="std::promise">std::promise<a title="#std::promise" href="#std::promise"></a></h2>
+<p>std::promise为获取线程函数中的某个值提供便利，在线程函数中给外面传进来的promise赋值，当线程函数执行完成之后就可以通过promis获取该值了，值得注意的是取值是间接的通过promise内部提供的future来获取的。它的基本用法：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">std</span>::promise&lt;<span class="keyword">int</span>&gt; pr;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t</span><span class="params">([](<span class="built_in">std</span>::promise&lt;<span class="keyword">int</span>&gt;&amp; p)&#123; p.set_value_at_thread_exit(<span class="number">9</span>); &#125;,<span class="built_in">std</span>::ref(pr))</span></span>;</span><br><span class="line"><span class="built_in">std</span>::future&lt;<span class="keyword">int</span>&gt; f = pr.get_future();</span><br><span class="line"><span class="keyword">auto</span> r = f.get();</span><br></pre></td></tr></table></figure>
+<h2 id="std::packaged_task">std::packaged_task<a title="#std::packaged_task" href="#std::packaged_task"></a></h2>
+<p>std::packaged_task它包装了一个可调用的目标（如function, lambda expression, bind expression, or another function object）,以便异步调用，它和promise在某种程度上有点像，promise保存了一个共享状态的值，而packaged_task保存的是一个函数。它的基本用法：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">std</span>::packaged_task&lt;<span class="keyword">int</span>()&gt; task([]()&#123; <span class="keyword">return</span> <span class="number">7</span>; &#125;);</span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t1</span><span class="params">(<span class="built_in">std</span>::ref(task))</span></span>; </span><br><span class="line"><span class="built_in">std</span>::future&lt;<span class="keyword">int</span>&gt; f1 = task.get_future(); </span><br><span class="line"><span class="keyword">auto</span> r1 = f1.get();</span><br></pre></td></tr></table></figure>
+<h2 id="std::promise、std::packaged_task和std::future的关系">std::promise、std::packaged_task和std::future的关系<a title="#std::promise、std::packaged_task和std::future的关系" href="#std::promise、std::packaged_task和std::future的关系"></a></h2>
+<p>至此, 我们介绍了std::async相关的几个对象std::future、std::promise和std::packaged_task，其中std::promise和std::packaged_task的结果最终都是通过其内部的future返回出来的，不知道读者有没有搞糊涂，为什么有这么多东西出来，他们之间的关系到底是怎样的？且听我慢慢道来，std::future提供了一个访问异步操作结果的机制，它和线程是一个级别的属于低层次的对象，在它之上高一层的是std::packaged_task和std::promise，他们内部都有future以便访问异步操作结果，<strong>std::packaged_task包装的是一个异步操作，而std::promise包装的是一个值，都是为了方便异步操作的，因为有时我需要获取线程中的某个值，这时就用std::promise，而有时我需要获一个异步操作的返回值，这时就用std::packaged_task。</strong>那std::promise和std::packaged_task之间又是什么关系呢？说他们没关系也关系，说他们有关系也有关系，都取决于你了，因为我可以将一个异步操作的结果保存到std::promise中。如果读者还没搞清楚他们的关系的话，我就用更通俗的话来解释一下。比如，一个小伙子给一个姑娘表白真心的时候也许会说：”我许诺会给你一个美好的未来“或者”我会努力奋斗为你创造一个美好的未来“。姑娘往往会说：”我等着“。现在我来将这三句话用c++11来翻译一下：</p>
+<p>小伙子说：我许诺会给你一个美好的未来等于c<ins>11中&quot;std::promise a std::future&quot;;<br>
+小伙子说：我会努力奋斗为你创造一个美好的未来等于c</ins>11中&quot;std::packaged_task a future&quot;;<br>
+姑娘说：我等着等于c++11中&quot;future.get()/wait()&quot;;</p>
+<p>小伙子两句话的个中差异，自己琢磨一下，这点差异也是std::promise和std::packaged_task的差异。现实中的山盟海誓靠不靠得住我不知道，但是c<ins>11中的许诺和未来是一定可靠的，发起来了许诺就一定有未来。细想起来c</ins>11标准的制定者选定的关键字真是贴切而有意思！好了，插科打诨到此了，现在言归正传，回过头来说说std::async。</p>
+<h2 id="为什么要用std::async代替线程的创建">为什么要用std::async代替线程的创建<a title="#为什么要用std::async代替线程的创建" href="#为什么要用std::async代替线程的创建"></a></h2>
+<p>std::async又是干啥的，已经有了td::future、std::promise和std::packaged_task，够多的了，真的还要一个std::async来凑热闹吗，std::async表示很委屈：我不是来凑热闹的，我是来帮忙的。是的，std::async是为了让用户的少费点脑子的，它让这三个对象默契的工作。大概的工作过程是这样的：std::async先将异步操作用std::packaged_task包装起来，然后将异步操作的结果放到std::promise中，这个过程就是创造未来的过程。外面再通过future.get/wait来获取这个未来的结果，怎么样，std::async真的是来帮忙的吧，你不用再想到底该怎么用std::future、std::promise和std::packaged_task了，std::async已经帮你搞定一切了！</p>
+<p>现在来看看std::async的原型async(std::launch::async | std::launch::deferred, f, args…)，第一个参数是线程的创建策略，有两种策略，默认的策略是立即创建线程：</p>
+<ul>
+<li>std::launch::async：在调用async就开始创建线程。</li>
+<li>std::launch::deferred：延迟加载方式创建线程。调用async时不创建线程，直到调用了future的get或者wait时才创建线程。可能在这里会阻塞住主线程。</li>
+</ul>
+<p>第二个参数是线程函数，第三个参数是线程函数的参数。</p>
+<p><strong>std::async基本用法：</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">std</span>::future&lt;<span class="keyword">int</span>&gt; f1 = <span class="built_in">std</span>::async(<span class="built_in">std</span>::launch::async, []()&#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="number">8</span>;  </span><br><span class="line">    &#125;); </span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;f1.get()&lt;&lt;<span class="built_in">endl</span>; <span class="comment">//output: 8</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::future&lt;<span class="keyword">int</span>&gt; f2 = <span class="built_in">std</span>::async(<span class="built_in">std</span>::launch::async, []()&#123; </span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="number">8</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;); </span><br><span class="line"></span><br><span class="line">f2.wait(); <span class="comment">//output: 8</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::future&lt;<span class="keyword">int</span>&gt; future = <span class="built_in">std</span>::async(<span class="built_in">std</span>::launch::async, []()&#123; </span><br><span class="line">        <span class="built_in">std</span>::this_thread::sleep_for(<span class="built_in">std</span>::chrono::seconds(<span class="number">3</span>));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">8</span>;  </span><br><span class="line">    &#125;); </span><br><span class="line"> </span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"waiting...\n"</span>;</span><br><span class="line">    <span class="built_in">std</span>::future_status status;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        status = future.wait_for(<span class="built_in">std</span>::chrono::seconds(<span class="number">1</span>));</span><br><span class="line">        <span class="keyword">if</span> (status == <span class="built_in">std</span>::future_status::deferred) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"deferred\n"</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (status == <span class="built_in">std</span>::future_status::timeout) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"timeout\n"</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (status == <span class="built_in">std</span>::future_status::ready) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ready!\n"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> (status != <span class="built_in">std</span>::future_status::ready); </span><br><span class="line"> </span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"result is "</span> &lt;&lt; future.get() &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">可能的结果：</span><br><span class="line">waiting...</span><br><span class="line">timeout</span><br><span class="line">timeout</span><br><span class="line">ready!</span><br><span class="line">result is <span class="number">8</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结：">总结：<a title="#总结：" href="#总结："></a></h2>
+<p>std::async是更高层次上的异步操作，使我们不用关注线程创建内部细节，就能方便的获取异步执行状态和结果，还可以指定线程创建策略，应该用std::async替代线程的创建，让它成为我们做异步操作的首选。</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -717,162 +881,6 @@ chrome 应用商店本身需要翻墙才能访问，因此需要先在 shadowsoc
       </tags>
   </entry>
   <entry>
-    <title>C++中优雅的异步操作</title>
-    <url>/posts/C++%E4%B8%AD%E4%BC%98%E9%9B%85%E7%9A%84%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<p>c++11中增加了线程，使得我们可以非常方便的创建线程，它的基本用法是这样的：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> n)</span></span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t</span><span class="params">(f, n + <span class="number">1</span>)</span></span>;</span><br><span class="line">t.join();</span><br></pre></td></tr></table></figure>
-<a id="more"></a>　　
-<p>​		但是线程毕竟是属于比较低层次的东西，有时候使用有些不便，比如我希望获取线程函数的返回结果的时候，我就不能直接通过thread.join()得到结果，这时就必须定义一个变量，在线程函数中去给这个变量赋值，然后join,最后得到结果，这个过程是比较繁琐的。c++11还提供了异步接口std::async，通过这个异步接口可以很方便的获取线程函数的执行结果。std::async会自动创建一个线程去调用线程函数，它返回一个std::future，这个future中存储了线程函数返回的结果，当我们需要线程函数的结果时，直接从future中获取，非常方便。但是我想说的是，<strong>其实std::async给我们提供的便利可不仅仅是这一点，它首先解耦了线程的创建和执行，使得我们可以在需要的时候获取异步操作的结果；其次它还提供了线程的创建策略（比如可以通过延迟加载的方式去创建线程）</strong>，使得我们可以以多种方式去创建线程。在介绍async具体用法以及为什么要用std::async代替线程的创建之前，我想先说一说std::future、std::promise和std::packaged_task。</p>
-<h2 id="std::futur">std::futur<a title="#std::futur" href="#std::futur"></a></h2>
-<p>std::future是一个非常有用也很有意思的东西，简单说std::future提供了一种访问异步操作结果的机制。从字面意思来理解，它表示未来，我觉得这个名字非常贴切，因为一个异步操作我们是不可能马上就获取操作结果的，只能在未来某个时候获取，但是我们可以以同步等待的方式来获取结果，可以通过查询future的状态（future_status）来获取异步操作的结果。future_status有三种状态：</p>
-<ul>
-<li>deferred：异步操作还没开始</li>
-<li>ready：异步操作已经完成</li>
-<li>timeout：异步操作超时</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//查询future的状态</span></span><br><span class="line"><span class="built_in">std</span>::future_status status;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        status = future.wait_for(<span class="built_in">std</span>::chrono::seconds(<span class="number">1</span>));</span><br><span class="line">        <span class="keyword">if</span> (status == <span class="built_in">std</span>::future_status::deferred) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"deferred\n"</span>; <span class="comment">//代表延迟执行</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (status == <span class="built_in">std</span>::future_status::timeout) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"timeout\n"</span>;  <span class="comment">//代表执行中</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (status == <span class="built_in">std</span>::future_status::ready) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ready!\n"</span>;   <span class="comment">//代表已经执行完成</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> (status != <span class="built_in">std</span>::future_status::ready);</span><br></pre></td></tr></table></figure>
-<p>获取future结果有三种方式：get、wait、wait_for，其中get等待异步操作结束并返回结果，wait只是等待异步操作完成，没有返回值，wait_for是超时等待返回结果。</p>
-<h2 id="std::promise">std::promise<a title="#std::promise" href="#std::promise"></a></h2>
-<p>std::promise为获取线程函数中的某个值提供便利，在线程函数中给外面传进来的promise赋值，当线程函数执行完成之后就可以通过promis获取该值了，值得注意的是取值是间接的通过promise内部提供的future来获取的。它的基本用法：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">std</span>::promise&lt;<span class="keyword">int</span>&gt; pr;</span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t</span><span class="params">([](<span class="built_in">std</span>::promise&lt;<span class="keyword">int</span>&gt;&amp; p)&#123; p.set_value_at_thread_exit(<span class="number">9</span>); &#125;,<span class="built_in">std</span>::ref(pr))</span></span>;</span><br><span class="line"><span class="built_in">std</span>::future&lt;<span class="keyword">int</span>&gt; f = pr.get_future();</span><br><span class="line"><span class="keyword">auto</span> r = f.get();</span><br></pre></td></tr></table></figure>
-<h2 id="std::packaged_task">std::packaged_task<a title="#std::packaged_task" href="#std::packaged_task"></a></h2>
-<p>std::packaged_task它包装了一个可调用的目标（如function, lambda expression, bind expression, or another function object）,以便异步调用，它和promise在某种程度上有点像，promise保存了一个共享状态的值，而packaged_task保存的是一个函数。它的基本用法：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">std</span>::packaged_task&lt;<span class="keyword">int</span>()&gt; task([]()&#123; <span class="keyword">return</span> <span class="number">7</span>; &#125;);</span><br><span class="line"><span class="built_in">std</span>::<span class="function">thread <span class="title">t1</span><span class="params">(<span class="built_in">std</span>::ref(task))</span></span>; </span><br><span class="line"><span class="built_in">std</span>::future&lt;<span class="keyword">int</span>&gt; f1 = task.get_future(); </span><br><span class="line"><span class="keyword">auto</span> r1 = f1.get();</span><br></pre></td></tr></table></figure>
-<h2 id="std::promise、std::packaged_task和std::future的关系">std::promise、std::packaged_task和std::future的关系<a title="#std::promise、std::packaged_task和std::future的关系" href="#std::promise、std::packaged_task和std::future的关系"></a></h2>
-<p>至此, 我们介绍了std::async相关的几个对象std::future、std::promise和std::packaged_task，其中std::promise和std::packaged_task的结果最终都是通过其内部的future返回出来的，不知道读者有没有搞糊涂，为什么有这么多东西出来，他们之间的关系到底是怎样的？且听我慢慢道来，std::future提供了一个访问异步操作结果的机制，它和线程是一个级别的属于低层次的对象，在它之上高一层的是std::packaged_task和std::promise，他们内部都有future以便访问异步操作结果，<strong>std::packaged_task包装的是一个异步操作，而std::promise包装的是一个值，都是为了方便异步操作的，因为有时我需要获取线程中的某个值，这时就用std::promise，而有时我需要获一个异步操作的返回值，这时就用std::packaged_task。</strong>那std::promise和std::packaged_task之间又是什么关系呢？说他们没关系也关系，说他们有关系也有关系，都取决于你了，因为我可以将一个异步操作的结果保存到std::promise中。如果读者还没搞清楚他们的关系的话，我就用更通俗的话来解释一下。比如，一个小伙子给一个姑娘表白真心的时候也许会说：”我许诺会给你一个美好的未来“或者”我会努力奋斗为你创造一个美好的未来“。姑娘往往会说：”我等着“。现在我来将这三句话用c++11来翻译一下：</p>
-<p>小伙子说：我许诺会给你一个美好的未来等于c<ins>11中&quot;std::promise a std::future&quot;;<br>
-小伙子说：我会努力奋斗为你创造一个美好的未来等于c</ins>11中&quot;std::packaged_task a future&quot;;<br>
-姑娘说：我等着等于c++11中&quot;future.get()/wait()&quot;;</p>
-<p>小伙子两句话的个中差异，自己琢磨一下，这点差异也是std::promise和std::packaged_task的差异。现实中的山盟海誓靠不靠得住我不知道，但是c<ins>11中的许诺和未来是一定可靠的，发起来了许诺就一定有未来。细想起来c</ins>11标准的制定者选定的关键字真是贴切而有意思！好了，插科打诨到此了，现在言归正传，回过头来说说std::async。</p>
-<h2 id="为什么要用std::async代替线程的创建">为什么要用std::async代替线程的创建<a title="#为什么要用std::async代替线程的创建" href="#为什么要用std::async代替线程的创建"></a></h2>
-<p>std::async又是干啥的，已经有了td::future、std::promise和std::packaged_task，够多的了，真的还要一个std::async来凑热闹吗，std::async表示很委屈：我不是来凑热闹的，我是来帮忙的。是的，std::async是为了让用户的少费点脑子的，它让这三个对象默契的工作。大概的工作过程是这样的：std::async先将异步操作用std::packaged_task包装起来，然后将异步操作的结果放到std::promise中，这个过程就是创造未来的过程。外面再通过future.get/wait来获取这个未来的结果，怎么样，std::async真的是来帮忙的吧，你不用再想到底该怎么用std::future、std::promise和std::packaged_task了，std::async已经帮你搞定一切了！</p>
-<p>现在来看看std::async的原型async(std::launch::async | std::launch::deferred, f, args…)，第一个参数是线程的创建策略，有两种策略，默认的策略是立即创建线程：</p>
-<ul>
-<li>std::launch::async：在调用async就开始创建线程。</li>
-<li>std::launch::deferred：延迟加载方式创建线程。调用async时不创建线程，直到调用了future的get或者wait时才创建线程。可能在这里会阻塞住主线程。</li>
-</ul>
-<p>第二个参数是线程函数，第三个参数是线程函数的参数。</p>
-<p><strong>std::async基本用法：</strong></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">std</span>::future&lt;<span class="keyword">int</span>&gt; f1 = <span class="built_in">std</span>::async(<span class="built_in">std</span>::launch::async, []()&#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="number">8</span>;  </span><br><span class="line">    &#125;); </span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;f1.get()&lt;&lt;<span class="built_in">endl</span>; <span class="comment">//output: 8</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::future&lt;<span class="keyword">int</span>&gt; f2 = <span class="built_in">std</span>::async(<span class="built_in">std</span>::launch::async, []()&#123; </span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="number">8</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;); </span><br><span class="line"></span><br><span class="line">f2.wait(); <span class="comment">//output: 8</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::future&lt;<span class="keyword">int</span>&gt; future = <span class="built_in">std</span>::async(<span class="built_in">std</span>::launch::async, []()&#123; </span><br><span class="line">        <span class="built_in">std</span>::this_thread::sleep_for(<span class="built_in">std</span>::chrono::seconds(<span class="number">3</span>));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">8</span>;  </span><br><span class="line">    &#125;); </span><br><span class="line"> </span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"waiting...\n"</span>;</span><br><span class="line">    <span class="built_in">std</span>::future_status status;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        status = future.wait_for(<span class="built_in">std</span>::chrono::seconds(<span class="number">1</span>));</span><br><span class="line">        <span class="keyword">if</span> (status == <span class="built_in">std</span>::future_status::deferred) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"deferred\n"</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (status == <span class="built_in">std</span>::future_status::timeout) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"timeout\n"</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (status == <span class="built_in">std</span>::future_status::ready) &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"ready!\n"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> (status != <span class="built_in">std</span>::future_status::ready); </span><br><span class="line"> </span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"result is "</span> &lt;&lt; future.get() &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">可能的结果：</span><br><span class="line">waiting...</span><br><span class="line">timeout</span><br><span class="line">timeout</span><br><span class="line">ready!</span><br><span class="line">result is <span class="number">8</span></span><br></pre></td></tr></table></figure>
-<h2 id="总结：">总结：<a title="#总结：" href="#总结："></a></h2>
-<p>std::async是更高层次上的异步操作，使我们不用关注线程创建内部细节，就能方便的获取异步执行状态和结果，还可以指定线程创建策略，应该用std::async替代线程的创建，让它成为我们做异步操作的首选。</p>
-]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++ 模板偏特化－来自STL的思考</title>
-    <url>/posts/%E6%A8%A1%E6%9D%BF%E7%89%B9%E5%8C%96/</url>
-    <content><![CDATA[<p>之前学习STL时接触过一段时间的模板，模板是C++泛型编程编程的基础<br>
-STL从头到尾都是模板泛型编程，我觉得用的最巧妙的就是在traits萃取技巧时用到的模板偏特化</p>
-<hr>
-<ul>
-<li>先简要回顾一下模板吧，模板主要分为函数模板与类模板</li>
-</ul>
-<h2 id="函数模板">函数模板<a title="#函数模板" href="#函数模板"></a></h2>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T</span>&gt;</span><br><span class="line"><span class="symbol">T</span> <span class="symbol">add</span>(<span class="symbol">T</span> <span class="symbol">a, <span class="symbol">T</span></span> <span class="symbol">b</span>) &#123; <span class="keyword">return</span> a + b;&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> a = <span class="number">1</span>, b = <span class="number">2</span>;</span><br><span class="line">    std::cout &lt;&lt; add(a + b) &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>如上就是最简单的函数模板，当实例化函数模板时，编译器会自动进行实参类型推导<br>
-上面类型T就被自动推导为int类型</p>
-<h2 id="类模板">类模板<a title="#类模板" href="#类模板"></a></h2>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">templete&lt;<span class="keyword">class</span> <span class="symbol">T</span>&gt;</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">explicit</span> A(T val) : t(val) &#123; &#125;</span><br><span class="line">    T add(T x) &#123; <span class="keyword">return</span> t + y; &#125;    </span><br><span class="line">privete:</span><br><span class="line">    T t;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    A&lt;<span class="built_in">int</span>&gt; a(<span class="number">10</span>);</span><br><span class="line">    std::cout &lt;&lt; a.add(<span class="number">5</span>) &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如上就是最简单的类模板，实例化类模板必须要指定类型，编译器无法为类模板自动推导类型</p>
-<h3 id="几个需要注意的点">几个需要注意的点<a title="#几个需要注意的点" href="#几个需要注意的点"></a></h3>
-<ul>
-<li>
-<p>１．类模板的和函数模板都必须定义在.h头文件中</p>
-</li>
-<li>
-<p>２．模板的实例化类型确定是在编译期间</p>
-</li>
-<li>
-<p>３．只是模板写好了，编译一般不会很多出错，出错一般会在实例化编译之后</p>
-</li>
-<li>
-<p>４．模板实例化只会实例化用到的部分，没有用到的部分将不会被实例化</p>
-</li>
-</ul>
-<hr>
-<p>我觉得模板的特例化是模板中比较精髓的东西<br>
-有函数模板特例化，类模板特例化，其中又分为全特化与偏特化<br>
-主要的用途都是对于特定的类型，指定特定的处理方式<br>
-就相当于普通编程中if-else if - else这样的方式<br>
-编译阶段确定如果是某个特化类型，就用特化的模板<br>
-如果都不是，就用最一般的模板</p>
-<h2 id="函数模板特例化">函数模板特例化<a title="#函数模板特例化" href="#函数模板特例化"></a></h2>
-<p>函数模板只能全特化，<span class="label primary">不能偏特化</span>，如果要偏特化的话只能重载</p>
-<h3 id="函数模板全特化">函数模板全特化<a title="#函数模板全特化" href="#函数模板全特化"></a></h3>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt; &gt;                                  <span class="comment">// 全特化　注意语法</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">add</span><span class="params">(<span class="keyword">double</span> a, <span class="keyword">double</span> b)</span>  </span>&#123; <span class="keyword">return</span> a + b; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">10</span>, y = <span class="number">20</span>;</span><br><span class="line">    <span class="keyword">double</span> z = <span class="number">1.1</span>, w = <span class="number">2.2</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; add(x, y) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;   <span class="comment">// 调用普通版本</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; add(z, w) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;   <span class="comment">// 调用全特化版本</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果有与实参更加匹配的特例化版本，编译器将会选择特例化版本</p>
-<h3 id="函数模板重载（不存在偏特化）">函数模板重载（不存在偏特化）<a title="#函数模板重载（不存在偏特化）" href="#函数模板重载（不存在偏特化）"></a></h3>
-<p>因为偏特化版本本质上仍然是模板，所以如果需要的话，可以重载一个函数模板</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T1</span>&gt;　　// 重载版本，接收参数为指针</span><br><span class="line"><span class="symbol">T1</span> <span class="symbol">add</span>(<span class="symbol">T1</span>* <span class="symbol">a, <span class="symbol">T1</span></span>* <span class="symbol">b</span>) &#123; <span class="keyword">return</span> *a + *b; &#125;   </span><br><span class="line"><span class="built_in">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> a = <span class="number">10</span>, b = <span class="number">20</span>;</span><br><span class="line">    <span class="built_in">int</span> *x = &amp;a, *y = &amp;b;</span><br><span class="line">    add(a, b);    <span class="comment">// 调用普通模板</span></span><br><span class="line">    add(x, y);　  <span class="comment">// 调用重载的模板</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如上，如果需要一个接收指针的偏特化版本，那么可以用重载模板实现<br>
-函数模板不存在偏特化</p>
-<h2 id="类模板特例化">类模板特例化<a title="#类模板特例化" href="#类模板特例化"></a></h2>
-<p>类模板既有全特化，又有偏特化<br>
-这里重新写一个更一般的模板类来说明类模板的特例化</p>
-<p>类模板全特化比较好理解，跟函数模板一样，全特化是一个实例，当编译器匹配时会优先匹配参数一致的实例</p>
-<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt; &gt;     　　　<span class="comment">// 注意语法</span></span><br><span class="line">class A&lt;<span class="keyword">char</span>*&gt;       <span class="comment">// 一个全特化的模板类A</span></span><br><span class="line">&#123;                    <span class="comment">// 当用char*类型来实例化类模板A时，将会优先调用这个全特化实例</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">explicit</span> A(<span class="keyword">char</span>* val) : t(val) &#123; &#125;</span><br><span class="line">    <span class="keyword">char</span>* add(<span class="keyword">char</span>* a, <span class="keyword">char</span>* b) &#123; <span class="built_in">return</span> strcat(a, b); &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">char</span>* t;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="类模板的偏特化">类模板的偏特化<a title="#类模板的偏特化" href="#类模板的偏特化"></a></h2>
-<p>类模板的偏特化会稍微复杂一点点，它有多种形式<br>
-类模板偏特化本质上都是指定部分类型，让偏特化版本称为普通版本的子集，若实例化时参数类型为指定的类型，则优先调用特例化版本<br>
-第一种形式</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T1, <span class="symbol">class</span></span> <span class="symbol">T2</span>&gt;      // 普通版本，有两个模板参数</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">B</span> &#123; ..... &#125;;</span><br><span class="line"></span><br><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T2</span>&gt;　　　         // 偏特化版本，指定其中一个参数，即指定了部分类型</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">B</span>&lt;<span class="symbol">int</span> , <span class="symbol">T2</span>&gt; &#123; ..... &#125;;　　<span class="comment">// 当实例化时的第一个参数为int 则会优先调用这个版本</span></span><br></pre></td></tr></table></figure>
-<p>第二种形式，也是最重要的版本</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T</span>&gt;     // 普通版本</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">B</span> &#123; ..... &#125;;</span><br><span class="line"></span><br><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T</span>&gt;　　　//这个偏特化版本只接收指针类型的模板实参 </span><br><span class="line"><span class="symbol">class</span> <span class="symbol">B</span>&lt;<span class="symbol">T</span>*&gt; &#123; ..... &#125;; </span><br><span class="line"></span><br><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T</span>&gt;</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">B</span>&lt;<span class="symbol">T</span>&amp;&gt; &#123; ..... &#125;;     <span class="comment">// 这个偏特化版本只接受引用类型的模板实参</span></span><br></pre></td></tr></table></figure>
-<p>第三种形式</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T</span>&gt;    //普通版本</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">B</span> &#123; ..... &#125;;</span><br><span class="line"></span><br><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T</span>&gt;　　　// 这种只接受用<span class="symbol">T</span>实例化的<span class="symbol">vector</span>的模板实参．也是一种偏特化</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">B</span>&lt;<span class="symbol">vector</span>&lt;<span class="symbol">T</span>&gt;&gt; &#123; ......  &#125;;</span><br></pre></td></tr></table></figure>
-<p><strong>几个值得注意的地方</strong></p>
-<ul>
-<li>１．特例化本质上是我们顶替了编译器的工作，我们帮编译器做了类型推导</li>
-<li>２．全特化本质上是一个实例，而偏特化本质上还是一个模板，只是原来模板的一个子集</li>
-<li>３．所以全特化的函数模板，本质上是实例，从而不会与函数模板产生二义性</li>
-<li>４．若想让用户能使用特例化版本，特例化版本必须与模板定义在同一个.h头文件中</li>
-</ul>
-<hr>
-<p>STL中的迭代器实现与高效实现与模板偏特化息息相关．</p>
-<h2 id="类模板偏特化与stl">类模板偏特化与STL<a title="#类模板偏特化与stl" href="#类模板偏特化与stl"></a></h2>
-<p><strong>偏特化在STL中最重要的两个应用</strong></p>
-<p>１．应用在迭代器设计中，为了使迭代器既可以萃取出值类型，又可以包容原生指针<br>
-如果要通过一个迭代器就能知道它的值类型，那么一般会使用iterator_traits<br>
-迭代器萃取技术的两个核心是：</p>
-<ul>
-<li>１）在每个迭代器类中定义value_type值类型的类型成员，这样直接通过迭代器的value_type类型成员就可以知道值类型</li>
-<li>２）问题就在于，迭代器必须兼容原生指针，而原生指针很难被重新定义，即要在原生指针的类中添加value_type的值类型的类型成员．这时候，靠的就是类模板的偏特化了．新添加一层iterator_traits类，专门萃取迭代器的属性，然后再对iterator_traits类设计原生指针与原生引用的偏特化版本，就解决了这个棘手的问题</li>
-</ul>
-<p>２．<span class="label success"> type_traits</span>类型萃取，对待特殊类型，特殊处理，提高效率<br>
-对于没有构造函数，析构函数等的内置类型，如果与复杂类型一样，执行同样的操作，显然是效率不高的<br>
-先实现一个对所有类型都设置一个最保守值的type_traits模板类，然后再对每个内置类型设置偏特化版本，内置类型设置一个更为激进的值，表明可以采取更为高效的操作来提高效率<br>
-比如copy函数，如果传递的对象是一个复杂类型，那么可能只能采取最保守的处理方式，一个一个的构造；如果是内置类型，这样显然太低效，使用memcpy()可能会好一些</p>
-<p>其实iterator_traits也不止是处理兼容原生指针的问题，它也可以提高效率．<br>
-迭代器分为很多种，有可以随机访问的（vector），有只能前后一个一个移动的（list）,也有只能单向移动的（slist），所以一般把迭代器分为五种：</p>
-<ul>
-<li>InputIterator　　　　　　　输入迭代器</li>
-<li>OutputIterator 　　　　　 　输出迭代器</li>
-<li>ForwardIterator　　　　　　单向迭代器</li>
-<li>BidirectionIterator　　　　　双向迭代器</li>
-<li>RandomAccessIterator　　　随机访问迭代器</li>
-</ul>
-<p>比如一个advance(n)函数，对于单向迭代器只能一个一个移动过去，但是这种实现对于随机访问迭代器显然不是理想的处理方式<br>
-处理的方式就是先实现这五个类，用作标记用，在每个迭代器里面都定义迭代器类型的类型成员iterator_catagory，再对不同版本的迭代器实现不同的advance(n)处理方式</p>
-<p>比如stl中添加右值引用元模板的实现：</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">template&lt;typename _Tp,</span><br><span class="line">		   bool = __and_&lt;__not_&lt;is_reference&lt;_Tp&gt;&gt;,</span><br><span class="line">		   					__not_&lt;is_void&lt;_Tp&gt;&gt;&gt;::value&gt;</span><br><span class="line">	struct __add_rvalue_reference_helper</span><br><span class="line">	&#123;typedef __Tp  <span class="built_in"> type; </span>&#125;;</span><br><span class="line"></span><br><span class="line">template&lt;typename _Tp&gt;</span><br><span class="line">	struct __add_rvalue_reference_helper&lt;__Tp, <span class="literal">true</span>&gt;</span><br><span class="line">	&#123;typedef __Tp&amp;&amp; <span class="built_in"> type; </span>&#125;;</span><br><span class="line">	</span><br><span class="line">template&lt;typename _Tp&gt;</span><br><span class="line">struct add_rvalue_reference</span><br><span class="line">: public __add_rvalue_reference_helper&lt;_Tp&gt;</span><br><span class="line">&#123; &#125;;</span><br></pre></td></tr></table></figure>
-<p>可以发现调用时一般为<code>static_cast&lt;typenameadd_rvalue_reference&lt;T&gt;::type&gt;(__t)</code>,首先会匹配泛化版本的元模板类，第二个模版参数bool会匹配_Tp的类型，如果原来不是引用类型的话就直接匹配true的偏特化版本（优先级高），否则false为原泛化版本。</p>
-<p>短短几行代码已经展示出了模板偏/全特化的强大匹配功能！</p>
-]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>new和malloc的区别</title>
     <url>/posts/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
     <content><![CDATA[<h2 id="1.-申请的内存所在位置">1. 申请的内存所在位置<a title="#1.-申请的内存所在位置" href="#1.-申请的内存所在位置"></a></h2>
@@ -1092,6 +1100,114 @@ STL从头到尾都是模板泛型编程，我觉得用的最巧妙的就是在tr
       </tags>
   </entry>
   <entry>
+    <title>C++ 模板偏特化－来自STL的思考</title>
+    <url>/posts/%E6%A8%A1%E6%9D%BF%E7%89%B9%E5%8C%96/</url>
+    <content><![CDATA[<p>之前学习STL时接触过一段时间的模板，模板是C++泛型编程编程的基础<br>
+STL从头到尾都是模板泛型编程，我觉得用的最巧妙的就是在traits萃取技巧时用到的模板偏特化</p>
+<hr>
+<ul>
+<li>先简要回顾一下模板吧，模板主要分为函数模板与类模板</li>
+</ul>
+<h2 id="函数模板">函数模板<a title="#函数模板" href="#函数模板"></a></h2>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T</span>&gt;</span><br><span class="line"><span class="symbol">T</span> <span class="symbol">add</span>(<span class="symbol">T</span> <span class="symbol">a, <span class="symbol">T</span></span> <span class="symbol">b</span>) &#123; <span class="keyword">return</span> a + b;&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> a = <span class="number">1</span>, b = <span class="number">2</span>;</span><br><span class="line">    std::cout &lt;&lt; add(a + b) &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>如上就是最简单的函数模板，当实例化函数模板时，编译器会自动进行实参类型推导<br>
+上面类型T就被自动推导为int类型</p>
+<h2 id="类模板">类模板<a title="#类模板" href="#类模板"></a></h2>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">templete&lt;<span class="keyword">class</span> <span class="symbol">T</span>&gt;</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">explicit</span> A(T val) : t(val) &#123; &#125;</span><br><span class="line">    T add(T x) &#123; <span class="keyword">return</span> t + y; &#125;    </span><br><span class="line">privete:</span><br><span class="line">    T t;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    A&lt;<span class="built_in">int</span>&gt; a(<span class="number">10</span>);</span><br><span class="line">    std::cout &lt;&lt; a.add(<span class="number">5</span>) &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上就是最简单的类模板，实例化类模板必须要指定类型，编译器无法为类模板自动推导类型</p>
+<h3 id="几个需要注意的点">几个需要注意的点<a title="#几个需要注意的点" href="#几个需要注意的点"></a></h3>
+<ul>
+<li>
+<p>１．类模板的和函数模板都必须定义在.h头文件中</p>
+</li>
+<li>
+<p>２．模板的实例化类型确定是在编译期间</p>
+</li>
+<li>
+<p>３．只是模板写好了，编译一般不会很多出错，出错一般会在实例化编译之后</p>
+</li>
+<li>
+<p>４．模板实例化只会实例化用到的部分，没有用到的部分将不会被实例化</p>
+</li>
+</ul>
+<hr>
+<p>我觉得模板的特例化是模板中比较精髓的东西<br>
+有函数模板特例化，类模板特例化，其中又分为全特化与偏特化<br>
+主要的用途都是对于特定的类型，指定特定的处理方式<br>
+就相当于普通编程中if-else if - else这样的方式<br>
+编译阶段确定如果是某个特化类型，就用特化的模板<br>
+如果都不是，就用最一般的模板</p>
+<h2 id="函数模板特例化">函数模板特例化<a title="#函数模板特例化" href="#函数模板特例化"></a></h2>
+<p>函数模板只能全特化，<span class="label primary">不能偏特化</span>，如果要偏特化的话只能重载</p>
+<h3 id="函数模板全特化">函数模板全特化<a title="#函数模板全特化" href="#函数模板全特化"></a></h3>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt; &gt;                                  <span class="comment">// 全特化　注意语法</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">add</span><span class="params">(<span class="keyword">double</span> a, <span class="keyword">double</span> b)</span>  </span>&#123; <span class="keyword">return</span> a + b; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="number">10</span>, y = <span class="number">20</span>;</span><br><span class="line">    <span class="keyword">double</span> z = <span class="number">1.1</span>, w = <span class="number">2.2</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; add(x, y) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;   <span class="comment">// 调用普通版本</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; add(z, w) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;   <span class="comment">// 调用全特化版本</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果有与实参更加匹配的特例化版本，编译器将会选择特例化版本</p>
+<h3 id="函数模板重载（不存在偏特化）">函数模板重载（不存在偏特化）<a title="#函数模板重载（不存在偏特化）" href="#函数模板重载（不存在偏特化）"></a></h3>
+<p>因为偏特化版本本质上仍然是模板，所以如果需要的话，可以重载一个函数模板</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T1</span>&gt;　　// 重载版本，接收参数为指针</span><br><span class="line"><span class="symbol">T1</span> <span class="symbol">add</span>(<span class="symbol">T1</span>* <span class="symbol">a, <span class="symbol">T1</span></span>* <span class="symbol">b</span>) &#123; <span class="keyword">return</span> *a + *b; &#125;   </span><br><span class="line"><span class="built_in">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> a = <span class="number">10</span>, b = <span class="number">20</span>;</span><br><span class="line">    <span class="built_in">int</span> *x = &amp;a, *y = &amp;b;</span><br><span class="line">    add(a, b);    <span class="comment">// 调用普通模板</span></span><br><span class="line">    add(x, y);　  <span class="comment">// 调用重载的模板</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上，如果需要一个接收指针的偏特化版本，那么可以用重载模板实现<br>
+函数模板不存在偏特化</p>
+<h2 id="类模板特例化">类模板特例化<a title="#类模板特例化" href="#类模板特例化"></a></h2>
+<p>类模板既有全特化，又有偏特化<br>
+这里重新写一个更一般的模板类来说明类模板的特例化</p>
+<p>类模板全特化比较好理解，跟函数模板一样，全特化是一个实例，当编译器匹配时会优先匹配参数一致的实例</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt; &gt;     　　　<span class="comment">// 注意语法</span></span><br><span class="line">class A&lt;<span class="keyword">char</span>*&gt;       <span class="comment">// 一个全特化的模板类A</span></span><br><span class="line">&#123;                    <span class="comment">// 当用char*类型来实例化类模板A时，将会优先调用这个全特化实例</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">explicit</span> A(<span class="keyword">char</span>* val) : t(val) &#123; &#125;</span><br><span class="line">    <span class="keyword">char</span>* add(<span class="keyword">char</span>* a, <span class="keyword">char</span>* b) &#123; <span class="built_in">return</span> strcat(a, b); &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">char</span>* t;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="类模板的偏特化">类模板的偏特化<a title="#类模板的偏特化" href="#类模板的偏特化"></a></h2>
+<p>类模板的偏特化会稍微复杂一点点，它有多种形式<br>
+类模板偏特化本质上都是指定部分类型，让偏特化版本称为普通版本的子集，若实例化时参数类型为指定的类型，则优先调用特例化版本<br>
+第一种形式</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T1, <span class="symbol">class</span></span> <span class="symbol">T2</span>&gt;      // 普通版本，有两个模板参数</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">B</span> &#123; ..... &#125;;</span><br><span class="line"></span><br><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T2</span>&gt;　　　         // 偏特化版本，指定其中一个参数，即指定了部分类型</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">B</span>&lt;<span class="symbol">int</span> , <span class="symbol">T2</span>&gt; &#123; ..... &#125;;　　<span class="comment">// 当实例化时的第一个参数为int 则会优先调用这个版本</span></span><br></pre></td></tr></table></figure>
+<p>第二种形式，也是最重要的版本</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T</span>&gt;     // 普通版本</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">B</span> &#123; ..... &#125;;</span><br><span class="line"></span><br><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T</span>&gt;　　　//这个偏特化版本只接收指针类型的模板实参 </span><br><span class="line"><span class="symbol">class</span> <span class="symbol">B</span>&lt;<span class="symbol">T</span>*&gt; &#123; ..... &#125;; </span><br><span class="line"></span><br><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T</span>&gt;</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">B</span>&lt;<span class="symbol">T</span>&amp;&gt; &#123; ..... &#125;;     <span class="comment">// 这个偏特化版本只接受引用类型的模板实参</span></span><br></pre></td></tr></table></figure>
+<p>第三种形式</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T</span>&gt;    //普通版本</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">B</span> &#123; ..... &#125;;</span><br><span class="line"></span><br><span class="line">template&lt;<span class="keyword">class</span> <span class="symbol">T</span>&gt;　　　// 这种只接受用<span class="symbol">T</span>实例化的<span class="symbol">vector</span>的模板实参．也是一种偏特化</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">B</span>&lt;<span class="symbol">vector</span>&lt;<span class="symbol">T</span>&gt;&gt; &#123; ......  &#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>几个值得注意的地方</strong></p>
+<ul>
+<li>１．特例化本质上是我们顶替了编译器的工作，我们帮编译器做了类型推导</li>
+<li>２．全特化本质上是一个实例，而偏特化本质上还是一个模板，只是原来模板的一个子集</li>
+<li>３．所以全特化的函数模板，本质上是实例，从而不会与函数模板产生二义性</li>
+<li>４．若想让用户能使用特例化版本，特例化版本必须与模板定义在同一个.h头文件中</li>
+</ul>
+<hr>
+<p>STL中的迭代器实现与高效实现与模板偏特化息息相关．</p>
+<h2 id="类模板偏特化与stl">类模板偏特化与STL<a title="#类模板偏特化与stl" href="#类模板偏特化与stl"></a></h2>
+<p><strong>偏特化在STL中最重要的两个应用</strong></p>
+<p>１．应用在迭代器设计中，为了使迭代器既可以萃取出值类型，又可以包容原生指针<br>
+如果要通过一个迭代器就能知道它的值类型，那么一般会使用iterator_traits<br>
+迭代器萃取技术的两个核心是：</p>
+<ul>
+<li>１）在每个迭代器类中定义value_type值类型的类型成员，这样直接通过迭代器的value_type类型成员就可以知道值类型</li>
+<li>２）问题就在于，迭代器必须兼容原生指针，而原生指针很难被重新定义，即要在原生指针的类中添加value_type的值类型的类型成员．这时候，靠的就是类模板的偏特化了．新添加一层iterator_traits类，专门萃取迭代器的属性，然后再对iterator_traits类设计原生指针与原生引用的偏特化版本，就解决了这个棘手的问题</li>
+</ul>
+<p>２．<span class="label success"> type_traits</span>类型萃取，对待特殊类型，特殊处理，提高效率<br>
+对于没有构造函数，析构函数等的内置类型，如果与复杂类型一样，执行同样的操作，显然是效率不高的<br>
+先实现一个对所有类型都设置一个最保守值的type_traits模板类，然后再对每个内置类型设置偏特化版本，内置类型设置一个更为激进的值，表明可以采取更为高效的操作来提高效率<br>
+比如copy函数，如果传递的对象是一个复杂类型，那么可能只能采取最保守的处理方式，一个一个的构造；如果是内置类型，这样显然太低效，使用memcpy()可能会好一些</p>
+<p>其实iterator_traits也不止是处理兼容原生指针的问题，它也可以提高效率．<br>
+迭代器分为很多种，有可以随机访问的（vector），有只能前后一个一个移动的（list）,也有只能单向移动的（slist），所以一般把迭代器分为五种：</p>
+<ul>
+<li>InputIterator　　　　　　　输入迭代器</li>
+<li>OutputIterator 　　　　　 　输出迭代器</li>
+<li>ForwardIterator　　　　　　单向迭代器</li>
+<li>BidirectionIterator　　　　　双向迭代器</li>
+<li>RandomAccessIterator　　　随机访问迭代器</li>
+</ul>
+<p>比如一个advance(n)函数，对于单向迭代器只能一个一个移动过去，但是这种实现对于随机访问迭代器显然不是理想的处理方式<br>
+处理的方式就是先实现这五个类，用作标记用，在每个迭代器里面都定义迭代器类型的类型成员iterator_catagory，再对不同版本的迭代器实现不同的advance(n)处理方式</p>
+<p>比如stl中添加右值引用元模板的实现：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">template&lt;typename _Tp,</span><br><span class="line">		   bool = __and_&lt;__not_&lt;is_reference&lt;_Tp&gt;&gt;,</span><br><span class="line">		   					__not_&lt;is_void&lt;_Tp&gt;&gt;&gt;::value&gt;</span><br><span class="line">	struct __add_rvalue_reference_helper</span><br><span class="line">	&#123;typedef __Tp  <span class="built_in"> type; </span>&#125;;</span><br><span class="line"></span><br><span class="line">template&lt;typename _Tp&gt;</span><br><span class="line">	struct __add_rvalue_reference_helper&lt;__Tp, <span class="literal">true</span>&gt;</span><br><span class="line">	&#123;typedef __Tp&amp;&amp; <span class="built_in"> type; </span>&#125;;</span><br><span class="line">	</span><br><span class="line">template&lt;typename _Tp&gt;</span><br><span class="line">struct add_rvalue_reference</span><br><span class="line">: public __add_rvalue_reference_helper&lt;_Tp&gt;</span><br><span class="line">&#123; &#125;;</span><br></pre></td></tr></table></figure>
+<p>可以发现调用时一般为<code>static_cast&lt;typenameadd_rvalue_reference&lt;T&gt;::type&gt;(__t)</code>,首先会匹配泛化版本的元模板类，第二个模版参数bool会匹配_Tp的类型，如果原来不是引用类型的话就直接匹配true的偏特化版本（优先级高），否则false为原泛化版本。</p>
+<p>短短几行代码已经展示出了模板偏/全特化的强大匹配功能！</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>编译器架构的王者LLVM——使用JIT引擎</title>
     <url>/posts/%E7%BC%96%E8%AF%91%E5%99%A8%E6%9E%B6%E6%9E%84%E7%9A%84%E7%8E%8B%E8%80%85LLVM%E2%80%94%E2%80%94%E4%BD%BF%E7%94%A8JIT%E5%BC%95%E6%93%8E/</url>
     <content><![CDATA[<h1 id="使用jit引擎">使用JIT引擎<a title="#使用jit引擎" href="#使用jit引擎"></a></h1>
@@ -1157,44 +1273,6 @@ github: <a href="https://github.com/elite-lang/Elite" target="_blank" rel="noope
       </categories>
       <tags>
         <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>问道</title>
-    <url>/posts/%E9%97%AE%E9%81%93/</url>
-    <content><![CDATA[<h3 id="游戏背景介绍">游戏背景介绍<a title="#游戏背景介绍" href="#游戏背景介绍"></a></h3>
-<p>鸿蒙开化之初，中州大陆昆仑之颠的鸿钧上人创立道教，并收徒三人，各授以道门绝技，三徒皆修成混元大罗金仙万劫不坏之体，分别发展出道教的人道、阐教和截教三个分支。此三徒正是人道教主太上老君、阐教教主元始天尊和截教的通天教主。</p>
-<a id="more"></a>
-<p>三教主秉承师父鸿钧上人教诲，广收门徒将道教流传于世。只因入道门中即可修仙，使人跳出三界之外，不在五行之中，免除生死轮回之苦，使得入道修行之人多不胜数。但修仙之道并非苦心修炼便可达成，修行路上，均要经历三百年一小劫，一千五百年一大劫的劫数。修行之人均无法避开劫数，只能根据自身道行的深浅去经历劫数。值商周两朝交替之时，恰逢修仙一千五百年仙劫，于是三教主共议封神榜，以观众仙根行浅深。然劫数难逃，封神一役，致使道门内部阐教和截教不和，修仙众人俱遭屠戮，更引来西方教派参与纷争，后因鸿钧上人亲自出面调停，终得以平息。通天教主被鸿钧上人禁制在紫霄宫昆仑之颠修行思过。<br>
-时光如梭，转眼已过千年，师尊鸿钧上人外出云游，不知所踪。而通天仿佛已经习惯了这种被禁固的生活，除了每日的必做的修真炼气和静诵《黄庭》，他更多的时间总是在断崖边静静坐着。也许只有这个时刻，他才能真真实实地感觉到自己的存在，千年的苦行使他的修为倍增，同时也让他饱受了孤单和寂寞，他已经很久没有说过一句话了，很久是多久，他自己也不知道，他只知道他在等，他们都在等。.<br>
-空旷的断崖边，一个人影伫立，良久，一动不动。山风劲袭，人犹如与山浑然一体，仍是一动不动，坚毅的面容毫无表情，只有明亮的双眸在黑夜印衬下寒光闪现，眺望着远方。远处，骷髅山顶，一块顽石好象动了一动，又动了一动，仿佛有了呼吸。慢慢地，顽石周围竟然忽隐忽现出着玄黄色的光芒，最终幻化为一个人形的光团，缓缓飘向山后的幽冥涧。此时，人影的苍白面容上浮现出奇怪的笑意，令人不寒而栗，他是通天。<br>
-五百年后的中洲大陆。<br>
-在东海渔村，世世代代以捕鱼为生的渔民有一天突然发现离他们村子不远的海面上，竟然出现一个异常美丽的仙岛。<br>
-在天墉城，熙熙攘攘地街道上突然多了一些身着奇装奇服，行为举止十分可疑之人。<br>
-在揽仙镇，一个平凡冷清的小镇上突然间热闹了起来，从四面八方赶来的俊男美女络绎不绝。<br>
-本来平静的《问道》世界中出现各种异象和征兆，而此时，准备一探究竟的玩家，正赶往揽仙镇的途中。 [1]</p>
-<h3 id="截图">截图<a title="#截图" href="#截图"></a></h3>
-<p><img src="/posts/%E9%97%AE%E9%81%93/261557566768_.pic_hd.jpg" alt="" class="φcx"></p>
-<span class="label default">截图内容和实际无关</span>
-<h3 id="下载">下载<a title="#下载" href="#下载"></a></h3>
-<div class="tabs" id="fourth-unique-name"><ul class="nav-tabs"><li class="tab active"><a href="#fourth-unique-name-1" data-toggle="tab"><i class="fa fa-text-width"></i>客户端下载</a></li><li class="tab"><a href="#fourth-unique-name-2" data-toggle="tab">登录器下载</a></li></ul><div class="tab-content"><div class="tab-pane active" id="fourth-unique-name-1"><div class="note success">
-            <h3 id="目前只提供1.60.0905版本客户端百度云下载链接🔗">目前只提供1.60.0905版本客户端百度云下载链接🔗<a title="#目前只提供1.60.0905版本客户端百度云下载链接🔗" href="#目前只提供1.60.0905版本客户端百度云下载链接🔗"></a></h3>
-          </div>
-<p><a class="btn" href="https://pan.baidu.com/s/1rsdS6oiuAxoYr5wXeZr22A" target="_blank" rel="noopener" title="kq7m"><i class="fa fa-edge"></i>百度云 密码(kq7m)</a></p></div><div class="tab-pane" id="fourth-unique-name-2"><div class="note warning">
-            <h3 id="与版本对应的登录器，服务器为公益服，不做任何盈利和不具备商业性质！">与版本对应的登录器，服务器为公益服，不做任何盈利和不具备商业性质！<a title="#与版本对应的登录器，服务器为公益服，不做任何盈利和不具备商业性质！" href="#与版本对应的登录器，服务器为公益服，不做任何盈利和不具备商业性质！"></a></h3>
-          </div>
-<p>链接：<a href="https://pan.baidu.com/s/1dllSI4gk4dEjf_84bf0AZQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1dllSI4gk4dEjf_84bf0AZQ</a></p>
-<p>提取码：bebc<br>
-复制这段内容后打开百度网盘手机App，操作更方便哦</p>
-<img src="/posts/问道/281557578598_.pic_hd.jpg" width = "100px" height = "100px" /></div></div></div>
-<p>更多资讯: <a href="https://hexo.io/docs/deployment.html" target="_blank">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>PC</category>
-      </categories>
-      <tags>
-        <tag>online</tag>
-        <tag>game</tag>
       </tags>
   </entry>
   <entry>
@@ -2633,84 +2711,6 @@ MATHJAX-SSR-0</p>
       <tags>
         <tag>Hexo</tag>
         <tag>Next</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>理解 Go defer</title>
-    <url>/posts/go-defer/</url>
-    <content><![CDATA[<h2 id="defer-的作用和执行时机">defer 的作用和执行时机<a title="#defer-的作用和执行时机" href="#defer-的作用和执行时机"></a></h2>
-<p>go 的 defer 语句是用来<strong>延迟执行函数的</strong>，而且延迟发生在<strong>调用函数 return 之后</strong>，比如</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">a</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">  <span class="keyword">defer</span> b()</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>b 的执行是发生在 return 0 之后，注意 defer 的语法，关键字 defer 之后是函数的调用。</p>
-<a id="more"></a>
-<h2 id="defer-的重要用途一：清理释放资源">defer 的重要用途一：清理释放资源<a title="#defer-的重要用途一：清理释放资源" href="#defer-的重要用途一：清理释放资源"></a></h2>
-<p>由于 defer 的延迟特性，defer 常用在函数调用结束之后清理相关的资源，比如</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">f, _ := os.Open(filename)</span><br><span class="line"><span class="keyword">defer</span> f.Close()</span><br></pre></td></tr></table></figure>
-<p>文件资源的释放会在函数调用结束之后借助 defer 自动执行，不需要时刻记住哪里的资源需要释放，打开和释放必须相对应。</p>
-<p>用一个例子深刻诠释一下 defer 带来的便利和简洁。</p>
-<p>代码的主要目的是打开一个文件，然后复制内容到另一个新的文件中，没有 defer 时这样写：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CopyFile</span><span class="params">(dstName, srcName <span class="keyword">string</span>)</span> <span class="params">(written <span class="keyword">int64</span>, err error)</span></span> &#123;</span><br><span class="line">    src, err := os.Open(srcName)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dst, err := os.Create(dstName)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123; <span class="comment">//1</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    written, err = io.Copy(dst, src)</span><br><span class="line">    dst.Close()</span><br><span class="line">    src.Close()</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>代码在 <code>#1</code> 处返回之后，src 文件没有执行关闭操作，可能会导致资源不能正确释放，改用 defer 实现：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CopyFile</span><span class="params">(dstName, srcName <span class="keyword">string</span>)</span> <span class="params">(written <span class="keyword">int64</span>, err error)</span></span> &#123;</span><br><span class="line">    src, err := os.Open(srcName)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> src.Close()</span><br><span class="line"></span><br><span class="line">    dst, err := os.Create(dstName)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> dst.Close()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> io.Copy(dst, src)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>src 和 dst 都能及时清理和释放，无论 return 在什么地方执行。</p>
-<p>鉴于 defer 的这种作用，defer 常用来释放数据库连接，文件打开句柄等释放资源的操作。</p>
-<h2 id="defer-的重要用途二：执行-recover">defer 的重要用途二：执行 recover<a title="#defer-的重要用途二：执行-recover" href="#defer-的重要用途二：执行-recover"></a></h2>
-<p>被 defer 的函数在 return 之后执行，这个时机点正好可以捕获函数抛出的 panic，因而 defer 的另一个重要用途就是执行 recover。</p>
-<p>recover 只有在 defer 中使用才更有意义，如果在其他地方使用，由于 program 已经调用结束而提前返回而无法有效捕捉错误。</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> ok := <span class="built_in">recover</span>(); ok != <span class="literal">nil</span> &#123;</span><br><span class="line">            fmt.Println(<span class="string">"recover"</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line"></span><br><span class="line">    <span class="built_in">panic</span>(<span class="string">"error"</span>)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>记住 defer 要放在 panic 执行之前。</p>
-<h2 id="多个-defer-的执行顺序">多个 defer 的执行顺序<a title="#多个-defer-的执行顺序" href="#多个-defer-的执行顺序"></a></h2>
-<p>defer 的作用就是把关键字之后的函数执行压入一个栈中延迟执行，多个 defer 的执行顺序是后进先出 LIFO ：</p>
-<figure class="highlight autoit"><table><tr><td class="code"><pre><span class="line">defer <span class="function"><span class="keyword">func</span><span class="params">()</span> &#123; <span class="title">fmt</span>.<span class="title">Println</span><span class="params">(<span class="string">"1"</span>)</span> &#125;<span class="params">()</span></span></span><br><span class="line">defer <span class="function"><span class="keyword">func</span><span class="params">()</span> &#123; <span class="title">fmt</span>.<span class="title">Println</span><span class="params">(<span class="string">"2"</span>)</span> &#125;<span class="params">()</span></span></span><br><span class="line">defer <span class="function"><span class="keyword">func</span><span class="params">()</span> &#123; <span class="title">fmt</span>.<span class="title">Println</span><span class="params">(<span class="string">"3"</span>)</span> &#125;<span class="params">()</span></span></span><br></pre></td></tr></table></figure>
-<p>输出顺序是 321。</p>
-<p>这个特性可以对一个 array 实现逆序操作。</p>
-<h2 id="被-deferred-函数的参数在-defer-时确定">被 deferred 函数的参数在 defer 时确定<a title="#被-deferred-函数的参数在-defer-时确定" href="#被-deferred-函数的参数在-defer-时确定"></a></h2>
-<p>这是 defer 的特点，一个函数被 defer 时，它的参数在 defer 时进行计算确定，即使 defer 之后参数发生修改，对已经 defer 的函数没有影响，什么意思？看例子：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">func</span> <span class="selector-tag">a</span>() &#123;</span><br><span class="line">    <span class="attribute">i </span>:= <span class="number">0</span></span><br><span class="line">    defer fmt.<span class="built_in">Println</span>(i)</span><br><span class="line">    i++</span><br><span class="line">    return</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>a 执行输出的是 0 而不是 1，因为 defer 时，i 的值是 0，此时被 defer 的函数参数已经进行执行计算并确定了。</p>
-<p>再看一个例子：</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">calc</span><span class="params">(index <span class="keyword">string</span>, a, b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">    ret := a + b</span><br><span class="line">    fmt.Println(index, a, b, ret)</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    a := <span class="number">1</span></span><br><span class="line">    b := <span class="number">2</span></span><br><span class="line">    <span class="keyword">defer</span> calc(<span class="string">"1"</span>, a, calc(<span class="string">"10"</span>, a, b))</span><br><span class="line">    a = <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行代码输出</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">10 </span><span class="number">1</span> <span class="number">2</span> <span class="number">3</span> </span><br><span class="line"><span class="symbol">1 </span><span class="number">1</span> <span class="number">3</span> <span class="number">4</span></span><br></pre></td></tr></table></figure>
-<p>defer 函数的参数 第三个参数在 defer 时就已经计算完成并确定，第二个参数 a 也是如此，无论之后 a 变量是否修改都不影响。</p>
-<h2 id="被-defer-的函数可以读取和修改带名称的返回值">被 defer 的函数可以读取和修改带名称的返回值<a title="#被-defer-的函数可以读取和修改带名称的返回值" href="#被-defer-的函数可以读取和修改带名称的返回值"></a></h2>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">c</span><span class="params">()</span> <span class="params">(i <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123; i++ &#125;()</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>被 defer 的函数是在 return 之后执行，可以修改带名称的返回值，上面的函数 c 返回的是 2。</p>
-<h2 id="go语言-异常panic和恢复recover用法">Go语言 异常panic和恢复recover用法<a title="#go语言-异常panic和恢复recover用法" href="#go语言-异常panic和恢复recover用法"></a></h2>
-<p>背景：Go语言追求简洁优雅，所以，Go语言不支持传统的 try…catch…finally 这种异常，因为Go语言的设计者们认为，将异常与控制结构混在一起会很容易使得代码变得混乱。因为开发者很容易滥用异常，甚至一个小小的错误都抛出一个异常。在Go语言中，使用多值返回来返回错误。不要用异常代替错误，更不要用来控制流程。在极个别的情况下，才使用Go中引入的Exception处理：defer, panic, recover。</p>
-<h2 id="panic：">panic：<a title="#panic：" href="#panic："></a></h2>
-<p>1、内建函数</p>
-<p>2、假如函数F中书写了panic语句，会终止其后要执行的代码，在panic所在函数F内如果存在要执行的defer函数列表，按照defer的逆序执行</p>
-<p>比如panic函数内有：</p>
-<ul>
-<li>defer  函数1</li>
-<li>defer  函数2</li>
-<li>defer  函数3</li>
-<li>那么执行顺序就是：</li>
-<li>函数3</li>
-<li>函数2</li>
-<li>函数1</li>
-</ul>
-<p>3、返回函数F的调用者G，在G中，调用函数F语句之后的代码不会执行，假如函数G中存在要执行的defer函数列表，按照defer的逆序执行，这里的defer 有点类似 try-catch-finally 中的 finally</p>
-<p>4、直到goroutine整个退出，并报告错误</p>
-<h2 id="recover：">recover：<a title="#recover：" href="#recover："></a></h2>
-<p>1、内建函数</p>
-<p>2、用来控制一个goroutine的panicking行为，捕获panic，从而影响应用的行为</p>
-<p>3、一般的调用建议</p>
-<p>a). 在defer函数中，通过recever来终止一个gojroutine的panicking过程，从而恢复正常代码的执行</p>
-<p>b). 可以获取通过panic传递的error</p>
-<p>简单来讲：go中可以抛出一个panic的异常，然后在defer中通过recover捕获这个异常，然后正常处理。</p>
-<p>示例代码 main函数相当于调用者G，f函数相当于函数F</p>
-<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">      fmt.Println(<span class="string">"c"</span>)</span><br><span class="line">   <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123; <span class="comment">// 必须要先声明defer，否则不能捕获到panic异常</span></span><br><span class="line">      fmt.Println(<span class="string">"d"</span>)</span><br><span class="line">      <span class="keyword">if</span> err := <span class="built_in">recover</span>(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">         fmt.Println(err) <span class="comment">// 这里的err其实就是panic传入的内容</span></span><br><span class="line">      &#125;</span><br><span class="line">      fmt.Println(<span class="string">"e"</span>)</span><br><span class="line">   &#125;()</span><br><span class="line">   f() <span class="comment">//开始调用f</span></span><br><span class="line">   fmt.Println(<span class="string">"f"</span>) <span class="comment">//这里开始下面代码不会再执行</span></span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f</span><span class="params">()</span></span> &#123;</span><br><span class="line">   fmt.Println(<span class="string">"a"</span>)</span><br><span class="line">   <span class="built_in">panic</span>(<span class="string">"异常信息"</span>)</span><br><span class="line">   fmt.Println(<span class="string">"b"</span>) <span class="comment">//这里开始下面代码不会再执行</span></span><br><span class="line">&#125;</span><br><span class="line">-------output-------</span><br><span class="line">c</span><br><span class="line">a</span><br><span class="line">d</span><br><span class="line">异常信息</span><br><span class="line">e</span><br></pre></td></tr></table></figure>
-<p><strong>注意：利用recover处理panic指令，defer必须在panic之前声明，否则当panic时，recover无法捕获到panic．</strong></p>
-<h2 id="参考资料">参考资料<a title="#参考资料" href="#参考资料"></a></h2>
-<p><a href="https://blog.golang.org/defer-panic-and-recover" target="_blank" rel="noopener">https://blog.golang.org/defer-panic-and-recover</a></p>
-]]></content>
-      <categories>
-        <category>go</category>
-      </categories>
-      <tags>
-        <tag>go</tag>
       </tags>
   </entry>
 </search>
