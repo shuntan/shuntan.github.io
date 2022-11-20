@@ -1,15 +1,15 @@
 {
-  "web_home": "http://43.154.222.167",
-  "web_register": "http://43.154.222.167/reg",
-  "web_recharege": "http://43.154.222.167/recharge",
-  "game_version": "1.6",
-  "client_version": "1.6654",
-  "register_api": "http://43.154.222.167:1323/registered_account",
-  "changepass_api": "http://43.154.222.167:1323/change_pass",
-  "verifycode_api": "http://43.154.222.167:1323/create_verify_code",
+  "web_home": "https://www.ddasktao.cf",
+  "web_register": "https://www.ddasktao.cf/reg",
+  "web_recharege": "https://www.ddasktao.cf/recharge",
+  "game_version": "1.68.190918",
+  "client_version": "0.1",
+  "register_api": "https://www.ddasktao.cf/api/registered_account",
+  "changepass_api": "https://www.ddasktao.cf/api/change_pass",
+  "verifycode_api": "https://www.ddasktao.cf/api/create_verify_code",
   "update_info": "1.修改启动错找不到配置文件的问题.\r\n2.压缩二进制文件大小.",
-  "client_download_url": "http://43.154.222.167/123/456.exe",
-  "game_download_url": "http://43.154.222.167/123/456.zip",
+  "client_download_url": "https://www.ddasktao.cf/123/456.exe",
+  "game_download_url": "https://www.ddasktao.cf/123/456.zip",
   "servers": [
     {
       "name": "鸾凤和鸣",
@@ -19,7 +19,7 @@
       "ping": 12
     },
     {
-      "name": "黄埔风云",
+      "name": "紫气东来",
       "ip": "127.0.0.1",
       "port": "8081",
       "status": true,
@@ -28,16 +28,12 @@
   ],
   "news": [
     {
-      "title": "软分河滨区9月4日正式开服",
-      "url": "http://www.baidu.com"
+      "title": "鸾凤和鸣区9月4日正式开区！",
+      "url": "https://www.ddasktao.cf/event/newdist.html"
     },
     {
-      "title": "新服开测，撒花撒花",
-      "url": "http://www.baidu.com"
-    },
-    {
-      "title": "新服开测，撒花撒花",
-      "url": "http://www.baidu.com"
+      "title": "鸾凤和鸣福利区九层妖塔系统调整详情",
+      "url": "https://www.ddasktao.cf/event/jiucengyaota.html"
     }
   ]
 }
