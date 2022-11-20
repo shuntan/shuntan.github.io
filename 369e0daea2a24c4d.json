@@ -8,8 +8,8 @@
   "changepass_api": "https://www.ddasktao.cf/api/change_pass",
   "verifycode_api": "https://www.ddasktao.cf/api/create_verify_code",
   "update_info": "1.修改启动错找不到配置文件的问题.\r\n2.压缩二进制文件大小.",
-  "client_download_url": "https://www.ddasktao.cf/123/456.exe",
-  "game_download_url": "https://www.ddasktao.cf/123/456.zip",
+  "client_download_url": "https://www.ddasktao.cf/wendao/问道登录器_v0.1.exe",
+  "game_download_url": "https://www.ddasktao.cf/wendao/1.68%E5%AE%8C%E6%95%B4%E5%AE%A2%E6%88%B7%E7%AB%AF.7z",
   "servers": [
     {
       "name": "鸾凤和鸣",
@@ -22,7 +22,7 @@
       "name": "紫气东来",
       "ip": "127.0.0.1",
       "port": "8081",
-      "status": true,
+      "status": false,
       "ping": 43
     }
   ],
